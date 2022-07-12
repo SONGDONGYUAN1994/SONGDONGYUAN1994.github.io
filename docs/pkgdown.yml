@@ -1,0 +1,16 @@
+pandoc: 2.11.4
+pkgdown: 2.0.5
+pkgdown_sha: ~
+articles:
+  scDesign3-batchEffect-vignette: scDesign3-batchEffect-vignette.html
+  scDesign3-clusterQuality-vignette: scDesign3-clusterQuality-vignette.html
+  scDesign3-conditionEffect-vignette: scDesign3-conditionEffect-vignette.html
+  scDesign3-introduction-vignette: scDesign3-introduction-vignette.html
+  scDesign3-multipleLineages_vignette: scDesign3-multipleLineages_vignette.html
+  scDesign3-pseudotimeQuality-vignette: scDesign3-pseudotimeQuality-vignette.html
+  scDesign3-scATACseq-vignette: scDesign3-scATACseq-vignette.html
+  scDesign3-spatial-vignette: scDesign3-spatial-vignette.html
+  scDesign3: scDesign3.html
+  scDesign3_copulaCompare: scDesign3_copulaCompare.html
+last_built: 2022-07-12T01:02Z
+
