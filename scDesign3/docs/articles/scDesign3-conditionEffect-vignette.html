@@ -46,13 +46,13 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/scDesign3-introduction-vignette.html">scDesign3 Introduction</a>
     <a class="dropdown-item" href="../articles/scDesign3_copulaCompare.html">Compare gaussian copula and vine copula</a>
-    <a class="dropdown-item" href="../articles/scDesign3-multipleLineages_vignette.html">Simulate dataset with multiple lineages</a>
+    <a class="dropdown-item" href="../articles/scDesign3-multipleLineages_vignette.html">Simulate datasets with multiple lineages</a>
     <a class="dropdown-item" href="../articles/scDesign3-conditionEffect-vignette.html">Simulate datasets with condition effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-batchEffect-vignette.html">Simulate datasets with batch effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-spatial-vignette.html">Simulate spatial transcriptomic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-scATACseq-vignette.html">Simulate single-cell ATAC-seq data</a>
-    <a class="dropdown-item" href="../articles/scDesign3-clusterQuality-vignette.html">Evaluate clustering qualities using scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeQuality-vignette.html">Evaluate pseudotime qualities using scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-clusterQuality-vignette.html">Evaluate clustering quality by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeQuality-vignette.html">Evaluate pseudotime quality by scDesign3</a>
   </div>
 </li>
       </ul>
@@ -129,11 +129,23 @@ pre {
 <span><span class="co">#&gt; reducedDimNames(0):</span></span>
 <span><span class="co">#&gt; mainExpName: RNA</span></span>
 <span><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
-<p>To save computational time, we only use the top 100 genes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>,<span class="op">]</span></span></code></pre></div>
-<p>The condition information is stored in colData of the example dataset.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;    CD14 Mono  CD4 Naive T CD4 Memory T    CD16 Mono            B        CD8 T </span></span>
+<span><span class="co">#&gt;         4362         2504         1762         1044          978          814 </span></span>
+<span><span class="co">#&gt;  T activated           NK           DC  B Activated           Mk          pDC </span></span>
+<span><span class="co">#&gt;          633          619          472          388          236          132 </span></span>
+<span><span class="co">#&gt;        Eryth </span></span>
+<span><span class="co">#&gt;           55</span></span></code></pre></div>
+<p>To save computational time, we only use the top 100 genes and two cell types (CD14 Mono and B).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fu">colData</span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD14 Mono"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">]</span></span>
+<span></span>
+<span><span class="co">## Remove unused cell type levels</span></span>
+<span><span class="fu">colData</span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span><span class="op">)</span></span></code></pre></div>
+<p>The condition information is stored in colData of the example dataset.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">colData</span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 6 rows and 8 columns</span></span>
 <span><span class="co">#&gt;                   orig.ident nCount_RNA nFeature_RNA        stim</span></span>
@@ -141,23 +153,23 @@ pre {
 <span><span class="co">#&gt; AAACATACATTTCC.1 IMMUNE_CTRL       3017          877        CTRL</span></span>
 <span><span class="co">#&gt; AAACATACCAGAAA.1 IMMUNE_CTRL       2481          713        CTRL</span></span>
 <span><span class="co">#&gt; AAACATACCTCGCT.1 IMMUNE_CTRL       3420          850        CTRL</span></span>
-<span><span class="co">#&gt; AAACATACCTGGTA.1 IMMUNE_CTRL       3156         1109        CTRL</span></span>
-<span><span class="co">#&gt; AAACATACGATGAA.1 IMMUNE_CTRL       1868          634        CTRL</span></span>
 <span><span class="co">#&gt; AAACATACGGCATT.1 IMMUNE_CTRL       1581          557        CTRL</span></span>
-<span><span class="co">#&gt;                  seurat_annotations       ident    cell_type   condition</span></span>
-<span><span class="co">#&gt;                            &lt;factor&gt;    &lt;factor&gt;     &lt;factor&gt; &lt;character&gt;</span></span>
-<span><span class="co">#&gt; AAACATACATTTCC.1       CD14 Mono    IMMUNE_CTRL CD14 Mono           CTRL</span></span>
-<span><span class="co">#&gt; AAACATACCAGAAA.1       CD14 Mono    IMMUNE_CTRL CD14 Mono           CTRL</span></span>
-<span><span class="co">#&gt; AAACATACCTCGCT.1       CD14 Mono    IMMUNE_CTRL CD14 Mono           CTRL</span></span>
-<span><span class="co">#&gt; AAACATACCTGGTA.1       pDC          IMMUNE_CTRL pDC                 CTRL</span></span>
-<span><span class="co">#&gt; AAACATACGATGAA.1       CD4 Memory T IMMUNE_CTRL CD4 Memory T        CTRL</span></span>
-<span><span class="co">#&gt; AAACATACGGCATT.1       CD14 Mono    IMMUNE_CTRL CD14 Mono           CTRL</span></span></code></pre></div>
+<span><span class="co">#&gt; AAACATTGCTTCGC.1 IMMUNE_CTRL       2536          669        CTRL</span></span>
+<span><span class="co">#&gt; AAACGCACTCGCCT.1 IMMUNE_CTRL       3563          908        CTRL</span></span>
+<span><span class="co">#&gt;                  seurat_annotations       ident cell_type   condition</span></span>
+<span><span class="co">#&gt;                            &lt;factor&gt;    &lt;factor&gt;  &lt;factor&gt; &lt;character&gt;</span></span>
+<span><span class="co">#&gt; AAACATACATTTCC.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span>
+<span><span class="co">#&gt; AAACATACCAGAAA.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span>
+<span><span class="co">#&gt; AAACATACCTCGCT.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span>
+<span><span class="co">#&gt; AAACATACGGCATT.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span>
+<span><span class="co">#&gt; AAACATTGCTTCGC.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span>
+<span><span class="co">#&gt; AAACGCACTCGCCT.1          CD14 Mono IMMUNE_CTRL CD14 Mono        CTRL</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
 <p>First, we will simulate new data with the condition effects.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simu_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
@@ -166,7 +178,7 @@ pre {
 <span>    spatial <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    other_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition"</span><span class="op">)</span>,</span>
 <span>    mu_formula <span class="op">=</span> <span class="st">"cell_type + condition + cell_type*condition"</span>,</span>
-<span>    sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>    sigma_formula <span class="op">=</span> <span class="st">"1"</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    usebam <span class="op">=</span> <span class="cn">FALSE</span>,</span>
@@ -178,7 +190,7 @@ pre {
 <span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Then, we can also simulate a new dataset with condition effects on B cells removed.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
 <span>  sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
@@ -188,17 +200,17 @@ pre {
 <span>  other_covariates <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"condition"</span><span class="op">)</span>,</span>
 <span>  corr_by <span class="op">=</span> <span class="st">"cell_type"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_marginal</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span></span>
 <span>  data <span class="op">=</span> <span class="va">IFNB_data</span>,</span>
 <span>  predictor <span class="op">=</span> <span class="st">"gene"</span>,</span>
 <span>  mu_formula <span class="op">=</span> <span class="st">"cell_type + condition + cell_type*condition"</span>,</span>
-<span>  sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>  sigma_formula <span class="op">=</span> <span class="st">"1"</span>,</span>
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  usebam <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
@@ -209,12 +221,12 @@ pre {
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">IFNB_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_marginal_null_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">IFNB_marginal</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"cell_typeB:conditionSTIM"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"conditionSTIM"</span><span class="op">]</span></span>
+<span>  <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"cell_typeB:conditionSTIM"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">-</span><span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"conditionSTIM"</span><span class="op">]</span></span>
 <span>  <span class="va">x</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_para_null_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_para.html">extract_para</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">IFNB_marginal_null_B</span>,</span>
@@ -222,7 +234,7 @@ pre {
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_newcount_null_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">IFNB_para_null_B</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
@@ -240,7 +252,7 @@ pre {
 <h2 id="visulization">Visulization<a class="anchor" aria-label="anchor" href="#visulization"></a>
 </h2>
 <p>We first create two <code>SingleCellExperiment</code> objects using two count matrices generated above.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simu_res_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_res</span><span class="op">$</span><span class="va">new_count</span>,<span class="va">IFNB_newcount_null_B</span> <span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span></span>
@@ -250,7 +262,7 @@ pre {
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Then, we visualize the results.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="va">simu_res_list</span>, </span>
@@ -261,7 +273,7 @@ pre {
 <span>                                  shape_by <span class="op">=</span> <span class="st">"condition"</span>,</span>
 <span>                                  n_pc <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scDesign3-conditionEffect-vignette_files/figure-html/unnamed-chunk-14-1.png" width="1152"></p>
+<p><img src="scDesign3-conditionEffect-vignette_files/figure-html/unnamed-chunk-15-1.png" width="1152"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

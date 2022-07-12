@@ -7,13 +7,7 @@
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>/LICENSE.html</loc>
-  </url>
-  <url>
     <loc>/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>/articles/scDesign-conditionEffect-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-batchEffect-vignette.html</loc>
@@ -31,22 +25,13 @@
     <loc>/articles/scDesign3-multipleLineages_vignette.html</loc>
   </url>
   <url>
-    <loc>/articles/scDesign3-pseudotimeQuailty-vignette.html</loc>
-  </url>
-  <url>
     <loc>/articles/scDesign3-pseudotimeQuality-vignette.html</loc>
-  </url>
-  <url>
-    <loc>/articles/scDesign3-quickstart-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-scATACseq-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-spatial-vignette.html</loc>
-  </url>
-  <url>
-    <loc>/articles/scDesign3-spatial_vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3.html</loc>

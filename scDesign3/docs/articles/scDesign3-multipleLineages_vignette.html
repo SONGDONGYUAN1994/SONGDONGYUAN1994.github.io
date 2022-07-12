@@ -51,8 +51,8 @@
     <a class="dropdown-item" href="../articles/scDesign3-batchEffect-vignette.html">Simulate datasets with batch effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-spatial-vignette.html">Simulate spatial transcriptomic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-scATACseq-vignette.html">Simulate single-cell ATAC-seq data</a>
-    <a class="dropdown-item" href="../articles/scDesign3-clusterQuality-vignette.html">Evaluate clustering qualities using scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeQuality-vignette.html">Evaluate pseudotime qualities using scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-clusterQuality-vignette.html">Evaluate clustering quality by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeQuality-vignette.html">Evaluate pseudotime quality by scDesign3</a>
   </div>
 </li>
       </ul>
@@ -180,11 +180,11 @@ pre {
 <span><span class="co">#&gt; [1]  100 2660</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/useful/man/corner.html" class="external-link">corner</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       W31105 W31106 W31107 W31108 W31109</span></span>
-<span><span class="co">#&gt; Prtn3      0     21      9     25      2</span></span>
-<span><span class="co">#&gt; Elane      0     19      5     18      0</span></span>
-<span><span class="co">#&gt; Mpo        3     36     13     33      7</span></span>
-<span><span class="co">#&gt; Ctsg       0     11      3     10      1</span></span>
-<span><span class="co">#&gt; Car1       3      0     28      0     39</span></span></code></pre></div>
+<span><span class="co">#&gt; Prtn3      0     21      9     27      2</span></span>
+<span><span class="co">#&gt; Elane      0     20      5     17      0</span></span>
+<span><span class="co">#&gt; Mpo        4     35     12     34      6</span></span>
+<span><span class="co">#&gt; Ctsg       0     11      4     10      1</span></span>
+<span><span class="co">#&gt; Car1       3      0     26      0     39</span></span></code></pre></div>
 <p>Create <code>SingleCellExperiment</code> object.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
