@@ -8,8 +8,8 @@
 <meta name="description" content="scDesign3">
 <title>Simulate datasets with multiple lineages • scDesign3</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate datasets with multiple lineages">
 <meta property="og:description" content="scDesign3">
@@ -80,16 +80,20 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate datasets with multiple lineages</h1>
-                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan
+Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang
+Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">11 July 2022</h4>
+            <h4 data-toc-skip class="date">1 October 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/scDesign3-multipleLineages_vignette.Rmd" class="external-link"><code>vignettes/scDesign3-multipleLineages_vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-multipleLineages_vignette.Rmd</code></div>
@@ -113,12 +117,15 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate the multiple lineages single-cell data.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate the
+multiple lineages single-cell data.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO with ID GSE72859</a>, which describes myeloid progenitors from mouse bone marrow. We pre-select the top 1000 highly variable genes.</p>
+<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO
+with ID GSE72859</a>, which describes myeloid progenitors from mouse
+bone marrow. We pre-select the top 1000 highly variable genes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AAADW7is80WscU5RwavChsdUa/MARROW_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span></span>
@@ -136,7 +143,11 @@ pre {
 <p>To save computational time, we only use the top 100 genes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span></code></pre></div>
-<p>As we can see, this example dataset has two sets of pseudotime, thus two lineages. The variables <code>pseudotime1</code> and <code>pseudotime2</code> contain the corresponding pseudotime for each cell. The variables <code>l1</code> and <code>l2</code> indicate whether a particular cell belong to the first and/or second lineages.</p>
+<p>As we can see, this example dataset has two sets of pseudotime, thus
+two lineages. The variables <code>pseudotime1</code> and
+<code>pseudotime2</code> contain the corresponding pseudotime for each
+cell. The variables <code>l1</code> and <code>l2</code> indicate whether
+a particular cell belong to the first and/or second lineages.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pseudotime1"</span>,<span class="st">"pseudotime2"</span>,<span class="st">"l1"</span>,<span class="st">"l2"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; DataFrame with 6 rows and 4 columns</span></span>
@@ -152,7 +163,8 @@ pre {
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>Then, we can use this multiple-lineage dataset to generate new data.</p>
+<p>Then, we can use this multiple-lineage dataset to generate new
+data.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">example_simu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
@@ -180,11 +192,11 @@ pre {
 <span><span class="co">#&gt; [1]  100 2660</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/useful/man/corner.html" class="external-link">corner</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
 <span><span class="co">#&gt;       W31105 W31106 W31107 W31108 W31109</span></span>
-<span><span class="co">#&gt; Prtn3      0     21      9     27      2</span></span>
-<span><span class="co">#&gt; Elane      0     20      5     17      0</span></span>
-<span><span class="co">#&gt; Mpo        4     35     12     34      6</span></span>
-<span><span class="co">#&gt; Ctsg       0     11      4     10      1</span></span>
-<span><span class="co">#&gt; Car1       3      0     26      0     39</span></span></code></pre></div>
+<span><span class="co">#&gt; Prtn3      0     22      9     26      2</span></span>
+<span><span class="co">#&gt; Elane      0     20      4     18      0</span></span>
+<span><span class="co">#&gt; Mpo        4     36     13     33      6</span></span>
+<span><span class="co">#&gt; Ctsg       0     11      3      9      1</span></span>
+<span><span class="co">#&gt; Car1       3      0     25      0     41</span></span></code></pre></div>
 <p>Create <code>SingleCellExperiment</code> object.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
@@ -226,7 +238,7 @@ pre {
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
