@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,8 +37,8 @@
     <a class="dropdown-item" href="../articles/scDesign3-CITEseq-vignette.html">Simulate CITE-seq data</a>
     <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-clusterGOF-vignette.html">Evaluate clustering goodness-of-fit by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime quality by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">DE Analysis with scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -120,7 +120,7 @@ multiple lineages. Default is NULL.</p></dd>
 
 
 <dt>other_covariates</dt>
-<dd><p>A string or a string vector of the other covaraites you want to include in the data.</p></dd>
+<dd><p>A string or a string vector of the other covariates you want to include in the data.</p></dd>
 
 
 <dt>ncell</dt>
@@ -159,7 +159,7 @@ Must be one of 'poisson', 'nb', 'zip', 'zinb' or 'gaussian'.</p></dd>
 <dt>DT</dt>
 <dd><p>A logic variable. If TRUE, perform the distributional transformation
 to make the discrete data 'continuous'. This is useful for discrete distributions (e.g., Poisson, NB).
-Default is TRUE.</p></dd>
+Default is TRUE. Note that for continuous data (e.g., Gaussian), DT does not make sense and should be set as FALSE.</p></dd>
 
 
 <dt>pseudo_obs</dt>
@@ -213,6 +213,15 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
 
   <dt><code>new_covariate</code></dt>
 <dd><p>A data.frame of the new covariate matrix.</p></dd>
+
+  <dt><code>model_aic</code></dt>
+<dd><p>The model AIC.</p></dd>
+
+  <dt><code>marginal_list</code></dt>
+<dd><p>A list of marginal regression models if return_model = TRUE.</p></dd>
+
+  <dt><code>corr_list</code></dt>
+<dd><p>A list of correlation models (conditional copulas) if return_model = TRUE.</p></dd>
 
 
 </dl></div>
