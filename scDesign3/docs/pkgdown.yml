@@ -1,4 +1,4 @@
-pandoc: 2.19.2
+pandoc: '2.5'
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles:
@@ -15,5 +15,5 @@ articles:
   scDesign3-scATACseq-vignette: scDesign3-scATACseq-vignette.html
   scDesign3-spatial-vignette: scDesign3-spatial-vignette.html
   scDesign3: scDesign3.html
-last_built: 2023-01-16T05:28Z
+last_built: 2023-01-18T23:53Z
 

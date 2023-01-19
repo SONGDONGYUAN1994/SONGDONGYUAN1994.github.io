@@ -7,10 +7,22 @@
     <loc>/LICENSE-text.html</loc>
   </url>
   <url>
+    <loc>/README.html</loc>
+  </url>
+  <url>
     <loc>/articles/index.html</loc>
   </url>
   <url>
+    <loc>/articles/scDesign3-CITEseq-vignette.html</loc>
+  </url>
+  <url>
+    <loc>/articles/scDesign3-DEanalysis-vignette.html</loc>
+  </url>
+  <url>
     <loc>/articles/scDesign3-batchEffect-vignette.html</loc>
+  </url>
+  <url>
+    <loc>/articles/scDesign3-clusterGOF-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-clusterQuality-vignette.html</loc>
@@ -19,10 +31,22 @@
     <loc>/articles/scDesign3-conditionEffect-vignette.html</loc>
   </url>
   <url>
+    <loc>/articles/scDesign3-copulaCompare-vignette.html</loc>
+  </url>
+  <url>
     <loc>/articles/scDesign3-introduction-vignette.html</loc>
   </url>
   <url>
+    <loc>/articles/scDesign3-multiomics-vignette.html</loc>
+  </url>
+  <url>
+    <loc>/articles/scDesign3-multipleLineages-vignette.html</loc>
+  </url>
+  <url>
     <loc>/articles/scDesign3-multipleLineages_vignette.html</loc>
+  </url>
+  <url>
+    <loc>/articles/scDesign3-pseudotimeGOF-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-pseudotimeQuality-vignette.html</loc>

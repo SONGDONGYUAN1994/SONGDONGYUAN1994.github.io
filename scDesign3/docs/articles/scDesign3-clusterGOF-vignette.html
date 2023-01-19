@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
     <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-clusterGOF-vignette.html">Evaluate clustering goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">DE Analysis with scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
 </li>
       </ul>
@@ -77,28 +77,21 @@
   </div>
 </nav><div class="container template-article">
 
-
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Evaluate clustering goodness-of-fit by scDesign3</h1>
-                        <h4 data-toc-skip class="author">Dongyuan
-Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang
-Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">16 January 2023</h4>
+            <h4 data-toc-skip class="date">18 January 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-clusterGOF-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-clusterGOF-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-clusterGOF-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-clusterGOF-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-clusterGOF-vignette.Rmd</code></div>
     </div>
 
@@ -121,25 +114,19 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to evaluate the
-clustering goodness-of-fit for different cell-type assignments. If the
-true labels are unavailable and we have little prior knowledge, the
-scDesign3 BIC can serve as an unsupervised metric.</p>
+<p>In this tutorial, we will show how to use scDesign3 to evaluate the clustering goodness-of-fit for different cell-type assignments. If the true labels are unavailable and we have little prior knowledge, the scDesign3 BIC can serve as an unsupervised metric.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the R package <code>DuoClustering2018</code>
-which contain a set of datasets with various clustering results.</p>
+<p>The raw data is from the R package <code>DuoClustering2018</code> which contain a set of datasets with various clustering results.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Zhengmix4eq_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="st">"sce_filteredExpr10_Zhengmix4eq"</span><span class="op">)</span><span class="op">(</span>metadata <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="st">"clustering_summary_filteredExpr10_Zhengmix4eq_v1"</span><span class="op">)</span><span class="op">(</span>metadata <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>  </span>
 <span><span class="va">res_sub</span> <span class="op">&lt;-</span> <span class="va">res</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">method</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SC3"</span>, <span class="st">"Seurat"</span>, <span class="st">"PCAHC"</span>, <span class="st">"PCAKmeans"</span>, <span class="st">"CIDR"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="va">run</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">res_sub_list</span> <span class="op">&lt;-</span> <span class="va">res_sub</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html" class="external-link">group_by</a></span><span class="op">(</span><span class="va">dataset</span>, <span class="va">method</span>, <span class="va">run</span>, <span class="va">k</span>, <span class="va">resolution</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_split.html" class="external-link">group_split</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>For demonstration purpose, we use the <code>Zhengmix4eq</code>
-dataset in the package with top 100 highly variable genes and the
-corresponding k-means clustering results with k = <span class="math inline">\(2 ,\cdots, 10\)</span>.</p>
+<p>For demonstration purpose, we use the <code>Zhengmix4eq</code> dataset in the package with top 100 highly variable genes and the corresponding k-means clustering results with k = <span class="math inline">\(2 ,\cdots, 10\)</span>.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">kmeans_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/funprog.html" class="external-link">Filter</a></span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/r/base/all.html" class="external-link">all</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">method</span> <span class="op">==</span> <span class="st">"PCAKmeans"</span><span class="op">)</span><span class="op">}</span>, <span class="va">res_sub_list</span><span class="op">)</span></span>
 <span><span class="va">ncell</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
@@ -156,8 +143,7 @@ corresponding k-means clustering results with k = <span class="math inline">\(2 
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>We then use different cell-type clustering information to simulate
-new data.</p>
+<p>We then use different cell-type clustering information to simulate new data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scDesign3_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">kmeans_res</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>      <span class="va">dat</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cell"</span>, <span class="st">"cluster"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -182,8 +168,7 @@ new data.</p>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<p>After the simulations, we can check the BIC provided by our package
-and the calculated ARI to evaluate k-means clustering qualities.</p>
+<p>After the simulations, we can check the BIC provided by our package and the calculated ARI to evaluate k-means clustering qualities.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bic_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">scDesign3_result</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">model_bic</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">kmeans_ari</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">kmeans_res</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="fu"><a href="https://rdrr.io/pkg/aricode/man/ARI.html" class="external-link">ARI</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">cluster</span>, <span class="va">x</span><span class="op">$</span><span class="va">trueclass</span><span class="op">)</span><span class="op">}</span><span class="op">)</span></span>

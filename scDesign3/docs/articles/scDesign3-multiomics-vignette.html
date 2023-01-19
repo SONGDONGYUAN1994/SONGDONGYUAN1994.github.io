@@ -77,21 +77,28 @@
   </div>
 </nav><div class="container template-article">
 
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate multi-omics data from single-omic data</h1>
-                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan
+Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang
+Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">17 January 2023</h4>
+            <h4 data-toc-skip class="date">18 January 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-multiomics-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-multiomics-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/scDesign3-multiomics-vignette.Rmd" class="external-link"><code>vignettes/scDesign3-multiomics-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-multiomics-vignette.Rmd</code></div>
     </div>
 
@@ -114,7 +121,10 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate multi-omics (RNA expression + DNA methylation) data by learning from real data that only have a single modality. The example data and aligned low-dimensional embeddings are from <a href="https://github.com/caokai1073/Pamona" class="external-link">Pamona</a>.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate
+multi-omics (RNA expression + DNA methylation) data by learning from
+real data that only have a single modality. The example data and aligned
+low-dimensional embeddings are from <a href="https://github.com/caokai1073/Pamona" class="external-link">Pamona</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
@@ -124,30 +134,25 @@ pre {
 <span><span class="va">SCGEMRNA_sce</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AADEKgmZG4FsW5tdbu1fdYKda/SCGEMRNA_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span><span class="op">)</span></span></code></pre></div>
-<p>We first combine the cell-level data from the scRNA-seq data and the DNA methylation data.</p>
+<p>We first combine the cell-level data from the scRNA-seq data and the
+DNA methylation data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coldata_bind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tech <span class="op">=</span> <span class="st">"RNA"</span><span class="op">)</span>, <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tech <span class="op">=</span> <span class="st">"Methylation"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coldata_bind</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 9</span></span></span>
-<span><span class="co">#&gt;        X1     X2      X3      X4     X5 cell_type UMAP1_integrated UMAP2…¹ Tech </span></span>
-<span><span class="co">#&gt;     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.028<span style="text-decoration: underline;">7</span> 0.003<span style="text-decoration: underline;">01</span> -<span style="color: #BB0000;">0.018</span><span style="color: #BB0000; text-decoration: underline;">1</span> 0.031<span style="text-decoration: underline;">2</span> d8                   -<span style="color: #BB0000;">1.71</span>    8.19 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.028<span style="text-decoration: underline;">7</span> 0.002<span style="text-decoration: underline;">75</span> -<span style="color: #BB0000;">0.017</span><span style="color: #BB0000; text-decoration: underline;">6</span> 0.030<span style="text-decoration: underline;">5</span> d8                   -<span style="color: #BB0000;">1.54</span>    8.19 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.024<span style="text-decoration: underline;">2</span> 0.027<span style="text-decoration: underline;">0</span>  -<span style="color: #BB0000;">0.050</span><span style="color: #BB0000; text-decoration: underline;">2</span> 0.030<span style="text-decoration: underline;">3</span> d8                   -<span style="color: #BB0000;">7.05</span>    6.07 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.027<span style="text-decoration: underline;">9</span> 0.007<span style="text-decoration: underline;">87</span> -<span style="color: #BB0000;">0.025</span><span style="color: #BB0000; text-decoration: underline;">9</span> 0.035<span style="text-decoration: underline;">8</span> d8                   -<span style="color: #BB0000;">3.84</span>    7.38 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.027<span style="text-decoration: underline;">3</span> 0.011<span style="text-decoration: underline;">5</span>  -<span style="color: #BB0000;">0.031</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.037<span style="text-decoration: underline;">9</span> d8                   -<span style="color: #BB0000;">3.65</span>    6.11 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> -<span style="color: #BB0000;">0.030</span><span style="color: #BB0000; text-decoration: underline;">4</span> 0.028<span style="text-decoration: underline;">6</span> 0.003<span style="text-decoration: underline;">56</span> -<span style="color: #BB0000;">0.019</span><span style="color: #BB0000; text-decoration: underline;">3</span> 0.032<span style="text-decoration: underline;">9</span> d8                   -<span style="color: #BB0000;">2.02</span>    8.38 RNA  </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># … with abbreviated variable name ¹​UMAP2_integrated</span></span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coldata_bind</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>We first use the step-by-step functions to fit genes’ marginal models, copulas, and extract simulation parameters separately for the scRNA-seq data and the DNA methylation data.</p>
+<p>We first use the step-by-step functions to fit genes’ marginal
+models, copulas, and extract simulation parameters separately for the
+scRNA-seq data and the DNA methylation data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">RNA_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span>, assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, celltype <span class="op">=</span> <span class="st">"cell_type"</span>, pseudotime <span class="op">=</span> <span class="cn">NULL</span>, spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, other_covariates <span class="op">=</span> <span class="cn">NULL</span>, corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">METH_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span>, assay_use <span class="op">=</span> <span class="st">"counts"</span>, celltype <span class="op">=</span> <span class="st">"cell_type"</span>, pseudotime <span class="op">=</span> <span class="cn">NULL</span>, spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, other_covariates <span class="op">=</span> <span class="cn">NULL</span>, corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Note here we actually treat the 2D aligned UMAPs as a kind of “pseudo”-spatial data. We use the tensor regression spline to fit two ref datasets seperately.</p>
+<p>Note here we actually treat the 2D aligned UMAPs as a kind of
+“pseudo”-spatial data. We use the tensor regression spline to fit two
+ref datasets seperately.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_marginal</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">RNA_data</span>, predictor <span class="op">=</span> <span class="st">"gene"</span>, mu_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 10)"</span>, sigma_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 5)"</span>, family_use <span class="op">=</span> <span class="st">"gaussian"</span>, n_cores <span class="op">=</span> <span class="fl">2</span>, usebam <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -163,28 +168,6 @@ pre {
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">RNA_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Convert Residuals to Uniform</span></span>
-<span><span class="co">#&gt; Converting End</span></span>
-<span><span class="co">#&gt; Copula group 2 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.351927 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 1 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1644456 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 3 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1676192 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 4 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1230381 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 5 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1796534 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
 <span></span>
 <span><span class="va">METH_copula</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMMETH_sce</span>,</span>
@@ -195,29 +178,7 @@ pre {
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">METH_data</span><span class="op">$</span><span class="va">dat</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Convert Residuals to Uniform</span></span>
-<span><span class="co">#&gt; Converting End</span></span>
-<span><span class="co">#&gt; Copula group 1 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.166286 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 2 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1487429 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 3 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1664228 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 4 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.1133821 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span>
-<span><span class="co">#&gt; Copula group 5 starts</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Starts</span></span>
-<span><span class="co">#&gt; Time difference of 0.145021 secs</span></span>
-<span><span class="co">#&gt; Vine Copula Estimation Ends</span></span></code></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_para</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_para.html">extract_para</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMRNA_sce</span>,</span>
@@ -237,7 +198,10 @@ pre {
 <div class="section level3">
 <h3 id="simulate-new-datasets">Simulate New Datasets<a class="anchor" aria-label="anchor" href="#simulate-new-datasets"></a>
 </h3>
-<p>Then, we combined the cell covariates from both the scRNA-seq data and the DNA methylation data as the new covariate to simulate the two new datasets with parameters from scRNA-seq data and the DNA methylation data separately.</p>
+<p>Then, we combined the cell covariates from both the scRNA-seq data
+and the DNA methylation data as the new covariate to simulate the two
+new datasets with parameters from scRNA-seq data and the DNA methylation
+data separately.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMRNA_sce</span>,</span>
@@ -252,12 +216,6 @@ pre {
 <span>    new_covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">RNA_data</span><span class="op">$</span><span class="va">dat</span>, <span class="va">METH_data</span><span class="op">$</span><span class="va">dat</span><span class="op">)</span>,</span>
 <span>    important_feature <span class="op">=</span> <span class="va">RNA_copula</span><span class="op">$</span><span class="va">important_feature</span></span>
 <span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Use Copula to sample a multivariate quantile matrix</span></span>
-<span><span class="co">#&gt; Sample Copula group 2 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 1 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 3 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 4 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 5 starts</span></span>
 <span><span class="va">METH_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMMETH_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">METH_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
@@ -270,19 +228,14 @@ pre {
 <span>    input_data <span class="op">=</span> <span class="va">METH_data</span><span class="op">$</span><span class="va">dat</span>,</span>
 <span>    new_covariate <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">RNA_data</span><span class="op">$</span><span class="va">dat</span>, <span class="va">METH_data</span><span class="op">$</span><span class="va">dat</span><span class="op">)</span>,</span>
 <span>    important_feature <span class="op">=</span> <span class="va">METH_copula</span><span class="op">$</span><span class="va">important_feature</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; Use Copula to sample a multivariate quantile matrix</span></span>
-<span><span class="co">#&gt; Sample Copula group 1 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 2 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 3 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 4 starts</span></span>
-<span><span class="co">#&gt; Sample Copula group 5 starts</span></span></code></pre></div>
+<span>  <span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<p>We combine the two synthetic datasets and obtain the UMAP embeddings for the combined dataset.</p>
+<p>We combine the two synthetic datasets and obtain the UMAP embeddings
+for the combined dataset.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_combine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">RNA_res</span>, <span class="va">METH_res</span><span class="op">)</span></span>
 <span><span class="va">count_combine_pca</span> <span class="op">&lt;-</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/irlba/man/prcomp_irlba.html" class="external-link">prcomp_irlba</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">count_combine</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -307,7 +260,9 @@ pre {
 <span><span class="va">dat_METH</span> <span class="op">&lt;-</span> <span class="va">SCGEMMETH_umap</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"Real data: Methylation"</span><span class="op">)</span></span>
 <span><span class="va">dat_NEW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">SCGEMNEW_sce</span>, <span class="st">"UMAP"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"scDesign3: RNA + Meythlation"</span><span class="op">)</span></span>
 <span><span class="va">SCGEM_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">dat_RNA</span>, <span class="va">dat_METH</span>, <span class="va">dat_NEW</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Then, we reformat the UMAP embeddings for the inputted scRNA-seq data, DNA methylation data, and the combined synthetic data and visualize the UMAP embeddings.</p>
+<p>Then, we reformat the UMAP embeddings for the inputted scRNA-seq
+data, DNA methylation data, and the combined synthetic data and
+visualize the UMAP embeddings.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">dat_text_SCGEM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Real data: RNA"</span>, <span class="st">"Real data: Methylation"</span>, <span class="st">"scDesign3: RNA + Meythlation"</span><span class="op">)</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"32 Features*177 Cells"</span>, <span class="st">"27 Features*142 Cells"</span>, <span class="st">"59 Features*319 Cells"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>

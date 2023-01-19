@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
     <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-clusterGOF-vignette.html">Evaluate clustering goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">DE Analysis with scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
 </li>
       </ul>
@@ -77,28 +77,21 @@
   </div>
 </nav><div class="container template-article">
 
-
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Compare gaussian copula and vine copula</h1>
-                        <h4 data-toc-skip class="author">Dongyuan
-Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang
-Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">16 January 2023</h4>
+            <h4 data-toc-skip class="date">18 January 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-copulaCompare-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-copulaCompare-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-copulaCompare-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-copulaCompare-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-copulaCompare-vignette.Rmd</code></div>
     </div>
 
@@ -117,31 +110,23 @@ Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.u
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show the differences between using Gaussian
-copula and vine copula when simulate new data. Vine copula can better
-estimate the high-dimensional gene-gene correlation, however, the
-simulation with vine copula does takes more time than with Gaussian
-copula. If your reference dataset have more than <strong>1000
-genes</strong>, we recommend you simulate data with Gaussian copula.</p>
+<p>In this tutorial, we will show the differences between using Gaussian copula and vine copula when simulate new data. Vine copula can better estimate the high-dimensional gene-gene correlation, however, the simulation with vine copula does takes more time than with Gaussian copula. If your reference dataset have more than <strong>1000 genes</strong>, we recommend you simulate data with Gaussian copula.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the R package
-<code>DuoClustering2018</code>.</p>
+<p>The raw data is from the R package <code>DuoClustering2018</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Zhengmix4eq_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"sce_filteredExpr10_"</span>, <span class="st">"Zhengmix4eq"</span><span class="op">)</span><span class="op">)</span><span class="op">(</span>metadata <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">symbol</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">phenoid</span></span></code></pre></div>
-<p>For demonstration purpose, we use the <code>Zhengmix4eq</code>
-dataset in the package with top 100 highly variable genes.</p>
+<p>For demonstration purpose, we use the <code>Zhengmix4eq</code> dataset in the package with top 100 highly variable genes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
 <span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html" class="external-link">getTopHVGs</a></span><span class="op">(</span><span class="va">stats</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span><span class="va">Zhengmix4eq_sce_sub</span> <span class="op">&lt;-</span> <span class="va">Zhengmix4eq_sce</span><span class="op">[</span><span class="va">chosen</span>, <span class="op">]</span></span></code></pre></div>
-<p>Before simulation, we store two dimension reduction results in the
-<code>SingleCellExperiment</code> object.</p>
+<p>Before simulation, we store two dimension reduction results in the <code>SingleCellExperiment</code> object.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Zhengmix4eq_sce_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocSingular/man/runPCA.html" class="external-link">runPCA</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce_sub</span><span class="op">)</span></span>
 <span><span class="va">Zhengmix4eq_sce_sub</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scater/man/runUMAP.html" class="external-link">runUMAP</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce_sub</span><span class="op">)</span></span></code></pre></div>
@@ -149,8 +134,7 @@ dataset in the package with top 100 highly variable genes.</p>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>We then use <code>scdesign3</code> to simulate two new datasets using
-Gaussian copula and vine copula respectively.</p>
+<p>We then use <code>scdesign3</code> to simulate two new datasets using Gaussian copula and vine copula respectively.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Zhengmix4eq_simu_sce_gaussian</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span>sce <span class="op">=</span> <span class="va">Zhengmix4eq_sce_sub</span>, </span>
 <span>                            celltype <span class="op">=</span> <span class="st">'cell_type'</span>, </span>
@@ -183,15 +167,8 @@ Gaussian copula and vine copula respectively.</p>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<p>For the simulation result using Gaussian copula, the return object
-contains a <code>corr_list</code> which is the gene-gene correlation
-matrices for each group that user specified, in this case, the groups
-are cell types. For the simulation result using vine copula, the
-<code>corr_list</code> gives the vine structure for each group that user
-specified, in this case, the groups are cell types. We then reformat the
-two <code>corr_list</code> and visualize them.</p>
-<p>We first visualize the <code>corr_list</code> returned when we use
-Gaussian copula.</p>
+<p>For the simulation result using Gaussian copula, the return object contains a <code>corr_list</code> which is the gene-gene correlation matrices for each group that user specified, in this case, the groups are cell types. For the simulation result using vine copula, the <code>corr_list</code> gives the vine structure for each group that user specified, in this case, the groups are cell types. We then reformat the two <code>corr_list</code> and visualize them.</p>
+<p>We first visualize the <code>corr_list</code> returned when we use Gaussian copula.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Zhengmix4eq_corr_list</span> <span class="op">&lt;-</span> <span class="va">Zhengmix4eq_simu_sce_gaussian</span><span class="op">$</span><span class="va">corr_list</span></span>
 <span></span>
@@ -328,10 +305,7 @@ Gaussian copula.</p>
 <span><span class="va">p_vine_copula</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span>plotlist <span class="op">=</span> <span class="va">p_vine_list</span> , nrow <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"hv"</span>, axis <span class="op">=</span> <span class="st">"lr"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Using the `size` aesthetic in this geom was deprecated in ggplot2 3.4.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `linewidth` in the `default_aes` field and elsewhere instead.</span></span></code></pre></div>
-<p>We then visualize the <code>corr_list</code> returned when we use
-vine copula. Comparing with the visualization above, the plots below
-give more direct visualization about which genes are connected in the
-vine structure and show gene networks.</p>
+<p>We then visualize the <code>corr_list</code> returned when we use vine copula. Comparing with the visualization above, the plots below give more direct visualization about which genes are connected in the vine structure and show gene networks.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">p_vine</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, <span class="va">p4</span>, nrow <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"hv"</span><span class="op">)</span></span>
 <span><span class="va">p_vine</span></span></code></pre></div>

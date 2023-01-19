@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
     <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
     <a class="dropdown-item" href="../articles/scDesign3-clusterGOF-vignette.html">Evaluate clustering goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">DE Analysis with scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
 </li>
       </ul>
@@ -77,28 +77,21 @@
   </div>
 </nav><div class="container template-article">
 
-
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate datasets with condition effect</h1>
-                        <h4 data-toc-skip class="author">Dongyuan
-Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang
-Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">16 January 2023</h4>
+            <h4 data-toc-skip class="date">18 January 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-conditionEffect-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-conditionEffect-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-conditionEffect-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-conditionEffect-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-conditionEffect-vignette.Rmd</code></div>
     </div>
 
@@ -118,15 +111,12 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate data
-with condition effects and how to adjust the condition effects.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate data with condition effects and how to adjust the condition effects.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the <code>SeuratData</code> package. The data is
-called <code>ifnb</code> in the package; it is PBMC data simulated and
-controlled by IFNB.</p>
+<p>The raw data is from the <code>SeuratData</code> package. The data is called <code>ifnb</code> in the package; it is PBMC data simulated and controlled by IFNB.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AABoozvjRadAygeSSJFoc2OOa/IFNB_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span></span>
@@ -151,15 +141,13 @@ controlled by IFNB.</p>
 <span><span class="co">#&gt;          633          619          472          388          236          132 </span></span>
 <span><span class="co">#&gt;        Eryth </span></span>
 <span><span class="co">#&gt;           55</span></span></code></pre></div>
-<p>To save computational time, we only use the top 100 genes and two
-cell types (CD14 Mono and B).</p>
+<p>To save computational time, we only use the top 100 genes and two cell types (CD14 Mono and B).</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"CD14 Mono"</span>, <span class="st">"B"</span><span class="op">)</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co">## Remove unused cell type levels</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/droplevels.html" class="external-link">droplevels</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span><span class="op">)</span></span></code></pre></div>
-<p>The condition information is stored in colData of the example
-dataset.</p>
+<p>The condition information is stored in colData of the example dataset.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; DataFrame with 6 rows and 8 columns</span></span>
@@ -204,8 +192,7 @@ dataset.</p>
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Then, we can also simulate a new dataset with condition effects on B
-cells removed.</p>
+<p>Then, we can also simulate a new dataset with condition effects on B cells removed.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
 <span>  sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
@@ -237,16 +224,13 @@ cells removed.</p>
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">IFNB_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>In here, the condition effects on B cells are removed for all genes
-by modifying the estimated coefficients for all genes’ marginal
-models.</p>
+<p>In here, the condition effects on B cells are removed for all genes by modifying the estimated coefficients for all genes’ marginal models.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_marginal_null_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">IFNB_marginal</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"cell_typeB:conditionSTIM"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span><span class="op">-</span><span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="st">"conditionSTIM"</span><span class="op">]</span></span>
 <span>  <span class="va">x</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
-<p>Then, we can generate the parameters using the altered marginal fits
-and simulate new data with the altered paremeters.</p>
+<p>Then, we can generate the parameters using the altered marginal fits and simulate new data with the altered paremeters.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">IFNB_para_null_B</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_para.html">extract_para</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
@@ -269,9 +253,7 @@ and simulate new data with the altered paremeters.</p>
 <span>    new_covariate <span class="op">=</span> <span class="va">IFNB_data</span><span class="op">$</span><span class="va">new_covariate</span>,</span>
 <span>    important_feature <span class="op">=</span> <span class="va">IFNB_copula</span><span class="op">$</span><span class="va">important_feature</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Then, we can create the <code>SinglecellExperiment</code> object
-using the synthetic count matrix and store the <code>logcounts</code> to
-the input and synthetic <code>SinglecellExperiment</code> objects.</p>
+<p>Then, we can create the <code>SinglecellExperiment</code> object using the synthetic count matrix and store the <code>logcounts</code> to the input and synthetic <code>SinglecellExperiment</code> objects.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simu_res_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_res</span><span class="op">$</span><span class="va">new_count</span>,<span class="va">IFNB_newcount_null_B</span> <span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
