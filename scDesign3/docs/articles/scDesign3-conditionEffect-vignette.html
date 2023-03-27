@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,9 @@
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -89,7 +92,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">18 January 2023</h4>
+            <h4 data-toc-skip class="date">27 March 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-conditionEffect-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-conditionEffect-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-conditionEffect-vignette.Rmd</code></div>
@@ -173,7 +176,8 @@ pre {
 </h2>
 <p>First, we will simulate new data with the condition effects.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">simu_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">simu_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    celltype <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
@@ -268,8 +272,7 @@ pre {
 <h2 id="visulization">Visulization<a class="anchor" aria-label="anchor" href="#visulization"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="va">simu_res_list</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"w/ Condition"</span>, <span class="st">"Modified Condition"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>

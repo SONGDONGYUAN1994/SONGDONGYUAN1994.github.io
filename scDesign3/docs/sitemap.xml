@@ -25,9 +25,6 @@
     <loc>/articles/scDesign3-clusterGOF-vignette.html</loc>
   </url>
   <url>
-    <loc>/articles/scDesign3-clusterQuality-vignette.html</loc>
-  </url>
-  <url>
     <loc>/articles/scDesign3-conditionEffect-vignette.html</loc>
   </url>
   <url>
@@ -43,13 +40,7 @@
     <loc>/articles/scDesign3-multipleLineages-vignette.html</loc>
   </url>
   <url>
-    <loc>/articles/scDesign3-multipleLineages_vignette.html</loc>
-  </url>
-  <url>
     <loc>/articles/scDesign3-pseudotimeGOF-vignette.html</loc>
-  </url>
-  <url>
-    <loc>/articles/scDesign3-pseudotimeQuality-vignette.html</loc>
   </url>
   <url>
     <loc>/articles/scDesign3-scATACseq-vignette.html</loc>
@@ -61,13 +52,13 @@
     <loc>/articles/scDesign3.html</loc>
   </url>
   <url>
-    <loc>/articles/scDesign3_copulaCompare.html</loc>
-  </url>
-  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
     <loc>/index.html</loc>
+  </url>
+  <url>
+    <loc>/news/index.html</loc>
   </url>
   <url>
     <loc>/reference/ba.control.html</loc>

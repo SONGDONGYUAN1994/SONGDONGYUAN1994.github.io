@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,6 +58,9 @@
     <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
 </li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
@@ -77,28 +80,21 @@
   </div>
 </nav><div class="container template-article">
 
-
-
-
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate multi-omics data from single-omic data</h1>
-                        <h4 data-toc-skip class="author">Dongyuan
-Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang
-Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los
-Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">18 January 2023</h4>
+            <h4 data-toc-skip class="date">27 March 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/scDesign3-multiomics-vignette.Rmd" class="external-link"><code>vignettes/scDesign3-multiomics-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-multiomics-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-multiomics-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-multiomics-vignette.Rmd</code></div>
     </div>
 
@@ -121,10 +117,7 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate
-multi-omics (RNA expression + DNA methylation) data by learning from
-real data that only have a single modality. The example data and aligned
-low-dimensional embeddings are from <a href="https://github.com/caokai1073/Pamona" class="external-link">Pamona</a>.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate multi-omics (RNA expression + DNA methylation) data by learning from real data that only have a single modality. The example data and aligned low-dimensional embeddings are from <a href="https://github.com/caokai1073/Pamona" class="external-link">Pamona</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
@@ -134,8 +127,7 @@ low-dimensional embeddings are from <a href="https://github.com/caokai1073/Pamon
 <span><span class="va">SCGEMRNA_sce</span> <span class="op">&lt;-</span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AADEKgmZG4FsW5tdbu1fdYKda/SCGEMRNA_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span><span class="op">)</span></span></code></pre></div>
-<p>We first combine the cell-level data from the scRNA-seq data and the
-DNA methylation data.</p>
+<p>We first combine the cell-level data from the scRNA-seq data and the DNA methylation data.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">coldata_bind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tech <span class="op">=</span> <span class="st">"RNA"</span><span class="op">)</span>, <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Tech <span class="op">=</span> <span class="st">"Methylation"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">coldata_bind</span><span class="op">)</span></span></code></pre></div>
@@ -143,21 +135,46 @@ DNA methylation data.</p>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>We first use the step-by-step functions to fit genes’ marginal
-models, copulas, and extract simulation parameters separately for the
-scRNA-seq data and the DNA methylation data.</p>
+<p>We first use the step-by-step functions to fit genes’ marginal models, copulas, and extract simulation parameters separately for the scRNA-seq data and the DNA methylation data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
-<span><span class="va">RNA_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span>, assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, celltype <span class="op">=</span> <span class="st">"cell_type"</span>, pseudotime <span class="op">=</span> <span class="cn">NULL</span>, spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, other_covariates <span class="op">=</span> <span class="cn">NULL</span>, corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">METH_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span>, assay_use <span class="op">=</span> <span class="st">"counts"</span>, celltype <span class="op">=</span> <span class="st">"cell_type"</span>, pseudotime <span class="op">=</span> <span class="cn">NULL</span>, spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, other_covariates <span class="op">=</span> <span class="cn">NULL</span>, corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Note here we actually treat the 2D aligned UMAPs as a kind of
-“pseudo”-spatial data. We use the tensor regression spline to fit two
-ref datasets seperately.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">RNA_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
+<span>  <span class="va">SCGEMRNA_sce</span>, </span>
+<span>  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
+<span>  celltype <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
+<span>  pseudotime <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>  spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, </span>
+<span>  other_covariates <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>  corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="va">METH_data</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
+<span>  <span class="va">SCGEMMETH_sce</span>, </span>
+<span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>, </span>
+<span>  celltype <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
+<span>  pseudotime <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>  spatial <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span>, </span>
+<span>  other_covariates <span class="op">=</span> <span class="cn">NULL</span>, </span>
+<span>  corr_by <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1_integrated"</span>, <span class="st">"UMAP2_integrated"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Note here we actually treat the 2D aligned UMAPs as a kind of “pseudo”-spatial data. We use the tensor regression spline to fit two ref datasets seperately.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">RNA_marginal</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">RNA_data</span>, predictor <span class="op">=</span> <span class="st">"gene"</span>, mu_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 10)"</span>, sigma_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 5)"</span>, family_use <span class="op">=</span> <span class="st">"gaussian"</span>, n_cores <span class="op">=</span> <span class="fl">2</span>, usebam <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">RNA_marginal</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">RNA_data</span>, </span>
+<span>  predictor <span class="op">=</span> <span class="st">"gene"</span>, </span>
+<span>  mu_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 10)"</span>, </span>
+<span>  sigma_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 5)"</span>, </span>
+<span>  family_use <span class="op">=</span> <span class="st">"gaussian"</span>, </span>
+<span>  n_cores <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  usebam <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">METH_marginal</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">METH_data</span>, </span>
+<span>  predictor <span class="op">=</span> <span class="st">"gene"</span>, </span>
+<span>  mu_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 10)"</span>, </span>
+<span>  sigma_formula <span class="op">=</span> <span class="st">"1"</span>, </span>
+<span>  family_use <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>  n_cores <span class="op">=</span> <span class="fl">2</span>, </span>
+<span>  usebam <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">METH_marginal</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_marginal.html">fit_marginal</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">METH_data</span>, predictor <span class="op">=</span> <span class="st">"gene"</span>, mu_formula <span class="op">=</span> <span class="st">"te(UMAP1_integrated, UMAP2_integrated, bs = 'cr', k = 10)"</span>, sigma_formula <span class="op">=</span> <span class="st">"1"</span>, family_use <span class="op">=</span> <span class="st">"binomial"</span>, n_cores <span class="op">=</span> <span class="fl">2</span>, usebam <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_copula</span> <span class="op">&lt;-</span> <span class="fu">scDesign3</span><span class="fu">::</span><span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMRNA_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
@@ -179,7 +196,7 @@ ref datasets seperately.</p>
 <span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">METH_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_para</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_para.html">extract_para</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMRNA_sce</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">RNA_marginal</span>,</span>
@@ -198,13 +215,11 @@ ref datasets seperately.</p>
 <div class="section level3">
 <h3 id="simulate-new-datasets">Simulate New Datasets<a class="anchor" aria-label="anchor" href="#simulate-new-datasets"></a>
 </h3>
-<p>Then, we combined the cell covariates from both the scRNA-seq data
-and the DNA methylation data as the new covariate to simulate the two
-new datasets with parameters from scRNA-seq data and the DNA methylation
-data separately.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>Then, we combined the cell covariates from both the scRNA-seq data and the DNA methylation data as the new covariate to simulate the two new datasets with parameters from scRNA-seq data and the DNA methylation data separately.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">RNA_res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">SCGEMRNA_sce</span>,</span>
+<span>    assay_use <span class="op">=</span> <span class="st">"logcounts"</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">RNA_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">RNA_para</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
 <span>    zero_mat <span class="op">=</span> <span class="va">RNA_para</span><span class="op">$</span><span class="va">zero_mat</span>,</span>
@@ -234,9 +249,8 @@ data separately.</p>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<p>We combine the two synthetic datasets and obtain the UMAP embeddings
-for the combined dataset.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>We combine the two synthetic datasets and obtain the UMAP embeddings for the combined dataset.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">count_combine</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">RNA_res</span>, <span class="va">METH_res</span><span class="op">)</span></span>
 <span><span class="va">count_combine_pca</span> <span class="op">&lt;-</span> <span class="fu">irlba</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/irlba/man/prcomp_irlba.html" class="external-link">prcomp_irlba</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">count_combine</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span>
 <span></span>
@@ -245,28 +259,26 @@ for the combined dataset.</p>
 <span></span>
 <span><span class="va">SCGEMNEW_sce</span> <span class="op">&lt;-</span> <span class="fu">SingleCellExperiment</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>logcounts <span class="op">=</span> <span class="va">count_combine</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDims</a></span><span class="op">(</span><span class="va">SCGEMNEW_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>PCA <span class="op">=</span> <span class="va">count_combine_pca</span><span class="op">$</span><span class="va">x</span>, UMAP <span class="op">=</span> <span class="va">count_combine_umap</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SCGEMRNA_umap</span> <span class="op">&lt;-</span> <span class="fu">umap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/umap/man/umap.html" class="external-link">umap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, n_neighbors<span class="op">=</span><span class="fl">30</span>, min_dist<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="va">SCGEMRNA_umap</span> <span class="op">&lt;-</span> <span class="va">SCGEMRNA_umap</span><span class="op">$</span><span class="va">layout</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">SCGEMRNA_umap</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">SCGEMRNA_sce</span>, <span class="st">"UMAP"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">SCGEMRNA_umap</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SCGEMMETH_umap</span> <span class="op">&lt;-</span> <span class="fu">umap</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/umap/man/umap.html" class="external-link">umap</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"X"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, n_neighbors<span class="op">=</span><span class="fl">30</span>, min_dist<span class="op">=</span><span class="fl">0.7</span><span class="op">)</span></span>
 <span><span class="va">SCGEMMETH_umap</span> <span class="op">&lt;-</span> <span class="va">SCGEMMETH_umap</span><span class="op">$</span><span class="va">layout</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">SCGEMMETH_umap</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"UMAP1"</span>, <span class="st">"UMAP2"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">SCGEMMETH_sce</span>, <span class="st">"UMAP"</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">SCGEMMETH_umap</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dat_RNA</span> <span class="op">&lt;-</span> <span class="va">SCGEMRNA_umap</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"Real data: RNA"</span><span class="op">)</span></span>
 <span><span class="va">dat_METH</span> <span class="op">&lt;-</span> <span class="va">SCGEMMETH_umap</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"Real data: Methylation"</span><span class="op">)</span></span>
 <span><span class="va">dat_NEW</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">SCGEMNEW_sce</span>, <span class="st">"UMAP"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"scDesign3: RNA + Meythlation"</span><span class="op">)</span></span>
 <span><span class="va">SCGEM_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">dat_RNA</span>, <span class="va">dat_METH</span>, <span class="va">dat_NEW</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>Then, we reformat the UMAP embeddings for the inputted scRNA-seq
-data, DNA methylation data, and the combined synthetic data and
-visualize the UMAP embeddings.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<p>Then, we reformat the UMAP embeddings for the inputted scRNA-seq data, DNA methylation data, and the combined synthetic data and visualize the UMAP embeddings.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">design</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span>, <span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">dat_text_SCGEM</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Real data: RNA"</span>, <span class="st">"Real data: Methylation"</span>, <span class="st">"scDesign3: RNA + Meythlation"</span><span class="op">)</span>, label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"32 Features*177 Cells"</span>, <span class="st">"27 Features*142 Cells"</span>, <span class="st">"59 Features*319 Cells"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SCGEM_dat</span> <span class="op">&lt;-</span> <span class="va">SCGEM_dat</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">Method</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Real data: RNA"</span>, <span class="st">"scDesign3: RNA + Meythlation"</span>, <span class="st">"Real data: Methylation"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>UMAP1 <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">Method</span> <span class="op">==</span> <span class="st">"Real data: RNA"</span>, <span class="op">-</span><span class="va">UMAP1</span>, <span class="va">UMAP1</span><span class="op">)</span>, UMAP2 <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/if_else.html" class="external-link">if_else</a></span><span class="op">(</span><span class="va">Method</span> <span class="op">==</span> <span class="st">"Real data: RNA"</span>, <span class="op">-</span><span class="va">UMAP2</span>, <span class="va">UMAP2</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_merge_modals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">SCGEM_dat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">UMAP1</span>, <span class="va">UMAP2</span>, colour <span class="op">=</span> <span class="va">Method</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu">ggrastr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrastr/man/rasterise.html" class="external-link">rasterize</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">+</span></span>
@@ -280,7 +292,7 @@ visualize the UMAP embeddings.</p>
 <span>  data    <span class="op">=</span> <span class="va">dat_text_SCGEM</span>,</span>
 <span>  mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">Inf</span>, y <span class="op">=</span> <span class="op">-</span><span class="cn">Inf</span>, label <span class="op">=</span> <span class="va">label</span><span class="op">)</span>, vjust <span class="op">=</span> <span class="op">-</span><span class="fl">6</span>, hjust <span class="op">=</span> <span class="fl">1</span>, color <span class="op">=</span> <span class="st">"black"</span>, size <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">p_merge_modals</span></span></code></pre></div>
-<p><img src="scDesign3-multiomics-vignette_files/figure-html/unnamed-chunk-17-1.png" width="480"></p>
+<p><img src="scDesign3-multiomics-vignette_files/figure-html/unnamed-chunk-16-1.png" width="480"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,6 +57,9 @@
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -89,7 +92,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">18 January 2023</h4>
+            <h4 data-toc-skip class="date">27 March 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-multipleLineages-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-multipleLineages-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-multipleLineages-vignette.Rmd</code></div>
@@ -174,19 +177,8 @@ pre {
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Now we get the synthetic count matrix.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  100 2660</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/useful/man/corner.html" class="external-link">corner</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       W31105 W31106 W31107 W31108 W31109</span></span>
-<span><span class="co">#&gt; Prtn3      0     21      9     27      2</span></span>
-<span><span class="co">#&gt; Elane      0     20      4     17      0</span></span>
-<span><span class="co">#&gt; Mpo        4     35     12     34      6</span></span>
-<span><span class="co">#&gt; Ctsg       0     11      3      9      1</span></span>
-<span><span class="co">#&gt; Car1       3      0     26      0     40</span></span></code></pre></div>
 <p>Then, we can create the <code>SinglecellExperiment</code> object using the synthetic count matrix and store the <code>logcounts</code> to the input and synthetic <code>SinglecellExperiment</code> objects.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span></span>
@@ -195,7 +187,7 @@ pre {
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
@@ -210,8 +202,8 @@ pre {
 <span>                                  if_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                                  color_by <span class="op">=</span>  <span class="st">"pseudotime2"</span>, </span>
 <span>                                  n_pc <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span>, <span class="va">compare_figure2</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scDesign3-multipleLineages-vignette_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span>, <span class="va">compare_figure2</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
+<p><img src="scDesign3-multipleLineages-vignette_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

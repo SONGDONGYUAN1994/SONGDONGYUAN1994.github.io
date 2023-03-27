@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -40,6 +40,9 @@
     <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
         <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off"></form>
@@ -143,6 +146,53 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
 marginal models from <code><a href="fit_marginal.html">fit_marginal</a></code>.</p>
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">my_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="construct_data.html">construct_data</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sce <span class="op">=</span> <span class="va">example_sce</span>,</span></span>
+<span class="r-in"><span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span></span>
+<span class="r-in"><span>  celltype <span class="op">=</span> <span class="st">"cell_type"</span>,</span></span>
+<span class="r-in"><span>  pseudotime <span class="op">=</span> <span class="st">"pseudotime"</span>,</span></span>
+<span class="r-in"><span>  spatial <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  other_covariates <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  corr_by <span class="op">=</span> <span class="st">"1"</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">my_marginal</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_marginal.html">fit_marginal</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  data <span class="op">=</span> <span class="va">my_data</span>,</span></span>
+<span class="r-in"><span>  mu_formula <span class="op">=</span> <span class="st">"s(pseudotime, bs = 'cr', k = 10)"</span>,</span></span>
+<span class="r-in"><span>  sigma_formula <span class="op">=</span> <span class="st">"1"</span>,</span></span>
+<span class="r-in"><span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span></span>
+<span class="r-in"><span>  n_cores <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  usebam <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">my_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_copula.html">fit_copula</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  sce <span class="op">=</span> <span class="va">example_sce</span>,</span></span>
+<span class="r-in"><span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span></span>
+<span class="r-in"><span>  marginal_list <span class="op">=</span> <span class="va">my_marginal</span>,</span></span>
+<span class="r-in"><span>  family_use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"nb"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  copula <span class="op">=</span> <span class="st">"vine"</span>,</span></span>
+<span class="r-in"><span>  n_cores <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>  input_data <span class="op">=</span> <span class="va">my_data</span><span class="op">$</span><span class="va">dat</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Convert Residuals to Uniform</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Converting End</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 1 starts</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1419759 secs</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
+<span class="r-in"><span>  <span class="va">my_para</span> <span class="op">&lt;-</span> <span class="fu">extract_para</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span></span>
+<span class="r-in"><span>    marginal_list <span class="op">=</span> <span class="va">my_marginal</span>,</span></span>
+<span class="r-in"><span>    n_cores <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>    family_use <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"nb"</span>, <span class="fl">5</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"zip"</span>, <span class="fl">5</span><span class="op">)</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
+<span class="r-in"><span>    data <span class="op">=</span> <span class="va">my_data</span><span class="op">$</span><span class="va">dat</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
