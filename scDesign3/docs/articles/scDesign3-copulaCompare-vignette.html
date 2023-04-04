@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,11 +45,14 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/scDesign3-introduction-vignette.html">scDesign3 Introduction</a>
+    <a class="dropdown-item" href="../articles/scDesign3-marginal-vignette.html">scDesign3 marginal distribution for genes</a>
     <a class="dropdown-item" href="../articles/scDesign3-copulaCompare-vignette.html">Compare gaussian copula and vine copula</a>
+    <a class="dropdown-item" href="../articles/scDesign3-librarySize-vignette.html">Simulate datasets with cell library size</a>
     <a class="dropdown-item" href="../articles/scDesign3-multipleLineages-vignette.html">Simulate datasets with multiple lineages</a>
     <a class="dropdown-item" href="../articles/scDesign3-conditionEffect-vignette.html">Simulate datasets with condition effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-batchEffect-vignette.html">Simulate datasets with batch effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-spatial-vignette.html">Simulate spatial transcriptomic data</a>
+    <a class="dropdown-item" href="../articles/scDesign3-spatial-deconvolution.html">Simulate spot-resolution spatial data for cell-type deconvolution</a>
     <a class="dropdown-item" href="../articles/scDesign3-scATACseq-vignette.html">Simulate single-cell ATAC-seq data</a>
     <a class="dropdown-item" href="../articles/scDesign3-CITEseq-vignette.html">Simulate CITE-seq data</a>
     <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
@@ -92,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">27 March 2023</h4>
+            <h4 data-toc-skip class="date">3 April 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-copulaCompare-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-copulaCompare-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-copulaCompare-vignette.Rmd</code></div>
@@ -109,6 +112,7 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">scran</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">rvinecopulib</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme_get.html" class="external-link">theme_set</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
@@ -125,11 +129,30 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">symbol</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">$</span><span class="va">phenoid</span></span></code></pre></div>
-<p>For demonstration purpose, we use the <code>Zhengmix4eq</code> dataset in the package with top 100 highly variable genes.</p>
+<p>For demonstration purpose, we use the <code>Zhengmix4eq</code> dataset in the package with top 100 highly variable genes. We further filtered out some highly expressed housekeeping genes and added TF genes.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">humantfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">read_csv</a></span><span class="op">(</span><span class="st">"http://humantfs.ccbr.utoronto.ca/download/v_1.01/TF_names_v_1.01.txt"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="va">stats</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
 <span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html" class="external-link">getTopHVGs</a></span><span class="op">(</span><span class="va">stats</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span><span class="va">Zhengmix4eq_sce_sub</span> <span class="op">&lt;-</span> <span class="va">Zhengmix4eq_sce</span><span class="op">[</span><span class="va">chosen</span>, <span class="op">]</span></span></code></pre></div>
+<span><span class="co">### Filter out some HKGs.</span></span>
+<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://generics.r-lib.org/reference/setops.html" class="external-link">union</a></span><span class="op">(</span><span class="va">chosen</span>, <span class="va">humantfs</span><span class="op">$</span><span class="va">X1</span><span class="op">)</span></span>
+<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="va">chosen</span><span class="op">[</span><span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_starts</a></span><span class="op">(</span><span class="va">chosen</span>, <span class="st">"RP"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="va">chosen</span><span class="op">[</span><span class="op">!</span><span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_starts.html" class="external-link">str_starts</a></span><span class="op">(</span><span class="va">chosen</span>, <span class="st">"TMSB"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="va">chosen</span><span class="op">[</span><span class="op">!</span><span class="va">chosen</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B2M"</span>, <span class="st">"MALAT1"</span>, <span class="st">"ACTB"</span>, <span class="st">"ACTG1"</span>, <span class="st">"GAPDH"</span>, <span class="st">"FTL"</span>, <span class="st">"FTH1"</span><span class="op">)</span><span class="op">]</span></span>
+<span><span class="va">Zhengmix4eq_sce_sub</span> <span class="op">&lt;-</span> <span class="va">Zhengmix4eq_sce</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">chosen</span>, <span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce_sub</span><span class="op">)</span></span>
+<span><span class="co">#&gt; class: SingleCellExperiment </span></span>
+<span><span class="co">#&gt; dim: 119 3555 </span></span>
+<span><span class="co">#&gt; metadata(1): log.exprs.offset</span></span>
+<span><span class="co">#&gt; assays(3): counts logcounts normcounts</span></span>
+<span><span class="co">#&gt; rownames(119): TPT1 CD74 ... PHF1 IRF7</span></span>
+<span><span class="co">#&gt; rowData names(10): id symbol ... total_counts log10_total_counts</span></span>
+<span><span class="co">#&gt; colnames(3555): b.cells6276 b.cells6144 ... regulatory.t1084</span></span>
+<span><span class="co">#&gt;   regulatory.t9696</span></span>
+<span><span class="co">#&gt; colData names(16): dataset barcode ... sizeFactor cell_type</span></span>
+<span><span class="co">#&gt; reducedDimNames(2): PCA TSNE</span></span>
+<span><span class="co">#&gt; mainExpName: NULL</span></span>
+<span><span class="co">#&gt; altExpNames(0):</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
@@ -137,32 +160,32 @@
 <p>We then use <code>scdesign3</code> to simulate two new datasets using Gaussian copula and vine copula respectively.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
-<span><span class="va">Zhengmix4eq_simu_sce_gaussian</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span>sce <span class="op">=</span> <span class="va">Zhengmix4eq_sce_sub</span>, </span>
-<span>                            celltype <span class="op">=</span> <span class="st">'cell_type'</span>, </span>
-<span>                            pseudotime <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            spatial <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            other_covariates <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            corr_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            mu_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            n_cores <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                            copula <span class="op">=</span> <span class="st">"gaussian"</span>, </span>
-<span>                            assay_use <span class="op">=</span> <span class="st">"normcounts"</span>, </span>
-<span>                            family_use <span class="op">=</span> <span class="st">"nb"</span>, </span>
+<span><span class="va">Zhengmix4eq_simu_sce_gaussian</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span>sce <span class="op">=</span> <span class="va">Zhengmix4eq_sce_sub</span>,</span>
+<span>                            celltype <span class="op">=</span> <span class="st">'cell_type'</span>,</span>
+<span>                            pseudotime <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            spatial <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            other_covariates <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            corr_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            mu_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                            copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>                            assay_use <span class="op">=</span> <span class="st">"normcounts"</span>,</span>
+<span>                            family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>                            pseudo_obs <span class="op">=</span> <span class="cn">TRUE</span>, return_model <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Zhengmix4eq_simu_sce_vine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span>sce <span class="op">=</span> <span class="va">Zhengmix4eq_sce_sub</span>, </span>
-<span>                            celltype <span class="op">=</span> <span class="st">'cell_type'</span>, </span>
-<span>                            pseudotime <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            spatial <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            other_covariates <span class="op">=</span> <span class="cn">NULL</span>, </span>
-<span>                            corr_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            mu_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>, </span>
-<span>                            n_cores <span class="op">=</span> <span class="fl">2</span>, </span>
-<span>                            copula <span class="op">=</span> <span class="st">"vine"</span>, </span>
-<span>                            assay_use <span class="op">=</span> <span class="st">"normcounts"</span>, </span>
-<span>                            family_use <span class="op">=</span> <span class="st">"nb"</span>, </span>
+<code class="sourceCode R"><span><span class="va">Zhengmix4eq_simu_sce_vine</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span>sce <span class="op">=</span> <span class="va">Zhengmix4eq_sce_sub</span>,</span>
+<span>                            celltype <span class="op">=</span> <span class="st">'cell_type'</span>,</span>
+<span>                            pseudotime <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            spatial <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            other_covariates <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>                            corr_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            mu_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            sigma_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
+<span>                            n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                            copula <span class="op">=</span> <span class="st">"vine"</span>,</span>
+<span>                            assay_use <span class="op">=</span> <span class="st">"normcounts"</span>,</span>
+<span>                            family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>                            pseudo_obs <span class="op">=</span> <span class="cn">TRUE</span>, return_model <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
@@ -195,8 +218,8 @@
 <span>                        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span><span class="va">Var2</span>, <span class="va">Var1</span>, fill <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">Method</span>, nrow <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="co">#, labeller = label_parsed</span></span>
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"blue"</span>, high <span class="op">=</span> <span class="st">"red"</span>, mid <span class="op">=</span> <span class="st">"white"</span>, </span>
-<span>                           midpoint <span class="op">=</span> <span class="fl">0</span>, limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, space <span class="op">=</span> <span class="st">"Lab"</span>, </span>
+<span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_fill_gradient2</a></span><span class="op">(</span>low <span class="op">=</span> <span class="st">"blue"</span>, high <span class="op">=</span> <span class="st">"red"</span>, mid <span class="op">=</span> <span class="st">"white"</span>,</span>
+<span>                           midpoint <span class="op">=</span> <span class="fl">0</span>, limit <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span>, <span class="fl">1</span><span class="op">)</span>, space <span class="op">=</span> <span class="st">"Lab"</span>,</span>
 <span>                           name<span class="op">=</span><span class="st">"Pearson\nCorrelation"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>      <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>panel.spacing.x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">0</span>, <span class="st">"lines"</span><span class="op">)</span>,panel.spacing.y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/grid/unit.html" class="external-link">unit</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"lines"</span><span class="op">)</span>,</span>
 <span>        legend.position <span class="op">=</span> <span class="st">"right"</span>,</span>
@@ -229,7 +252,7 @@
 <span>        repel <span class="op">=</span> <span class="cn">TRUE</span>, check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">3</span></span>
 <span>      <span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
 <span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -245,7 +268,7 @@
 <span>        repel <span class="op">=</span> <span class="cn">TRUE</span>, check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">3</span></span>
 <span>      <span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
 <span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -261,7 +284,7 @@
 <span>        repel <span class="op">=</span> <span class="cn">TRUE</span>, check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">3</span></span>
 <span>      <span class="op">)</span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
 <span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
@@ -277,16 +300,135 @@
 <span>        repel <span class="op">=</span> <span class="cn">TRUE</span>, check_overlap <span class="op">=</span> <span class="cn">TRUE</span>, size <span class="op">=</span> <span class="fl">3</span></span>
 <span>      <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                panel.background <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>, </span>
+<span>        panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>        axis.line <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_line</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>,</span>
 <span>        panel.border <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_rect</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"black"</span>, fill<span class="op">=</span><span class="cn">NA</span>, size<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">vine_dat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">igr_obj1</span>, <span class="va">igr_obj2</span>, <span class="va">igr_obj3</span>, <span class="va">igr_obj4</span><span class="op">)</span></span></code></pre></div>
 <p>We then visualize the <code>corr_list</code> returned when we use vine copula. Comparing with the visualization above, the plots below give more direct visualization about which genes are connected in the vine structure and show gene networks.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">p_vine</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span>, <span class="va">p2</span>, <span class="va">p3</span>, <span class="va">p4</span>, nrow <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"hv"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">p_vine</span> <span class="op">&lt;-</span> <span class="fu">cowplot</span><span class="fu">::</span><span class="fu"><a href="https://wilkelab.org/cowplot/reference/plot_grid.html" class="external-link">plot_grid</a></span><span class="op">(</span><span class="va">p1</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"CD14+ monocyte"</span><span class="op">)</span>, <span class="va">p2</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"B cell"</span><span class="op">)</span>, <span class="va">p3</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Regulatory T cell"</span><span class="op">)</span>, <span class="va">p4</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggtitle</a></span><span class="op">(</span><span class="st">"Naive cytotoxic T cell"</span><span class="op">)</span>, nrow <span class="op">=</span> <span class="fl">1</span>, align <span class="op">=</span> <span class="st">"hv"</span><span class="op">)</span></span>
 <span><span class="va">p_vine</span></span></code></pre></div>
 <p><img src="scDesign3-copulaCompare-vignette_files/figure-html/unnamed-chunk-13-1.png" width="1152"></p>
+</div>
+<div class="section level2">
+<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+</h2>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.2 Patched (2022-11-10 r83330)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">#&gt; [8] base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] rvinecopulib_0.6.2.1.3      forcats_0.5.2              </span></span>
+<span><span class="co">#&gt;  [3] stringr_1.5.0               purrr_1.0.1                </span></span>
+<span><span class="co">#&gt;  [5] readr_2.1.3                 tidyr_1.2.1                </span></span>
+<span><span class="co">#&gt;  [7] tibble_3.1.8                tidyverse_1.3.2            </span></span>
+<span><span class="co">#&gt;  [9] igraph_1.3.5                dplyr_1.0.10               </span></span>
+<span><span class="co">#&gt; [11] scran_1.24.1                ggrepel_0.9.2              </span></span>
+<span><span class="co">#&gt; [13] tidygraph_1.2.2             scater_1.24.0              </span></span>
+<span><span class="co">#&gt; [15] ggplot2_3.4.0               scuttle_1.8.3              </span></span>
+<span><span class="co">#&gt; [17] SingleCellExperiment_1.20.0 SummarizedExperiment_1.28.0</span></span>
+<span><span class="co">#&gt; [19] Biobase_2.58.0              GenomicRanges_1.50.2       </span></span>
+<span><span class="co">#&gt; [21] GenomeInfoDb_1.34.6         IRanges_2.32.0             </span></span>
+<span><span class="co">#&gt; [23] S4Vectors_0.36.1            BiocGenerics_0.44.0        </span></span>
+<span><span class="co">#&gt; [25] MatrixGenerics_1.10.0       matrixStats_0.63.0         </span></span>
+<span><span class="co">#&gt; [27] DuoClustering2018_1.14.0    scDesign3_0.99.1           </span></span>
+<span><span class="co">#&gt; [29] BiocStyle_2.24.0           </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;   [1] utf8_1.2.2                    tidyselect_1.2.0             </span></span>
+<span><span class="co">#&gt;   [3] RSQLite_2.2.20                AnnotationDbi_1.58.0         </span></span>
+<span><span class="co">#&gt;   [5] grid_4.2.2                    BiocParallel_1.32.5          </span></span>
+<span><span class="co">#&gt;   [7] munsell_0.5.0                 ScaledMatrix_1.4.1           </span></span>
+<span><span class="co">#&gt;   [9] codetools_0.2-19              ragg_1.2.5                   </span></span>
+<span><span class="co">#&gt;  [11] statmod_1.5.0                 withr_2.5.0                  </span></span>
+<span><span class="co">#&gt;  [13] colorspace_2.0-3              filelock_1.0.2               </span></span>
+<span><span class="co">#&gt;  [15] highr_0.10                    knitr_1.41                   </span></span>
+<span><span class="co">#&gt;  [17] rngWELL_0.10-8                labeling_0.4.2               </span></span>
+<span><span class="co">#&gt;  [19] GenomeInfoDbData_1.2.9        polyclip_1.10-4              </span></span>
+<span><span class="co">#&gt;  [21] farver_2.1.1                  bit64_4.0.5                  </span></span>
+<span><span class="co">#&gt;  [23] rprojroot_2.0.3               vctrs_0.5.1                  </span></span>
+<span><span class="co">#&gt;  [25] generics_0.1.3                xfun_0.36                    </span></span>
+<span><span class="co">#&gt;  [27] ggthemes_4.2.4                timechange_0.2.0             </span></span>
+<span><span class="co">#&gt;  [29] BiocFileCache_2.6.0           R6_2.5.1                     </span></span>
+<span><span class="co">#&gt;  [31] graphlayouts_0.8.4            ggbeeswarm_0.7.1             </span></span>
+<span><span class="co">#&gt;  [33] rsvd_1.0.5                    locfit_1.5-9.7               </span></span>
+<span><span class="co">#&gt;  [35] bitops_1.0-7                  cachem_1.0.6                 </span></span>
+<span><span class="co">#&gt;  [37] DelayedArray_0.24.0           assertthat_0.2.1             </span></span>
+<span><span class="co">#&gt;  [39] promises_1.2.0.1              scales_1.2.1                 </span></span>
+<span><span class="co">#&gt;  [41] vroom_1.6.0                   ggraph_2.1.0                 </span></span>
+<span><span class="co">#&gt;  [43] googlesheets4_1.0.1           beeswarm_0.4.0               </span></span>
+<span><span class="co">#&gt;  [45] gtable_0.3.1                  beachmat_2.14.0              </span></span>
+<span><span class="co">#&gt;  [47] rlang_1.0.6                   systemfonts_1.0.4            </span></span>
+<span><span class="co">#&gt;  [49] splines_4.2.2                 gargle_1.2.1                 </span></span>
+<span><span class="co">#&gt;  [51] broom_1.0.2                   BiocManager_1.30.19          </span></span>
+<span><span class="co">#&gt;  [53] yaml_2.3.6                    reshape2_1.4.4               </span></span>
+<span><span class="co">#&gt;  [55] modelr_0.1.10                 backports_1.4.1              </span></span>
+<span><span class="co">#&gt;  [57] httpuv_1.6.8                  tools_4.2.2                  </span></span>
+<span><span class="co">#&gt;  [59] bookdown_0.31                 ellipsis_0.3.2               </span></span>
+<span><span class="co">#&gt;  [61] gamlss.data_6.0-2             jquerylib_0.1.4              </span></span>
+<span><span class="co">#&gt;  [63] gamlss_5.4-10                 Rcpp_1.0.9                   </span></span>
+<span><span class="co">#&gt;  [65] plyr_1.8.8                    sparseMatrixStats_1.10.0     </span></span>
+<span><span class="co">#&gt;  [67] zlibbioc_1.44.0               RCurl_1.98-1.9               </span></span>
+<span><span class="co">#&gt;  [69] viridis_0.6.2                 cowplot_1.1.1                </span></span>
+<span><span class="co">#&gt;  [71] haven_2.5.1                   cluster_2.1.4                </span></span>
+<span><span class="co">#&gt;  [73] fs_1.5.2                      magrittr_2.0.3               </span></span>
+<span><span class="co">#&gt;  [75] reprex_2.0.2                  googledrive_2.0.0            </span></span>
+<span><span class="co">#&gt;  [77] mvtnorm_1.1-3                 hms_1.1.2                    </span></span>
+<span><span class="co">#&gt;  [79] mime_0.12                     evaluate_0.19                </span></span>
+<span><span class="co">#&gt;  [81] xtable_1.8-4                  mclust_6.0.0                 </span></span>
+<span><span class="co">#&gt;  [83] readxl_1.4.1                  gridExtra_2.3                </span></span>
+<span><span class="co">#&gt;  [85] compiler_4.2.2                randtoolbox_2.0.3            </span></span>
+<span><span class="co">#&gt;  [87] crayon_1.5.2                  htmltools_0.5.4              </span></span>
+<span><span class="co">#&gt;  [89] mgcv_1.8-41                   kde1d_1.0.5                  </span></span>
+<span><span class="co">#&gt;  [91] later_1.3.0                   tzdb_0.3.0                   </span></span>
+<span><span class="co">#&gt;  [93] lubridate_1.9.0               DBI_1.1.3                    </span></span>
+<span><span class="co">#&gt;  [95] tweenr_2.0.2                  ExperimentHub_2.4.0          </span></span>
+<span><span class="co">#&gt;  [97] dbplyr_2.2.1                  MASS_7.3-58.2                </span></span>
+<span><span class="co">#&gt;  [99] rappdirs_0.3.3                Matrix_1.5-1                 </span></span>
+<span><span class="co">#&gt; [101] cli_3.6.0                     parallel_4.2.2               </span></span>
+<span><span class="co">#&gt; [103] metapod_1.4.0                 pkgconfig_2.0.3              </span></span>
+<span><span class="co">#&gt; [105] pkgdown_2.0.7                 xml2_1.3.3                   </span></span>
+<span><span class="co">#&gt; [107] vipor_0.4.5                   bslib_0.4.2                  </span></span>
+<span><span class="co">#&gt; [109] dqrng_0.3.0                   gamlss.dist_6.0-5            </span></span>
+<span><span class="co">#&gt; [111] XVector_0.38.0                rvest_1.0.3                  </span></span>
+<span><span class="co">#&gt; [113] digest_0.6.31                 Biostrings_2.64.1            </span></span>
+<span><span class="co">#&gt; [115] rmarkdown_2.19                cellranger_1.1.0             </span></span>
+<span><span class="co">#&gt; [117] edgeR_3.40.1                  DelayedMatrixStats_1.20.0    </span></span>
+<span><span class="co">#&gt; [119] curl_5.0.0                    shiny_1.7.4                  </span></span>
+<span><span class="co">#&gt; [121] lifecycle_1.0.3               nlme_3.1-162                 </span></span>
+<span><span class="co">#&gt; [123] jsonlite_1.8.4                BiocNeighbors_1.14.0         </span></span>
+<span><span class="co">#&gt; [125] desc_1.4.2                    viridisLite_0.4.1            </span></span>
+<span><span class="co">#&gt; [127] limma_3.54.0                  fansi_1.0.3                  </span></span>
+<span><span class="co">#&gt; [129] pillar_1.8.1                  lattice_0.20-45              </span></span>
+<span><span class="co">#&gt; [131] KEGGREST_1.36.3               fastmap_1.1.0                </span></span>
+<span><span class="co">#&gt; [133] httr_1.4.4                    survival_3.5-3               </span></span>
+<span><span class="co">#&gt; [135] interactiveDisplayBase_1.34.0 glue_1.6.2                   </span></span>
+<span><span class="co">#&gt; [137] png_0.1-8                     bluster_1.6.0                </span></span>
+<span><span class="co">#&gt; [139] BiocVersion_3.15.2            bit_4.0.5                    </span></span>
+<span><span class="co">#&gt; [141] ggforce_0.4.1                 stringi_1.7.12               </span></span>
+<span><span class="co">#&gt; [143] sass_0.4.4                    blob_1.2.3                   </span></span>
+<span><span class="co">#&gt; [145] textshaping_0.3.6             BiocSingular_1.12.0          </span></span>
+<span><span class="co">#&gt; [147] AnnotationHub_3.4.0           memoise_2.0.1                </span></span>
+<span><span class="co">#&gt; [149] irlba_2.3.5.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
