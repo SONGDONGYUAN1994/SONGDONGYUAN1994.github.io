@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">3 April 2023</h4>
+            <h4 data-toc-skip class="date">11 April 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-batchEffect-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-batchEffect-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-batchEffect-vignette.Rmd</code></div>
@@ -266,7 +266,7 @@ pre {
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">dat</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">new_covariate</span>,</span>
+<span>    new_covariate <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">newCovariate</span>,</span>
 <span>    important_feature <span class="op">=</span> <span class="va">BATCH_copula</span><span class="op">$</span><span class="va">important_feature</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Additionally, we can alter the batch effect information by mannually change the estimated coefficient for batch effect in each gene’s marginal model. Then, we can simulate new dataset with altered batch effect information.</p>
@@ -294,7 +294,7 @@ pre {
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>    input_data <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">dat</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">new_covariate</span>,</span>
+<span>    new_covariate <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">newCovariate</span>,</span>
 <span>    important_feature <span class="op">=</span> <span class="va">BATCH_copula</span><span class="op">$</span><span class="va">important_feature</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>We create three <code>SingleCellExperiment</code> objects using three count matrices generated above and store their <code>logcounts</code>.</p>
