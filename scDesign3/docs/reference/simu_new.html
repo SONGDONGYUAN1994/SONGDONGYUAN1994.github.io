@@ -83,6 +83,7 @@
 <span>  quantile_mat <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">copula_list</span>,</span>
 <span>  <span class="va">n_cores</span>,</span>
+<span>  fastmvn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">family_use</span>,</span>
 <span>  nonnegative <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  nonzerovar <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -126,6 +127,10 @@
 
 <dt>n_cores</dt>
 <dd><p>An integer. The number of cores to use.</p></dd>
+
+
+<dt>fastmvn</dt>
+<dd><p>An logical variable. If TRUE, the sampling of multivariate Gaussian is done by <code>mvnfast</code>, otherwise by <code>mvtnorm</code>. Default is FALSE.</p></dd>
 
 
 <dt>family_use</dt>
@@ -174,7 +179,7 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A feature by cell matrix of the new simulated count (expression) matrix.</p>
+<p>A feature by cell matrix of the new simulated count (expression) matrix or sparse matrix.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
@@ -216,7 +221,7 @@ parameter matricies from <code><a href="extract_para.html">extract_para</a></cod
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting End</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 1 starts</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1231782 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.1208956 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
 <span class="r-in"><span>  <span class="va">my_para</span> <span class="op">&lt;-</span> <span class="fu"><a href="extract_para.html">extract_para</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span></span>

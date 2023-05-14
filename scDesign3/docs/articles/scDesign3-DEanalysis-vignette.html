@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">11 April 2023</h4>
+            <h4 data-toc-skip class="date">14 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-DEanalysis-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-DEanalysis-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-DEanalysis-vignette.Rmd</code></div>
@@ -145,8 +145,8 @@ pre {
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ngene</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">dec.seurat_obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
-<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html" class="external-link">getTopHVGs</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span>, n <span class="op">=</span> <span class="va">ngene</span><span class="op">)</span></span>
+<span><span class="va">zheng_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/modelGeneVar.html" class="external-link">modelGeneVar</a></span><span class="op">(</span><span class="va">Zhengmix4eq_sce</span><span class="op">)</span></span>
+<span><span class="va">chosen</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/scran/man/getTopHVGs.html" class="external-link">getTopHVGs</a></span><span class="op">(</span><span class="va">zheng_sce</span>, n <span class="op">=</span> <span class="va">ngene</span><span class="op">)</span></span>
 <span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">Zhengmix4eq_sce</span><span class="op">[</span><span class="va">chosen</span>,<span class="op">]</span></span></code></pre></div>
 <p>We extract out B cells and regulatory T cells only and use all cells from these two cell types to simulate synthetic data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -161,7 +161,7 @@ pre {
 </h3>
 <p>We use the step-by-step functions instead of the one-shot function to generate synthetic data since these step-by-step functions allow us to alter estimated parameters and generate new data based on our desired parameters.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
 <span><span class="va">example_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
@@ -182,7 +182,8 @@ pre {
 <span>    usebam <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span><span class="va">example_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">example_marginal</span>,</span>
@@ -196,9 +197,10 @@ pre {
 <code class="sourceCode R"><span><span class="va">example_para</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/extract_para.html">extract_para</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">example_marginal</span>,</span>
-<span>    n_cores <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">example_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Here, we examine the <code>mean_mat</code>, which is one of the outputs from the previous function <code><a href="../reference/extract_para.html">extract_para()</a></code>. For each gene, we calculate the difference in the between the maximum mean parameter and minimum mean parameter across all cells. We select genes which the gene’s mean difference across cells are in the top 50 largest differences. We regard these genes as DE genes. Then, we manually set the mean parameters of the rest genes to be the same across all cells. We regard all genes with the same mean parameter across cells as non-DE genes. Of course, this is a very flexible step and users may choose other ideas to modify the mean matrix.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
@@ -215,7 +217,8 @@ pre {
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">example_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">[</span>,<span class="va">non_de_idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">non_de_mat</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">example_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1234</span><span class="op">)</span></span>
+<span> <span class="va">example_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">example_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">example_para</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -364,7 +367,8 @@ pre {
 <span>    usebam <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">PANCREAS_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">PANCREAS_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">PANCREAS_marginal</span>,</span>
@@ -380,7 +384,8 @@ pre {
 <span>    marginal_list <span class="op">=</span> <span class="va">PANCREAS_marginal</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">PANCREAS_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Here, we examine the <code>mean_mat</code>, which is one of the outputs from the previous function <code><a href="../reference/extract_para.html">extract_para()</a></code>. For each gene, we calculate the difference in the between the maximum mean parameter and minimum mean parameter across all cells. We select genes which the gene’s mean difference across cells are in the top 50 largest differences. We regard these genes as DE genes(DEG). Then, we manually set the mean parameters of the rest genes to be the same across all cells. We regard all genes with the same mean parameter across cells as non-DE genes.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
@@ -397,7 +402,8 @@ pre {
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">PANCREAS_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">[</span>,<span class="va">non_de_idx</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="va">non_de_mat</span></span></code></pre></div>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">PANCREAS_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span> <span class="va">PANCREAS_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">PANCREAS_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">PANCREAS_para</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -594,7 +600,8 @@ pre {
 <span>    usebam <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">example_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">example_marginal</span>,</span>
@@ -610,12 +617,13 @@ pre {
 <span>    marginal_list <span class="op">=</span> <span class="va">example_marginal</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">example_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>Here, we examine the <code>mean_mat</code>, which is one of the outputs from the previous function <code><a href="../reference/extract_para.html">extract_para()</a></code>. For each gene, we calculate the deviance explained by spatial locations in each regression model, and select the top 50. We regard these genes as spatially variable genes (SVGs). Then, we manually set the mean parameters of the rest genes to be the same across all cells. We regard all genes with the same mean parameter across cells as non-SVG genes.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">dev_explain</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">example_marginal</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">sum</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span>  <span class="va">sum</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">sum</span><span class="op">$</span><span class="va">dev.expl</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">dev_ordered</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">dev_explain</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -645,7 +653,8 @@ pre {
 <span><span class="co"># })</span></span>
 <span><span class="co"># example_para$mean_mat[,non_de_idx] &lt;- non_de_mat</span></span></code></pre></div>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">example_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span> <span class="va">example_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">example_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">example_para</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -928,7 +937,7 @@ pre {
 <span><span class="co">#&gt; [103] textshaping_0.3.6             statmod_1.5.0                </span></span>
 <span><span class="co">#&gt; [105] Rtsne_0.16                    uwot_0.1.14                  </span></span>
 <span><span class="co">#&gt; [107] igraph_1.3.5                  HDF5Array_1.26.0             </span></span>
-<span><span class="co">#&gt; [109] survival_3.5-3                yaml_2.3.6                   </span></span>
+<span><span class="co">#&gt; [109] survival_3.5-5                yaml_2.3.6                   </span></span>
 <span><span class="co">#&gt; [111] systemfonts_1.0.4             htmltools_0.5.4              </span></span>
 <span><span class="co">#&gt; [113] memoise_2.0.1                 locfit_1.5-9.7               </span></span>
 <span><span class="co">#&gt; [115] here_1.0.1                    viridisLite_0.4.1            </span></span>

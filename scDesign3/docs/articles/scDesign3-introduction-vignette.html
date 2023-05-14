@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">11 April 2023</h4>
+            <h4 data-toc-skip class="date">12 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-introduction-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-introduction-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-introduction-vignette.Rmd</code></div>
@@ -168,7 +168,8 @@
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
@@ -215,7 +216,8 @@
 <li>Fit a copula, obtain AIC and BIC.</li>
 </ol>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">PANCREAS_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">PANCREAS_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">PANCREAS_marginal</span>,</span>
@@ -250,13 +252,15 @@
 <span>    marginal_list <span class="op">=</span> <span class="va">PANCREAS_marginal</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">PANCREAS_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Simulate the new count matrix.</li>
 </ol>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span> <span class="va">PANCREAS_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span> <span class="va">PANCREAS_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">PANCREAS_para</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">PANCREAS_para</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -280,7 +284,8 @@
 <h2 id="visualization-1">Visualization<a class="anchor" aria-label="anchor" href="#visualization-1"></a>
 </h2>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
@@ -352,7 +357,7 @@
 <span><span class="co">#&gt; [73] gtable_0.3.1           openssl_2.0.5          purrr_1.0.1           </span></span>
 <span><span class="co">#&gt; [76] assertthat_0.2.1       cachem_1.0.6           xfun_0.36             </span></span>
 <span><span class="co">#&gt; [79] RSpectra_0.16-1        viridisLite_0.4.1      ragg_1.2.5            </span></span>
-<span><span class="co">#&gt; [82] survival_3.5-3         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [82] survival_3.5-5         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

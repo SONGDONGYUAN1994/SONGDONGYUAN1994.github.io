@@ -89,6 +89,7 @@
 <span>  usebam <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">corr_formula</span>,</span>
 <span>  copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>  fastmvn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  DT <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  pseudo_obs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  family_set <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gauss"</span>, <span class="st">"indep"</span><span class="op">)</span>,</span>
@@ -160,6 +161,10 @@ Must be one of 'poisson', 'nb', 'zip', 'zinb' or 'gaussian'.</p></dd>
 
 <dt>copula</dt>
 <dd><p>A string of the copula choice. Must be one of 'gaussian' or 'vine'. Default is 'gaussian'. Note that vine copula may have better modeling of high-dimensions, but can be very slow when features are &gt;1000.</p></dd>
+
+
+<dt>fastmvn</dt>
+<dd><p>An logical variable. If TRUE, the sampling of multivariate Gaussian is done by <code>mvnfast</code>, otherwise by <code>mvtnorm</code>. Default is FALSE. It only matters for Gaussian copula.</p></dd>
 
 
 <dt>DT</dt>
@@ -263,19 +268,19 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Converting End</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 1 starts</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.03523207 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.03163481 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 2 starts</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.03944278 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.04066229 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 3 starts</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.0450201 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.04789376 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula group 4 starts</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Starts</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.02421451 secs</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Time difference of 0.02348304 secs</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Vine Copula Estimation Ends</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Copula Fitting End</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Start Parameter Extraction</span>

@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">11 April 2023</h4>
+            <h4 data-toc-skip class="date">12 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-batchEffect-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-batchEffect-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-batchEffect-vignette.Rmd</code></div>
@@ -231,7 +231,8 @@ pre {
 <span>  usebam <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">BATCH_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">BATCH_copula</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_copula.html">fit_copula</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>    marginal_list <span class="op">=</span> <span class="va">BATCH_marginal</span>,</span>
@@ -244,7 +245,7 @@ pre {
 <p>In here, we remove the batch effect by setting its coefficient to zero for all genes’ marginal fits. Then, we use the new sets of coefficients to generate the parameters for all genes across all cells.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BATCH_marginal_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">BATCH_marginal</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
+<span>  <span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span>  <span class="va">x</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
@@ -253,10 +254,12 @@ pre {
 <span>    marginal_list <span class="op">=</span> <span class="va">BATCH_marginal_null</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">BATCH_newcount_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">BATCH_newcount_null</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">BATCH_para_null</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">BATCH_para_null</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -272,7 +275,7 @@ pre {
 <p>Additionally, we can alter the batch effect information by mannually change the estimated coefficient for batch effect in each gene’s marginal model. Then, we can simulate new dataset with altered batch effect information.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">BATCH_marginal_alter</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">BATCH_marginal</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span>  <span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">$</span><span class="va">coefficients</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">$</span><span class="va">fit</span><span class="op">$</span><span class="va">coefficients</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">1</span>, mean <span class="op">=</span> <span class="fl">5</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
 <span>  <span class="va">x</span></span>
 <span><span class="op">}</span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -281,10 +284,12 @@ pre {
 <span>    marginal_list <span class="op">=</span> <span class="va">BATCH_marginal_alter</span>,</span>
 <span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>    new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    data <span class="op">=</span> <span class="va">BATCH_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">BATCH_newcount_alter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">BATCH_newcount_alter</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
 <span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>    mean_mat <span class="op">=</span> <span class="va">BATCH_para_alter</span><span class="op">$</span><span class="va">mean_mat</span>,</span>
 <span>    sigma_mat <span class="op">=</span> <span class="va">BATCH_para_alter</span><span class="op">$</span><span class="va">sigma_mat</span>,</span>
@@ -310,7 +315,8 @@ pre {
 <h2 id="visulization">Visulization<a class="anchor" aria-label="anchor" href="#visulization"></a>
 </h2>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="va">simu_res_list</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"w/ Batch"</span>, <span class="st">"w/o Batch"</span>,<span class="st">"Aritifical Batch"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
@@ -382,7 +388,7 @@ pre {
 <span><span class="co">#&gt; [70] png_0.1-8              gtable_0.3.1           openssl_2.0.5         </span></span>
 <span><span class="co">#&gt; [73] purrr_1.0.1            assertthat_0.2.1       cachem_1.0.6          </span></span>
 <span><span class="co">#&gt; [76] xfun_0.36              RSpectra_0.16-1        ragg_1.2.5            </span></span>
-<span><span class="co">#&gt; [79] survival_3.5-3         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [79] survival_3.5-5         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

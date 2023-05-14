@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">12 April 2023</h4>
+            <h4 data-toc-skip class="date">13 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-spatial-deconvolution.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-spatial-deconvolution.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-spatial-deconvolution.Rmd</code></div>
@@ -158,7 +158,8 @@
 </h2>
 <p>We first use scDesign3 to estimate the cell-type reference from scRNA-seq data.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MOBSC_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">MOBSC_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
 <span>  sce <span class="op">=</span> <span class="va">MOBSC_sce</span>,</span>
 <span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>  celltype <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
@@ -196,7 +197,8 @@
 <span>  marginal_list <span class="op">=</span> <span class="va">MOBSC_marginal</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">MOBSC_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">MOBSC_newcount</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/simu_new.html">simu_new</a></span><span class="op">(</span></span>
@@ -212,7 +214,8 @@
 <span>  new_covariate <span class="op">=</span> <span class="va">MOBSC_data</span><span class="op">$</span><span class="va">newCovariate</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">MOBSP_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">MOBSP_data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/construct_data.html">construct_data</a></span><span class="op">(</span></span>
 <span>  sce <span class="op">=</span> <span class="va">MOBSP_sce</span>,</span>
 <span>  assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>  celltype <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -250,12 +253,13 @@
 <span>  marginal_list <span class="op">=</span> <span class="va">MOBSP_marginal</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  data <span class="op">=</span> <span class="va">MOBSP_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now we get the fitted models for scRNA-seq and spatial data. We need to extract their mean parameters (i.e., expected expression values).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MOBSC_sig_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">cell_type</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">rowMeans</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MOBSC_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSC_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cellType</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MOBSC_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSC_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cellType</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">MOBSP_matrix</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MOBSP_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -291,9 +295,9 @@
 <span></span>
 <span><span class="va">MOBSP_new_mixture</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">proportion_mat</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">n</span> <span class="op">=</span> <span class="fl">50</span></span>
-<span>  <span class="fu">rowSums</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">cell_type</span>, <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">cell_type</span>, <span class="kw">function</span><span class="op">(</span><span class="va">y</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSCSIM_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span><span class="op">==</span><span class="va">y</span><span class="op">)</span>, size <span class="op">=</span> <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span>    <span class="fu">rowSums</span><span class="op">(</span><span class="va">MOBSC_newcount</span><span class="op">[</span>, <span class="va">index</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="va">x</span><span class="op">[</span><span class="va">y</span><span class="op">]</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">MOBSC_newcount</span><span class="op">[</span>, <span class="va">index</span><span class="op">]</span><span class="op">)</span><span class="op">*</span><span class="va">x</span><span class="op">[</span><span class="va">y</span><span class="op">]</span></span>
 <span>  <span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -307,7 +311,7 @@
 <p>Finally, we can check the simulated results. We use four cell-type marker genes as the example.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">MOBSC_sig_matrix</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">sapply</a></span><span class="op">(</span><span class="va">cell_type</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu">rowMeans</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MOBSC_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSC_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cellType</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">]</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowMeans</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">MOBSC_para</span><span class="op">$</span><span class="va">mean_mat</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSC_sce</span><span class="op">)</span><span class="op">$</span><span class="va">cellType</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">x</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="va">MOBSP_sc_mixture</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/crossprod.html" class="external-link">tcrossprod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">MOBSC_sig_matrix</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">proportion_mat</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
@@ -369,7 +373,7 @@
 <span><span class="co">#&gt; other attached packages:</span></span>
 <span><span class="co">#&gt;  [1] scatterpie_0.1.8            IOBR_0.99.9                </span></span>
 <span><span class="co">#&gt;  [3] tidyHeatmap_1.8.1           ComplexHeatmap_2.12.1      </span></span>
-<span><span class="co">#&gt;  [5] survival_3.5-3              ggpubr_0.5.0               </span></span>
+<span><span class="co">#&gt;  [5] survival_3.5-5              ggpubr_0.5.0               </span></span>
 <span><span class="co">#&gt;  [7] tibble_3.1.8                viridis_0.6.2              </span></span>
 <span><span class="co">#&gt;  [9] viridisLite_0.4.1           dplyr_1.0.10               </span></span>
 <span><span class="co">#&gt; [11] ggplot2_3.4.0               SingleCellExperiment_1.20.0</span></span>

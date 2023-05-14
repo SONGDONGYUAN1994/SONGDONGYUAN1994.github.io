@@ -99,7 +99,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">12 April 2023</h4>
+            <h4 data-toc-skip class="date">13 May 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-scATACseq-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-scATACseq-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-scATACseq-vignette.Rmd</code></div>
@@ -164,22 +164,23 @@ pre {
 <span>    mu_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
 <span>    sigma_formula <span class="op">=</span> <span class="st">"1"</span>,</span>
 <span>    family_use <span class="op">=</span> <span class="st">"zip"</span>,</span>
-<span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>    n_cores <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>    usebam <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    corr_formula <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
 <span>    copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
 <span>    DT <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    pseudo_obs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    parallelization <span class="op">=</span> <span class="st">"pbmcmapply"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p>We also run the TF-IDF transformation.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tf_idf</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">{</span></span>
-<span>  <span class="va">frequences</span> <span class="op">&lt;-</span> <span class="fu">colSums</span><span class="op">(</span><span class="va">Y</span><span class="op">)</span></span>
+<span>  <span class="va">frequences</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span></span>
 <span>  <span class="va">nfreqs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">Y</span>, <span class="fl">1</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span><span class="op">/</span><span class="va">frequences</span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span>  <span class="va">nfreqs</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">nfreqs</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
-<span>  <span class="va">idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu">rowSums</span><span class="op">(</span><span class="va">Y</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
+<span>  <span class="va">idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">Y</span><span class="op">)</span><span class="op">)</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">Y</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fl">1</span></span>
 <span>  <span class="va">Y_idf</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">nfreqs</span>, <span class="fl">2</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span><span class="va">x</span> <span class="op">*</span> <span class="va">idf</span><span class="op">}</span><span class="op">)</span></span>
 <span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="va">Y_idf</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -192,7 +193,8 @@ pre {
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>,</span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"tfidf"</span>,</span>
@@ -249,8 +251,8 @@ pre {
 <span><span class="co">#&gt; [28] systemfonts_1.0.4      stringr_1.5.0          digest_0.6.31         </span></span>
 <span><span class="co">#&gt; [31] rmarkdown_2.19         XVector_0.38.0         pkgconfig_2.0.3       </span></span>
 <span><span class="co">#&gt; [34] htmltools_0.5.4        umap_0.2.9.0           highr_0.10            </span></span>
-<span><span class="co">#&gt; [37] fastmap_1.1.0          rlang_1.0.6            jquerylib_0.1.4       </span></span>
-<span><span class="co">#&gt; [40] generics_0.1.3         farver_2.1.1           gamlss.data_6.0-2     </span></span>
+<span><span class="co">#&gt; [37] fastmap_1.1.0          rlang_1.0.6            farver_2.1.1          </span></span>
+<span><span class="co">#&gt; [40] jquerylib_0.1.4        generics_0.1.3         gamlss.data_6.0-2     </span></span>
 <span><span class="co">#&gt; [43] jsonlite_1.8.4         mclust_6.0.0           dplyr_1.0.10          </span></span>
 <span><span class="co">#&gt; [46] RCurl_1.98-1.9         magrittr_2.0.3         GenomeInfoDbData_1.2.9</span></span>
 <span><span class="co">#&gt; [49] Matrix_1.5-1           Rcpp_1.0.9             munsell_0.5.0         </span></span>
@@ -263,7 +265,8 @@ pre {
 <span><span class="co">#&gt; [70] png_0.1-8              gtable_0.3.1           openssl_2.0.5         </span></span>
 <span><span class="co">#&gt; [73] purrr_1.0.1            assertthat_0.2.1       cachem_1.0.6          </span></span>
 <span><span class="co">#&gt; [76] xfun_0.36              RSpectra_0.16-1        ragg_1.2.5            </span></span>
-<span><span class="co">#&gt; [79] survival_3.5-3         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [79] survival_3.5-5         tibble_3.1.8           pbmcapply_1.5.1       </span></span>
+<span><span class="co">#&gt; [82] memoise_2.0.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
