@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -87,7 +87,7 @@
 <h2 id="scdesign3">scDesign3<a class="anchor" aria-label="anchor" href="#scdesign3"></a>
 </h2>
 <hr>
-<p>The R package <strong>scDesign3</strong> is an all-in-one single-cell data simulation tool by using reference datasets with different cell states (cell types, trajectories or and spatial coordinates), different modalities (gene expression, chromatin accessibility, protein abundance, DNA methylation, etc), and complex experimental designs. The transparent parameters enable users to alter models as needed; the model evaluation metrics (AIC, BIC) and convenient visualization function help users select models. The following illustration figure summarizes the usage of scDesign3:</p>
+<p>The R package <strong>scDesign3</strong> is an all-in-one single-cell data simulation tool by using reference datasets with different cell states (cell types, trajectories or and spatial coordinates), different modalities (gene expression, chromatin accessibility, protein abundance, DNA methylation, etc), and complex experimental designs. The transparent parameters enable users to alter models as needed; the model evaluation metrics (AIC, BIC) and convenient visualization function help users select models. Detailed tutorials that illustrate various functionalities of scDesign3 are available at this <a href="https://songdongyuan1994.github.io/scDesign3/docs/index.html" class="external-link">website</a>. The following illustration figure summarizes the usage of scDesign3:</p>
 <p><img src="reference/figures/scDesign3_illustration.png" width="600"></p>
 <p>To find out more details about <strong>scDesign3</strong>, you can check out our manuscript on Nature Biotechnology:</p>
 <p><a href="https://www.nature.com/articles/s41587-023-01772-1" class="external-link">Song, D., Wang, Q., Yan, G. et al. scDesign3 generates realistic in silico data for multimodal single-cell and spatial omics. <em>Nat Biotechnol</em> (2023).</a></p>
@@ -106,26 +106,83 @@
 <h2 id="quick-start">Quick Start<a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
 <p>The following code is a quick example of running our simulator. The function <code><a href="reference/scdesign3.html">scdesign3()</a></code> takes in a <code>SinglecellExperiment</code> object with the cell covariates(such as cell types, pesudotime, or spatial coordinates) stored in the <code>colData</code> of the <code>SinglecellExperiment</code> object. For more details on the <code>SinlgeCellExperiment</code> object, please check on its <a href="https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html" class="external-link">Bioconductor link</a>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_simu</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
-<span>    sce <span class="op">=</span> <span class="va">example_sce</span>,</span>
-<span>    assay_use <span class="op">=</span> <span class="st">"counts"</span>,</span>
-<span>    celltype <span class="op">=</span> <span class="st">"cell_type"</span>,</span>
-<span>    pseudotime <span class="op">=</span> <span class="st">"pseudotime"</span>,</span>
-<span>    spatial <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    other_covariates <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>    mu_formula <span class="op">=</span> <span class="st">"s(pseudotime, k = 10, bs = 'cr')"</span>,</span>
-<span>    sigma_formula <span class="op">=</span> <span class="st">"s(pseudotime, k = 5, bs = 'cr')"</span>,</span>
-<span>    family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>    n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>    usebam <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    corr_formula <span class="op">=</span> <span class="st">"1"</span>,</span>
-<span>    copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
-<span>    DT <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    pseudo_obs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>example_simu <span class="ot">&lt;-</span> <span class="fu">scdesign3</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">sce =</span> example_sce,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">assay_use =</span> <span class="st">"counts"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">celltype =</span> <span class="st">"cell_type"</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">pseudotime =</span> <span class="st">"pseudotime"</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">spatial =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">other_covariates =</span> <span class="cn">NULL</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mu_formula =</span> <span class="st">"s(pseudotime, k = 10, bs = 'cr')"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">sigma_formula =</span> <span class="st">"s(pseudotime, k = 5, bs = 'cr')"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">family_use =</span> <span class="st">"nb"</span>,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_cores =</span> <span class="dv">2</span>,</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">usebam =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">corr_formula =</span> <span class="st">"1"</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">copula =</span> <span class="st">"gaussian"</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">fastmvn =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">DT =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">pseudo_obs =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">family_set =</span> <span class="fu">c</span>(<span class="st">"gauss"</span>, <span class="st">"indep"</span>),</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">important_feature =</span> <span class="fu">rep</span>(<span class="cn">TRUE</span>, <span class="fu">dim</span>(sce)[<span class="dv">1</span>]),</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">nonnegative =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">return_model =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">nonzerovar =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">parallelization =</span> <span class="st">"mcmapply"</span>,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">BPPARAM =</span> NULL，</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">trace =</span> <span class="cn">FALSE</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>The parameters of <code><a href="reference/scdesign3.html">scdesign3()</a></code> are:</p>
+<ul>
+<li>
+<code>sce</code>: A SingleCellExperiment object.</li>
+<li>
+<code>assay_use</code>: A string which indicates the assay you will use in the sce. Default is ‘counts’.</li>
+<li>
+<code>celltype</code>: A string of the column name of the cell type variable in the colData of the sce. Default is ‘cell_type’. The cell type variable in the colData of the sce should be a factor variable. Use NULL if there is no column in the colData that contains the cell-type information.</li>
+<li>
+<code>pseudotime</code>: A string or a string vector of the name of pseudotime and (if exist) multiple lineages. Default is NULL. If the data only has one lineage, then this parameter should be the column name of the pesudotime variable in the colData of the sce. If the data has multiple lingaes, then this parameter be the column names of the pseudotime variables for each lineage and the vaiables indicating which lineage that a cell belongs to. The pseudotime variables should be continuous numeric variables.</li>
+<li>
+<code>spatial</code>: A length-two string vector of the column names of spatial coordinates in the colData of sce. Defualt is NULL.</li>
+<li>
+<code>other_covariate</code>: A string or a string vector of the other covariates in the colData of sce you want to include in the data. For example, you can put the column names of the batch variables and/or condition variables in the colData of sce here if your sce contains these information and you want to include these variables in<code>mu_formula</code> or <code>sigma_formula</code> or <code>corr_formula</code>.</li>
+<li>
+<code>mu_formula</code>: A string of the mu parameter formula for fitting each gene’s marginal distribution.</li>
+<li>
+<code>sigma_formula</code>: A string of the sigma parameter formula for fitting each gene’s marginal distribution.</li>
+<li>
+<code>family_use</code>: A string of the marginal distribution you want to use when fitting each gene’s marginal distribution. Must be one of ‘poisson’, ‘nb’, ‘zip’, ‘zinb’ or ‘gaussian’.</li>
+<li>
+<code>n_cores</code>: An integer. The number of cores to use.</li>
+<li>
+<code>usebam</code>: A logic variable. If use bam (generalized additive models for very large datasets ) for acceleration.</li>
+<li>
+<code>corr_formula</code>: A string of the correlation structure. For example, if you want to obtain a correlation structure for each cell type, then this parameter should be the column name of the cell type variable in the colData of sce.</li>
+<li>
+<code>copula</code>: A string of the copula choice. Must be one of ‘gaussian’ or ‘vine’. Default is ‘gaussian’. Note that vine copula may have better modeling of high-dimensions, but can be very slow when features are &gt;1000.</li>
+<li>
+<code>fastmvn</code>: An logical variable. If TRUE, the sampling of multivariate Gaussian is done by mvnfast, otherwise by mvtnorm. Default is FALSE. It only matters for Gaussian copula.</li>
+<li>
+<code>DT</code>: A logic variable. If TRUE, perform the distributional transformation to make the discrete data ‘continuous’. This is useful for discrete distributions (e.g., Poisson, NB). Default is TRUE. Note that for continuous data (e.g., Gaussian), DT does not make sense and should be set as FALSE.</li>
+<li>
+<code>pseudo_obs</code>: A logic variable. If TRUE, use the empirical quantiles instead of theoretical quantiles for fitting copula. Default is FALSE.</li>
+<li>
+<code>family_set</code>: A string or a string vector of the bivariate copula families. Default is c(“gauss”, “indep”).</li>
+<li>
+<code>important_feature</code>: A string or vector which indicates whether a gene will be used in correlation estimation or not. If this is a string, then this string must be “auto”, which indicates that the genes will be automatically selected based on the proportion of zero expression across cells for each gene. Gene with zero proportion greater than 0.8 will be excluded form gene-gene correlation estimation. If this is a vector, then this should be a logical vector with length equal to the number of genes in sce. TRUE in the logical vector means the corresponding gene will be included in gene-gene correlation estimation and FALSE in the logical vector means the corresponding gene will be excluded from the gene-gene correlation estimation. The default value for is a vector with length equal to the number of inputted genes and every value equals to TRUE.</li>
+<li>
+<code>nonnegative</code>: A logical variable. If TRUE, values &lt; 0 in the synthetic data will be converted to 0. Default is TRUE (since the expression matrix is nonnegative).</li>
+<li>
+<code>return_model</code>: A logic variable. If TRUE, the marginal models and copula models will be returned. Default is FALSE.</li>
+<li>
+<code>nonzerovar</code>: A logical variable. If TRUE, for any gene with zero variance, a cell will be replaced with 1. This is designed for avoiding potential errors, for example, PCA.</li>
+<li>
+<code>parallelization</code>: A string indicating the specific parallelization function to use. Must be one of ‘mcmapply’, ‘bpmapply’, or ‘pbmcmapply’, which corresponds to the parallelization function in the package parallel,BiocParallel, and pbmcapply respectively. The default value is ‘mcmapply’.</li>
+<li>
+<code>BPPARAM</code>: A MulticoreParam object or NULL. When the parameter parallelization = ‘mcmapply’ or ‘pbmcmapply’, this parameter must be NULL. When the parameter parallelization = ‘bpmapply’, this parameter must be one of the MulticoreParam object offered by the package ’BiocParallel. The default value is NULL.</li>
+<li>
+<code>TRACE</code>: A logic variable. If TRUE, the warning/error log and runtime for gam/gamlss will be returned, FALSE otherwise. Default is FALSE.</li>
+</ul>
 <p>The output of <code><a href="reference/scdesign3.html">scdesign3()</a></code> is a list which includes:</p>
 <ul>
 <li>
@@ -151,7 +208,7 @@
 <li>
 <code>corr_list</code>:
 <ul>
-<li>If the parameter <code>return_model</code> is set to <code>TRUE</code>, this will be a list which contains either a correlation matrix (when <code>copula = "gaussian"</code>) or the fitted Vine copula (when <code>copula = "vine</code>) for each user specified correlation groups (based on the parameter <code>corr_by</code>).</li>
+<li>If the parameter <code>return_model</code> is set to <code>TRUE</code>, this will be a list which contains either a correlation matrix (when <code>copula = "gaussian"</code>) or the fitted Vine copula (when <code>copula = "vine"</code>) for each user specified correlation groups (based on the parameter <code>corr_by</code>).</li>
 <li>If the parameter <code>return_model</code> is set to the default value <code>FALSE</code>, this will be <code>NULL</code>.</li>
 </ul>
 </li>
@@ -165,7 +222,7 @@
 <li>Data simulation
 <ul>
 <li>scDesign3 introduction</li>
-<li>Simulate datasets with cell library siz</li>
+<li>Simulate datasets with cell library size</li>
 <li>Simulate datasets with multiple lineages</li>
 <li>Simulate spatial transcriptomic data</li>
 <li>Simulate spot-resolution spatial data for cell-type deconvolution</li>

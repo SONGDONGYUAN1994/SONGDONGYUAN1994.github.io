@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,21 +83,28 @@
   </div>
 </nav><div class="container template-article">
 
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate datasets with multiple lineages</h1>
-                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan
+Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang
+Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">12 May 2023</h4>
+            <h4 data-toc-skip class="date">20 May 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-multipleLineages-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-multipleLineages-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-multipleLineages-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-multipleLineages-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-multipleLineages-vignette.Rmd</code></div>
     </div>
 
@@ -119,14 +126,17 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate the multiple lineages single-cell data.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate the
+multiple lineages single-cell data.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO with ID GSE72859</a>, which describes myeloid progenitors from mouse bone marrow. We pre-select the top 1000 highly variable genes.</p>
+<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO
+with ID GSE72859</a>, which describes myeloid progenitors from mouse
+bone marrow. We pre-select the top 1000 highly variable genes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AAADW7is80WscU5RwavChsdUa/MARROW_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://figshare.com/ndownloader/files/40581980"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span><span class="co">#&gt; dim: 1000 2660 </span></span>
@@ -142,7 +152,11 @@ pre {
 <p>To save computational time, we only use the top 100 genes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span></code></pre></div>
-<p>As we can see, this example dataset has two sets of pseudotime, thus two lineages. The variables <code>pseudotime1</code> and <code>pseudotime2</code> contain the corresponding pseudotime for each cell. The variables <code>l1</code> and <code>l2</code> indicate whether a particular cell belong to the first and/or second lineages.</p>
+<p>As we can see, this example dataset has two sets of pseudotime, thus
+two lineages. The variables <code>pseudotime1</code> and
+<code>pseudotime2</code> contain the corresponding pseudotime for each
+cell. The variables <code>l1</code> and <code>l2</code> indicate whether
+a particular cell belong to the first and/or second lineages.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pseudotime1"</span>,<span class="st">"pseudotime2"</span>,<span class="st">"l1"</span>,<span class="st">"l2"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; DataFrame with 6 rows and 4 columns</span></span>
@@ -158,7 +172,9 @@ pre {
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>Then, we can use this multiple-lineage dataset to generate new data by setting the parameter <code>mu_formula</code> as two smooth terms for each lineage.</p>
+<p>Then, we can use this multiple-lineage dataset to generate new data
+by setting the parameter <code>mu_formula</code> as two smooth terms for
+each lineage.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">example_simu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
@@ -180,7 +196,9 @@ pre {
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Then, we can create the <code>SinglecellExperiment</code> object using the synthetic count matrix and store the <code>logcounts</code> to the input and synthetic <code>SinglecellExperiment</code> objects.</p>
+<p>Then, we can create the <code>SinglecellExperiment</code> object
+using the synthetic count matrix and store the <code>logcounts</code> to
+the input and synthetic <code>SinglecellExperiment</code> objects.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span></span>
@@ -191,7 +209,8 @@ pre {
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
@@ -240,7 +259,7 @@ pre {
 <span><span class="co">#&gt;  [7] GenomicRanges_1.50.2        GenomeInfoDb_1.34.6        </span></span>
 <span><span class="co">#&gt;  [9] IRanges_2.32.0              S4Vectors_0.36.1           </span></span>
 <span><span class="co">#&gt; [11] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      </span></span>
-<span><span class="co">#&gt; [13] matrixStats_0.63.0          scDesign3_0.99.1           </span></span>
+<span><span class="co">#&gt; [13] matrixStats_0.63.0          scDesign3_0.99.2           </span></span>
 <span><span class="co">#&gt; [15] BiocStyle_2.24.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
@@ -252,26 +271,27 @@ pre {
 <span><span class="co">#&gt; [16] textshaping_0.3.6      cli_3.6.0              desc_1.4.2            </span></span>
 <span><span class="co">#&gt; [19] DelayedArray_0.24.0    labeling_0.4.2         bookdown_0.31         </span></span>
 <span><span class="co">#&gt; [22] sass_0.4.4             scales_1.2.1           mvtnorm_1.1-3         </span></span>
-<span><span class="co">#&gt; [25] gamlss_5.4-10          askpass_1.1            pkgdown_2.0.7         </span></span>
+<span><span class="co">#&gt; [25] askpass_1.1            gamlss_5.4-10          pkgdown_2.0.7         </span></span>
 <span><span class="co">#&gt; [28] systemfonts_1.0.4      stringr_1.5.0          digest_0.6.31         </span></span>
 <span><span class="co">#&gt; [31] rmarkdown_2.19         XVector_0.38.0         pkgconfig_2.0.3       </span></span>
 <span><span class="co">#&gt; [34] htmltools_0.5.4        umap_0.2.9.0           highr_0.10            </span></span>
-<span><span class="co">#&gt; [37] fastmap_1.1.0          rlang_1.0.6            farver_2.1.1          </span></span>
-<span><span class="co">#&gt; [40] jquerylib_0.1.4        generics_0.1.3         gamlss.data_6.0-2     </span></span>
-<span><span class="co">#&gt; [43] jsonlite_1.8.4         mclust_6.0.0           dplyr_1.0.10          </span></span>
-<span><span class="co">#&gt; [46] RCurl_1.98-1.9         magrittr_2.0.3         GenomeInfoDbData_1.2.9</span></span>
-<span><span class="co">#&gt; [49] Matrix_1.5-1           Rcpp_1.0.9             munsell_0.5.0         </span></span>
-<span><span class="co">#&gt; [52] fansi_1.0.3            viridis_0.6.2          reticulate_1.27       </span></span>
-<span><span class="co">#&gt; [55] lifecycle_1.0.3        stringi_1.7.12         yaml_2.3.6            </span></span>
-<span><span class="co">#&gt; [58] MASS_7.3-58.2          zlibbioc_1.44.0        gamlss.dist_6.0-5     </span></span>
-<span><span class="co">#&gt; [61] plyr_1.8.8             grid_4.2.2             parallel_4.2.2        </span></span>
-<span><span class="co">#&gt; [64] lattice_0.20-45        splines_4.2.2          knitr_1.41            </span></span>
-<span><span class="co">#&gt; [67] pillar_1.8.1           glue_1.6.2             evaluate_0.19         </span></span>
-<span><span class="co">#&gt; [70] BiocManager_1.30.19    png_0.1-8              vctrs_0.5.1           </span></span>
-<span><span class="co">#&gt; [73] gtable_0.3.1           openssl_2.0.5          purrr_1.0.1           </span></span>
-<span><span class="co">#&gt; [76] assertthat_0.2.1       cachem_1.0.6           xfun_0.36             </span></span>
-<span><span class="co">#&gt; [79] RSpectra_0.16-1        viridisLite_0.4.1      ragg_1.2.5            </span></span>
-<span><span class="co">#&gt; [82] survival_3.5-5         tibble_3.1.8           memoise_2.0.1</span></span></code></pre></div>
+<span><span class="co">#&gt; [37] fastmap_1.1.0          rlang_1.0.6            rstudioapi_0.14       </span></span>
+<span><span class="co">#&gt; [40] farver_2.1.1           jquerylib_0.1.4        generics_0.1.3        </span></span>
+<span><span class="co">#&gt; [43] gamlss.data_6.0-2      jsonlite_1.8.4         mclust_6.0.0          </span></span>
+<span><span class="co">#&gt; [46] dplyr_1.0.10           RCurl_1.98-1.9         magrittr_2.0.3        </span></span>
+<span><span class="co">#&gt; [49] GenomeInfoDbData_1.2.9 Matrix_1.5-1           Rcpp_1.0.9            </span></span>
+<span><span class="co">#&gt; [52] munsell_0.5.0          fansi_1.0.3            viridis_0.6.2         </span></span>
+<span><span class="co">#&gt; [55] reticulate_1.27        lifecycle_1.0.3        stringi_1.7.12        </span></span>
+<span><span class="co">#&gt; [58] yaml_2.3.6             MASS_7.3-58.2          zlibbioc_1.44.0       </span></span>
+<span><span class="co">#&gt; [61] gamlss.dist_6.0-5      plyr_1.8.8             grid_4.2.2            </span></span>
+<span><span class="co">#&gt; [64] parallel_4.2.2         lattice_0.20-45        splines_4.2.2         </span></span>
+<span><span class="co">#&gt; [67] knitr_1.41             pillar_1.8.1           glue_1.6.2            </span></span>
+<span><span class="co">#&gt; [70] evaluate_0.19          BiocManager_1.30.19    png_0.1-8             </span></span>
+<span><span class="co">#&gt; [73] vctrs_0.5.1            openssl_2.0.5          gtable_0.3.1          </span></span>
+<span><span class="co">#&gt; [76] purrr_1.0.1            assertthat_0.2.1       cachem_1.0.6          </span></span>
+<span><span class="co">#&gt; [79] xfun_0.36              RSpectra_0.16-1        viridisLite_0.4.1     </span></span>
+<span><span class="co">#&gt; [82] ragg_1.2.5             survival_3.5-5         tibble_3.1.8          </span></span>
+<span><span class="co">#&gt; [85] memoise_2.0.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

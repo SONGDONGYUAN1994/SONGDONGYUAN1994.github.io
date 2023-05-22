@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,7 +83,8 @@
 <span>  <span class="va">n_cores</span>,</span>
 <span>  <span class="va">usebam</span>,</span>
 <span>  parallelization <span class="op">=</span> <span class="st">"mcmapply"</span>,</span>
-<span>  BPPARAM <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  BPPARAM <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  trace <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -130,6 +131,11 @@ Must be one of 'mcmapply', 'bpmapply', or 'pbmcmapply', which corresponds to the
 <dd><p>A <code>MulticoreParam</code> object or NULL. When the parameter parallelization = 'mcmapply' or 'pbmcmapply',
 this parameter must be NULL. When the parameter parallelization = 'bpmapply',  this parameter must be one of the
 <code>MulticoreParam</code> object offered by the package 'BiocParallel. The default value is NULL.</p></dd>
+
+
+<dt>trace</dt>
+<dd><p>A logic variable. If TRUE, the warning/error log and runtime for gam/gamlss
+will be returned, FALSE otherwise. Default is FALSE.</p></dd>
 
 </dl></div>
     <div class="section level2">
