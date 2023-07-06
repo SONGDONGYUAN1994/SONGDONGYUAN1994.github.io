@@ -8,10 +8,10 @@
 <meta name="description" content="scDesign3">
 <title>Simulate datasets with multiple lineages • scDesign3</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate datasets with multiple lineages">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Simulate datasets with multiple lineages">
 <meta property="og:description" content="scDesign3">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -45,15 +45,24 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/scDesign3-introduction-vignette.html">scDesign3 Introduction</a>
-    <a class="dropdown-item" href="../articles/scDesign3_copulaCompare.html">Compare gaussian copula and vine copula</a>
-    <a class="dropdown-item" href="../articles/scDesign3-multipleLineages_vignette.html">Simulate datasets with multiple lineages</a>
+    <a class="dropdown-item" href="../articles/scDesign3-marginal-vignette.html">scDesign3 marginal distribution for genes</a>
+    <a class="dropdown-item" href="../articles/scDesign3-copulaCompare-vignette.html">Compare gaussian copula and vine copula</a>
+    <a class="dropdown-item" href="../articles/scDesign3-librarySize-vignette.html">Simulate datasets with cell library size</a>
+    <a class="dropdown-item" href="../articles/scDesign3-multipleLineages-vignette.html">Simulate datasets with multiple lineages</a>
     <a class="dropdown-item" href="../articles/scDesign3-conditionEffect-vignette.html">Simulate datasets with condition effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-batchEffect-vignette.html">Simulate datasets with batch effect</a>
     <a class="dropdown-item" href="../articles/scDesign3-spatial-vignette.html">Simulate spatial transcriptomic data</a>
+    <a class="dropdown-item" href="../articles/scDesign3-spatial-deconvolution.html">Simulate spot-resolution spatial data for cell-type deconvolution</a>
     <a class="dropdown-item" href="../articles/scDesign3-scATACseq-vignette.html">Simulate single-cell ATAC-seq data</a>
-    <a class="dropdown-item" href="../articles/scDesign3-clusterQuality-vignette.html">Evaluate clustering quality by scDesign3</a>
-    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeQuality-vignette.html">Evaluate pseudotime quality by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-CITEseq-vignette.html">Simulate CITE-seq data</a>
+    <a class="dropdown-item" href="../articles/scDesign3-multiomics-vignette.html">Simulate multi-omics data from single-omic data</a>
+    <a class="dropdown-item" href="../articles/scDesign3-clusterGOF-vignette.html">Evaluate clustering goodness-of-fit by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-pseudotimeGOF-vignette.html">Evaluate pseudotime goodness-of-fit by scDesign3</a>
+    <a class="dropdown-item" href="../articles/scDesign3-DEanalysis-vignette.html">Benchmarking DE Analysis with scDesign3</a>
   </div>
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
 </li>
       </ul>
 <form class="form-inline my-2 my-lg-0" role="search">
@@ -80,19 +89,23 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate datasets with multiple lineages</h1>
-                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan
+Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang
+Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">11 July 2022</h4>
+            <h4 data-toc-skip class="date">20 May 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/scDesign3-multipleLineages_vignette.Rmd" class="external-link"><code>vignettes/scDesign3-multipleLineages_vignette.Rmd</code></a></small>
-      <div class="d-none name"><code>scDesign3-multipleLineages_vignette.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-multipleLineages-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-multipleLineages-vignette.Rmd</code></a></small>
+      <div class="d-none name"><code>scDesign3-multipleLineages-vignette.Rmd</code></div>
     </div>
 
     
@@ -113,14 +126,17 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate the multiple lineages single-cell data.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate the
+multiple lineages single-cell data.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO with ID GSE72859</a>, which describes myeloid progenitors from mouse bone marrow. We pre-select the top 1000 highly variable genes.</p>
+<p>The raw data is from the <a href="https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE72859" class="external-link">GEO
+with ID GSE72859</a>, which describes myeloid progenitors from mouse
+bone marrow. We pre-select the top 1000 highly variable genes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://www.dropbox.com/sh/0tptrft7hsstpi3/AAADW7is80WscU5RwavChsdUa/MARROW_sce.rds?raw=1"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/connections.html" class="external-link">url</a></span><span class="op">(</span><span class="st">"https://figshare.com/ndownloader/files/40581980"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span></span>
 <span><span class="co">#&gt; class: SingleCellExperiment </span></span>
 <span><span class="co">#&gt; dim: 1000 2660 </span></span>
@@ -136,7 +152,11 @@ pre {
 <p>To save computational time, we only use the top 100 genes.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">example_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, <span class="op">]</span></span></code></pre></div>
-<p>As we can see, this example dataset has two sets of pseudotime, thus two lineages. The variables <code>pseudotime1</code> and <code>pseudotime2</code> contain the corresponding pseudotime for each cell. The variables <code>l1</code> and <code>l2</code> indicate whether a particular cell belong to the first and/or second lineages.</p>
+<p>As we can see, this example dataset has two sets of pseudotime, thus
+two lineages. The variables <code>pseudotime1</code> and
+<code>pseudotime2</code> contain the corresponding pseudotime for each
+cell. The variables <code>l1</code> and <code>l2</code> indicate whether
+a particular cell belong to the first and/or second lineages.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pseudotime1"</span>,<span class="st">"pseudotime2"</span>,<span class="st">"l1"</span>,<span class="st">"l2"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; DataFrame with 6 rows and 4 columns</span></span>
@@ -152,7 +172,9 @@ pre {
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>Then, we can use this multiple-lineage dataset to generate new data.</p>
+<p>Then, we can use this multiple-lineage dataset to generate new data
+by setting the parameter <code>mu_formula</code> as two smooth terms for
+each lineage.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">example_simu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
@@ -174,19 +196,10 @@ pre {
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Now we get the synthetic count matrix.</p>
+<p>Then, we can create the <code>SinglecellExperiment</code> object
+using the synthetic count matrix and store the <code>logcounts</code> to
+the input and synthetic <code>SinglecellExperiment</code> objects.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1]  100 2660</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/useful/man/corner.html" class="external-link">corner</a></span><span class="op">(</span><span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span></span>
-<span><span class="co">#&gt;       W31105 W31106 W31107 W31108 W31109</span></span>
-<span><span class="co">#&gt; Prtn3      0     21      9     27      2</span></span>
-<span><span class="co">#&gt; Elane      0     20      5     17      0</span></span>
-<span><span class="co">#&gt; Mpo        4     35     12     34      6</span></span>
-<span><span class="co">#&gt; Ctsg       0     11      4     10      1</span></span>
-<span><span class="co">#&gt; Car1       3      0     26      0     39</span></span></code></pre></div>
-<p>Create <code>SingleCellExperiment</code> object.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">example_sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="va">example_sce</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span></span>
@@ -195,8 +208,9 @@ pre {
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
 </h2>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
+<span><span class="va">compare_figure</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plot_reduceddim.html">plot_reduceddim</a></span><span class="op">(</span>ref_sce <span class="op">=</span> <span class="va">example_sce</span>, </span>
 <span>                                  sce_list <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span>, </span>
 <span>                                  name_vec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Reference"</span>, <span class="st">"scDesign3"</span><span class="op">)</span>,</span>
 <span>                                  assay_use <span class="op">=</span> <span class="st">"logcounts"</span>, </span>
@@ -210,8 +224,74 @@ pre {
 <span>                                  if_plot <span class="op">=</span> <span class="cn">TRUE</span>, </span>
 <span>                                  color_by <span class="op">=</span>  <span class="st">"pseudotime2"</span>, </span>
 <span>                                  n_pc <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
-<span><span class="fu">gridExtra</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span>, <span class="va">compare_figure2</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
-<p><img src="scDesign3-multipleLineages_vignette_files/figure-html/unnamed-chunk-9-1.png" width="700"></p>
+<span><span class="fu"><a href="https://rdrr.io/pkg/gridExtra/man/arrangeGrob.html" class="external-link">grid.arrange</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span>, <span class="va">compare_figure2</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
+<p><img src="scDesign3-multipleLineages-vignette_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+</div>
+<div class="section level2">
+<h2 id="session-information">Session information<a class="anchor" aria-label="anchor" href="#session-information"></a>
+</h2>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; R version 4.2.2 Patched (2022-11-10 r83330)</span></span>
+<span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; Matrix products: default</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; locale:</span></span>
+<span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
+<span><span class="co">#&gt;  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    </span></span>
+<span><span class="co">#&gt;  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   </span></span>
+<span><span class="co">#&gt;  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 </span></span>
+<span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
+<span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; attached base packages:</span></span>
+<span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
+<span><span class="co">#&gt; [8] base     </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; other attached packages:</span></span>
+<span><span class="co">#&gt;  [1] gridExtra_2.3               useful_1.2.6               </span></span>
+<span><span class="co">#&gt;  [3] ggplot2_3.4.0               SingleCellExperiment_1.20.0</span></span>
+<span><span class="co">#&gt;  [5] SummarizedExperiment_1.28.0 Biobase_2.58.0             </span></span>
+<span><span class="co">#&gt;  [7] GenomicRanges_1.50.2        GenomeInfoDb_1.34.6        </span></span>
+<span><span class="co">#&gt;  [9] IRanges_2.32.0              S4Vectors_0.36.1           </span></span>
+<span><span class="co">#&gt; [11] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      </span></span>
+<span><span class="co">#&gt; [13] matrixStats_0.63.0          scDesign3_0.99.2           </span></span>
+<span><span class="co">#&gt; [15] BiocStyle_2.24.0           </span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
+<span><span class="co">#&gt;  [1] nlme_3.1-162           bitops_1.0-7           fs_1.5.2              </span></span>
+<span><span class="co">#&gt;  [4] rprojroot_2.0.3        tools_4.2.2            bslib_0.4.2           </span></span>
+<span><span class="co">#&gt;  [7] utf8_1.2.2             R6_2.5.1               irlba_2.3.5.1         </span></span>
+<span><span class="co">#&gt; [10] DBI_1.1.3              mgcv_1.8-41            colorspace_2.0-3      </span></span>
+<span><span class="co">#&gt; [13] withr_2.5.0            tidyselect_1.2.0       compiler_4.2.2        </span></span>
+<span><span class="co">#&gt; [16] textshaping_0.3.6      cli_3.6.0              desc_1.4.2            </span></span>
+<span><span class="co">#&gt; [19] DelayedArray_0.24.0    labeling_0.4.2         bookdown_0.31         </span></span>
+<span><span class="co">#&gt; [22] sass_0.4.4             scales_1.2.1           mvtnorm_1.1-3         </span></span>
+<span><span class="co">#&gt; [25] askpass_1.1            gamlss_5.4-10          pkgdown_2.0.7         </span></span>
+<span><span class="co">#&gt; [28] systemfonts_1.0.4      stringr_1.5.0          digest_0.6.31         </span></span>
+<span><span class="co">#&gt; [31] rmarkdown_2.19         XVector_0.38.0         pkgconfig_2.0.3       </span></span>
+<span><span class="co">#&gt; [34] htmltools_0.5.4        umap_0.2.9.0           highr_0.10            </span></span>
+<span><span class="co">#&gt; [37] fastmap_1.1.0          rlang_1.0.6            rstudioapi_0.14       </span></span>
+<span><span class="co">#&gt; [40] farver_2.1.1           jquerylib_0.1.4        generics_0.1.3        </span></span>
+<span><span class="co">#&gt; [43] gamlss.data_6.0-2      jsonlite_1.8.4         mclust_6.0.0          </span></span>
+<span><span class="co">#&gt; [46] dplyr_1.0.10           RCurl_1.98-1.9         magrittr_2.0.3        </span></span>
+<span><span class="co">#&gt; [49] GenomeInfoDbData_1.2.9 Matrix_1.5-1           Rcpp_1.0.9            </span></span>
+<span><span class="co">#&gt; [52] munsell_0.5.0          fansi_1.0.3            viridis_0.6.2         </span></span>
+<span><span class="co">#&gt; [55] reticulate_1.27        lifecycle_1.0.3        stringi_1.7.12        </span></span>
+<span><span class="co">#&gt; [58] yaml_2.3.6             MASS_7.3-58.2          zlibbioc_1.44.0       </span></span>
+<span><span class="co">#&gt; [61] gamlss.dist_6.0-5      plyr_1.8.8             grid_4.2.2            </span></span>
+<span><span class="co">#&gt; [64] parallel_4.2.2         lattice_0.20-45        splines_4.2.2         </span></span>
+<span><span class="co">#&gt; [67] knitr_1.41             pillar_1.8.1           glue_1.6.2            </span></span>
+<span><span class="co">#&gt; [70] evaluate_0.19          BiocManager_1.30.19    png_0.1-8             </span></span>
+<span><span class="co">#&gt; [73] vctrs_0.5.1            openssl_2.0.5          gtable_0.3.1          </span></span>
+<span><span class="co">#&gt; [76] purrr_1.0.1            assertthat_0.2.1       cachem_1.0.6          </span></span>
+<span><span class="co">#&gt; [79] xfun_0.36              RSpectra_0.16-1        viridisLite_0.4.1     </span></span>
+<span><span class="co">#&gt; [82] ragg_1.2.5             survival_3.5-5         tibble_3.1.8          </span></span>
+<span><span class="co">#&gt; [85] memoise_2.0.1</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -226,7 +306,7 @@ pre {
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
