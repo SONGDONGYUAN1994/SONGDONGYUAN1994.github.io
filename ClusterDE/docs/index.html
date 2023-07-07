@@ -68,7 +68,7 @@
 <h2 id="clusterde">ClusterDE<a class="anchor" aria-label="anchor" href="#clusterde"></a>
 </h2>
 <hr>
-<p>The R package <strong>ClusterDE</strong> a post-clustering DE method for controlling the false discovery rate (FDR) of identified DE genes regardless of clustering quality. The core idea of ClusterDE is to generate real-data-based synthetic null data with only one cluster, as a counterfactual in contrast to the real data, for evaluating the whole procedure of clustering followed by a DE test. <span style="color:blue"> <strong>Detailed tutorials that illustrate various functionalities of ClusterDE are available at this <a href="https://songdongyuan1994.github.io/ClusterDE/docs/index.html">website</a></strong></span>. The following illustration figure summarizes the usage of ClusterDE:</p>
+<p>The R package <strong>ClusterDE</strong> is a post-clustering DE method for controlling the false discovery rate (FDR) of identified DE genes regardless of clustering quality. The core idea of ClusterDE is to generate real-data-based synthetic null data with only one cluster, as a counterfactual in contrast to the real data, for evaluating the whole procedure of clustering followed by a DE test. <span style="color:blue"> <strong>Detailed tutorials that illustrate various functionalities of ClusterDE are available at this <a href="https://songdongyuan1994.github.io/ClusterDE/docs/index.html">website</a></strong></span>. The following illustration figure summarizes the usage of ClusterDE:</p>
 <p><img src="reference/figures/ClusterDE_illustration.png" width="600"></p>
 <p>To find out more details about <strong>ClusterDE</strong>, you can check out our manuscript on bioRxiv.</p>
 </div>
@@ -82,14 +82,14 @@
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SONGDONGYUAN1994/scDesign3"</span><span class="op">)</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"SONGDONGYUAN1994/ClusterDE"</span><span class="op">)</span></span></code></pre></div>
-<p>Please note that ClusterDE is actually a wrapper of ClusterDE. Therefore, you can also directly use scDesign3 to generate the synthetic null data. To better understand <strong>scDesign3</strong>, you can check out our manuscript on Nature Biotechnology:</p>
+<p>Please note that ClusterDE is actually a wrapper of <strong>scDesign3</strong>. Therefore, you can also directly use scDesign3 to generate the synthetic null data. To better understand scDesign3, you can check out our manuscript on Nature Biotechnology:</p>
 <p><a href="https://www.nature.com/articles/s41587-023-01772-1" class="external-link">Song, D., Wang, Q., Yan, G. et al. scDesign3 generates realistic in silico data for multimodal single-cell and spatial omics. <em>Nat Biotechnol</em> (2023).</a></p>
 </div>
 <div class="section level2">
 <h2 id="quick-start">Quick Start<a name="quick-start"></a>
 <a class="anchor" aria-label="anchor" href="#quick-start"></a>
 </h2>
-<p>The following code is a quick example of how to generate the synthetic null data. The input data should be a gene by cell matrix containing the two clusters you want to compare. If your input matrix is count data, the <code>nb</code> (Negative Binomial) is usually the appropriate choice. For log-transformed data, please try <code>gaussian</code>.</p>
+<p>The following code is a quick example of how to generate the synthetic null data. The input data should be a gene by cell matrix containing the two clusters you want to compare. If your input matrix is count data, <code>nb</code> (Negative Binomial) is usually the appropriate choice. For log-transformed data, please try <code>gaussian</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">exampleCounts</span><span class="op">)</span></span>
 <span><span class="va">nullData</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/constructNull.html">constructNull</a></span><span class="op">(</span>mat <span class="op">=</span> <span class="va">exampleCounts</span>,</span>
@@ -142,8 +142,8 @@
 </h2>
 <p>For all detailed tutorials, please check the <a href="https://songdongyuan1994.github.io/ClusterDE/docs/index.html">website</a>. The tutorials will demonstrate the applications of <strong>ClusterDE</strong> in two cases: a cell line dataset (no cell type exists) and a PBMC dataset.</p>
 <ul>
-<li><a href="https://songdongyuan1994.github.io/ClusterDE/docs/articles/ClusterDE-cellline-vignette.html">Perform ClusterDE on a cell line dataset</a></li>
-<li><a href="https://songdongyuan1994.github.io/ClusterDE/docs/articles/ClusterDE-PBMC-vignette.html">Perform ClusterDE on a PBMC dataset</a></li>
+<li><a href="https://songdongyuan1994.github.io/ClusterDE/docs/articles/ClusterDE-cellline.html">Perform ClusterDE on a cell line dataset</a></li>
+<li><a href="https://songdongyuan1994.github.io/ClusterDE/docs/articles/ClusterDE-PBMC.html">Perform ClusterDE on a PBMC dataset</a></li>
 </ul>
 </div>
 <div class="section level2">
