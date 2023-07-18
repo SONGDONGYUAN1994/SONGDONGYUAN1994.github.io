@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,21 +83,28 @@
   </div>
 </nav><div class="container template-article">
 
+
+
+
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="" class="logo" alt=""><h1>Simulate datasets with cell library size</h1>
-                        <h4 data-toc-skip class="author">Dongyuan Song</h4>
+                        <h4 data-toc-skip class="author">Dongyuan
+Song</h4>
             <address class="author_afil">
-      Bioinformatics IDP, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
+      Bioinformatics IDP, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:dongyuansong@ucla.edu" class="email">dongyuansong@ucla.edu</a>
       </address>
-                              <h4 data-toc-skip class="author">Qingyang Wang</h4>
+                              <h4 data-toc-skip class="author">Qingyang
+Wang</h4>
             <address class="author_afil">
-      Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
+      Department of Statistics, University of California, Los
+Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">20 May 2023</h4>
+            <h4 data-toc-skip class="date">17 July 2023</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-librarySize-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-librarySize-vignette.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/vignettes/vignettes/scDesign3-librarySize-vignette.Rmd" class="external-link"><code>vignettes/vignettes/scDesign3-librarySize-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-librarySize-vignette.Rmd</code></div>
     </div>
 
@@ -120,23 +127,31 @@ pre {
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>In this tutorial, we will show how to use scDesign3 to simulate datasets adjusted by cell library size. The purpose of this tutorial is to show that including the library size when modeling the marginal distribution for each gene can help cells in the synthetic data have more similar library sizes as the cells in the real data.</p>
+<p>In this tutorial, we will show how to use scDesign3 to simulate
+datasets adjusted by cell library size. The purpose of this tutorial is
+to show that including the library size when modeling the marginal
+distribution for each gene can help cells in the synthetic data have
+more similar library sizes as the cells in the real data.</p>
 </div>
 <div class="section level2">
 <h2 id="read-in-the-reference-data">Read in the reference data<a class="anchor" aria-label="anchor" href="#read-in-the-reference-data"></a>
 </h2>
-<p>The raw data is from the R package <code>DuoClustering2018</code> which contain a set of datasets with true cell type labels.</p>
+<p>The raw data is from the R package <code>DuoClustering2018</code>
+which contain a set of datasets with true cell type labels.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/get.html" class="external-link">get</a></span><span class="op">(</span><span class="st">"sce_filteredExpr10_Zhengmix4eq"</span><span class="op">)</span><span class="op">(</span>metadata <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">cell_type</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">as.factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">phenoid</span><span class="op">)</span></span></code></pre></div>
 <p>We then calculate the library size for each cell.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">library</span> <span class="op">=</span> <span class="fu">colSums</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">$</span><span class="va">library</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="simulation">Simulation<a class="anchor" aria-label="anchor" href="#simulation"></a>
 </h2>
-<p>Then, we set the mu_formula as cell_type and offsetted by the cell library size to generate new dataset adjusted by library size. The library size is log-transformed because the link function for <span class="math inline">\(\mu\)</span> of the negative binomial distribution in GAMLSS is <span class="math inline">\(\log\)</span>.</p>
+<p>Then, we set the mu_formula as cell_type and offsetted by the cell
+library size to generate new dataset adjusted by library size. The
+library size is log-transformed because the link function for <span class="math inline">\(\mu\)</span> of the negative binomial distribution
+in GAMLSS is <span class="math inline">\(\log\)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">example_simu</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/scdesign3.html">scdesign3</a></span><span class="op">(</span></span>
@@ -156,15 +171,18 @@ pre {
 <span>    DT <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>    pseudo_obs <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>    return_model <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    nonzerovar <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    parallelization <span class="op">=</span> <span class="st">"pbmcmapply"</span>,</span>
+<span>    important_feature <span class="op">=</span> <span class="st">"auto"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<p>Then, we can create the <code>SinglecellExperiment</code> object using the synthetic count matrix and store the <code>logcounts</code> to the input and synthetic <code>SinglecellExperiment</code> objects.</p>
+<p>Then, we can create the <code>SinglecellExperiment</code> object
+using the synthetic count matrix and store the <code>logcounts</code> to
+the input and synthetic <code>SinglecellExperiment</code> objects.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="va">sce</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span></span>
+<span><span class="va">simu_sce</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/SingleCellExperiment.html" class="external-link">SingleCellExperiment</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">example_simu</span><span class="op">$</span><span class="va">new_count</span><span class="op">)</span>, colData <span class="op">=</span> <span class="va">example_simu</span><span class="op">$</span><span class="va">new_covariate</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/assays.html" class="external-link">logcounts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log1p</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span><span class="op">$</span><span class="va">library</span> <span class="op">&lt;-</span> <span class="fu">colSums</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span><span class="op">$</span><span class="va">library</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visualization">Visualization<a class="anchor" aria-label="anchor" href="#visualization"></a>
@@ -180,7 +198,8 @@ pre {
 <span>                                  n_pc <span class="op">=</span> <span class="fl">20</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">compare_figure</span><span class="op">$</span><span class="va">p_umap</span><span class="op">)</span></span></code></pre></div>
 <p><img src="scDesign3-librarySize-vignette_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
-<p>The violin plot below shows the cells in simulated dataset have similar library size as the cells in the reference dataset.</p>
+<p>The violin plot below shows the cells in simulated dataset have
+similar library size as the cells in the reference dataset.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df1</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">sce</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">library</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"Reference"</span><span class="op">)</span></span>
 <span><span class="va">df2</span> <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">simu_sce</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="op">)</span>  <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">library</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Method <span class="op">=</span> <span class="st">"scDesign3"</span><span class="op">)</span></span>
@@ -194,13 +213,13 @@ pre {
 </h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.2.2 Patched (2022-11-10 r83330)</span></span>
+<span><span class="co">#&gt; R version 4.3.0 (2023-04-21)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.6 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3;  LAPACK version 3.9.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
 <span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -210,96 +229,95 @@ pre {
 <span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
 <span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
+<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
 <span><span class="co">#&gt; [1] stats4    stats     graphics  grDevices utils     datasets  methods  </span></span>
 <span><span class="co">#&gt; [8] base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] forcats_0.5.2               stringr_1.5.0              </span></span>
-<span><span class="co">#&gt;  [3] dplyr_1.0.10                purrr_1.0.1                </span></span>
-<span><span class="co">#&gt;  [5] readr_2.1.3                 tidyr_1.2.1                </span></span>
-<span><span class="co">#&gt;  [7] tibble_3.1.8                tidyverse_1.3.2            </span></span>
-<span><span class="co">#&gt;  [9] scran_1.24.1                scuttle_1.8.3              </span></span>
-<span><span class="co">#&gt; [11] DuoClustering2018_1.14.0    ggplot2_3.4.0              </span></span>
-<span><span class="co">#&gt; [13] SingleCellExperiment_1.20.0 SummarizedExperiment_1.28.0</span></span>
-<span><span class="co">#&gt; [15] Biobase_2.58.0              GenomicRanges_1.50.2       </span></span>
-<span><span class="co">#&gt; [17] GenomeInfoDb_1.34.6         IRanges_2.32.0             </span></span>
-<span><span class="co">#&gt; [19] S4Vectors_0.36.1            BiocGenerics_0.44.0        </span></span>
-<span><span class="co">#&gt; [21] MatrixGenerics_1.10.0       matrixStats_0.63.0         </span></span>
-<span><span class="co">#&gt; [23] scDesign3_0.99.2            BiocStyle_2.24.0           </span></span>
+<span><span class="co">#&gt;  [1] lubridate_1.9.2             forcats_1.0.0              </span></span>
+<span><span class="co">#&gt;  [3] stringr_1.5.0               dplyr_1.1.2                </span></span>
+<span><span class="co">#&gt;  [5] purrr_1.0.1                 readr_2.1.4                </span></span>
+<span><span class="co">#&gt;  [7] tidyr_1.3.0                 tibble_3.2.1               </span></span>
+<span><span class="co">#&gt;  [9] tidyverse_2.0.0             scran_1.28.1               </span></span>
+<span><span class="co">#&gt; [11] scuttle_1.10.1              DuoClustering2018_1.18.0   </span></span>
+<span><span class="co">#&gt; [13] ggplot2_3.4.2               SingleCellExperiment_1.22.0</span></span>
+<span><span class="co">#&gt; [15] SummarizedExperiment_1.30.2 Biobase_2.60.0             </span></span>
+<span><span class="co">#&gt; [17] GenomicRanges_1.52.0        GenomeInfoDb_1.36.1        </span></span>
+<span><span class="co">#&gt; [19] IRanges_2.34.1              S4Vectors_0.38.1           </span></span>
+<span><span class="co">#&gt; [21] BiocGenerics_0.46.0         MatrixGenerics_1.12.2      </span></span>
+<span><span class="co">#&gt; [23] matrixStats_1.0.0           scDesign3_0.99.5           </span></span>
+<span><span class="co">#&gt; [25] BiocStyle_2.28.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] readxl_1.4.1                  backports_1.4.1              </span></span>
-<span><span class="co">#&gt;   [3] AnnotationHub_3.4.0           BiocFileCache_2.6.0          </span></span>
-<span><span class="co">#&gt;   [5] systemfonts_1.0.4             plyr_1.8.8                   </span></span>
-<span><span class="co">#&gt;   [7] igraph_1.3.5                  splines_4.2.2                </span></span>
-<span><span class="co">#&gt;   [9] gamlss_5.4-10                 BiocParallel_1.32.5          </span></span>
-<span><span class="co">#&gt;  [11] digest_0.6.31                 htmltools_0.5.4              </span></span>
-<span><span class="co">#&gt;  [13] viridis_0.6.2                 fansi_1.0.3                  </span></span>
-<span><span class="co">#&gt;  [15] magrittr_2.0.3                memoise_2.0.1                </span></span>
-<span><span class="co">#&gt;  [17] ScaledMatrix_1.4.1            googlesheets4_1.0.1          </span></span>
-<span><span class="co">#&gt;  [19] cluster_2.1.4                 tzdb_0.3.0                   </span></span>
-<span><span class="co">#&gt;  [21] limma_3.54.0                  Biostrings_2.64.1            </span></span>
-<span><span class="co">#&gt;  [23] modelr_0.1.10                 askpass_1.1                  </span></span>
-<span><span class="co">#&gt;  [25] timechange_0.2.0              pkgdown_2.0.7                </span></span>
-<span><span class="co">#&gt;  [27] colorspace_2.0-3              rvest_1.0.3                  </span></span>
-<span><span class="co">#&gt;  [29] blob_1.2.3                    rappdirs_0.3.3               </span></span>
-<span><span class="co">#&gt;  [31] gamlss.data_6.0-2             haven_2.5.1                  </span></span>
-<span><span class="co">#&gt;  [33] textshaping_0.3.6             xfun_0.36                    </span></span>
-<span><span class="co">#&gt;  [35] crayon_1.5.2                  RCurl_1.98-1.9               </span></span>
-<span><span class="co">#&gt;  [37] jsonlite_1.8.4                survival_3.5-5               </span></span>
-<span><span class="co">#&gt;  [39] glue_1.6.2                    gargle_1.2.1                 </span></span>
-<span><span class="co">#&gt;  [41] gtable_0.3.1                  zlibbioc_1.44.0              </span></span>
-<span><span class="co">#&gt;  [43] XVector_0.38.0                DelayedArray_0.24.0          </span></span>
-<span><span class="co">#&gt;  [45] BiocSingular_1.12.0           scales_1.2.1                 </span></span>
-<span><span class="co">#&gt;  [47] mvtnorm_1.1-3                 DBI_1.1.3                    </span></span>
-<span><span class="co">#&gt;  [49] edgeR_3.40.1                  ggthemes_4.2.4               </span></span>
-<span><span class="co">#&gt;  [51] Rcpp_1.0.9                    viridisLite_0.4.1            </span></span>
-<span><span class="co">#&gt;  [53] xtable_1.8-4                  reticulate_1.27              </span></span>
-<span><span class="co">#&gt;  [55] dqrng_0.3.0                   bit_4.0.5                    </span></span>
-<span><span class="co">#&gt;  [57] rsvd_1.0.5                    mclust_6.0.0                 </span></span>
-<span><span class="co">#&gt;  [59] umap_0.2.9.0                  metapod_1.4.0                </span></span>
-<span><span class="co">#&gt;  [61] httr_1.4.4                    ellipsis_0.3.2               </span></span>
-<span><span class="co">#&gt;  [63] farver_2.1.1                  pkgconfig_2.0.3              </span></span>
-<span><span class="co">#&gt;  [65] sass_0.4.4                    dbplyr_2.2.1                 </span></span>
-<span><span class="co">#&gt;  [67] locfit_1.5-9.7                utf8_1.2.2                   </span></span>
-<span><span class="co">#&gt;  [69] labeling_0.4.2                tidyselect_1.2.0             </span></span>
-<span><span class="co">#&gt;  [71] rlang_1.0.6                   reshape2_1.4.4               </span></span>
-<span><span class="co">#&gt;  [73] later_1.3.0                   AnnotationDbi_1.58.0         </span></span>
-<span><span class="co">#&gt;  [75] cellranger_1.1.0              munsell_0.5.0                </span></span>
-<span><span class="co">#&gt;  [77] BiocVersion_3.15.2            tools_4.2.2                  </span></span>
-<span><span class="co">#&gt;  [79] cachem_1.0.6                  cli_3.6.0                    </span></span>
-<span><span class="co">#&gt;  [81] generics_0.1.3                RSQLite_2.2.20               </span></span>
-<span><span class="co">#&gt;  [83] ExperimentHub_2.4.0           broom_1.0.2                  </span></span>
-<span><span class="co">#&gt;  [85] evaluate_0.19                 fastmap_1.1.0                </span></span>
-<span><span class="co">#&gt;  [87] yaml_2.3.6                    ragg_1.2.5                   </span></span>
-<span><span class="co">#&gt;  [89] knitr_1.41                    bit64_4.0.5                  </span></span>
-<span><span class="co">#&gt;  [91] fs_1.5.2                      KEGGREST_1.36.3              </span></span>
-<span><span class="co">#&gt;  [93] nlme_3.1-162                  sparseMatrixStats_1.10.0     </span></span>
-<span><span class="co">#&gt;  [95] mime_0.12                     xml2_1.3.3                   </span></span>
-<span><span class="co">#&gt;  [97] compiler_4.2.2                filelock_1.0.2               </span></span>
-<span><span class="co">#&gt;  [99] curl_5.0.0                    png_0.1-8                    </span></span>
-<span><span class="co">#&gt; [101] interactiveDisplayBase_1.34.0 reprex_2.0.2                 </span></span>
-<span><span class="co">#&gt; [103] statmod_1.5.0                 bslib_0.4.2                  </span></span>
-<span><span class="co">#&gt; [105] stringi_1.7.12                highr_0.10                   </span></span>
-<span><span class="co">#&gt; [107] RSpectra_0.16-1               desc_1.4.2                   </span></span>
-<span><span class="co">#&gt; [109] lattice_0.20-45               bluster_1.6.0                </span></span>
-<span><span class="co">#&gt; [111] Matrix_1.5-1                  vctrs_0.5.1                  </span></span>
-<span><span class="co">#&gt; [113] pillar_1.8.1                  lifecycle_1.0.3              </span></span>
-<span><span class="co">#&gt; [115] BiocManager_1.30.19           jquerylib_0.1.4              </span></span>
-<span><span class="co">#&gt; [117] BiocNeighbors_1.14.0          bitops_1.0-7                 </span></span>
-<span><span class="co">#&gt; [119] irlba_2.3.5.1                 httpuv_1.6.8                 </span></span>
-<span><span class="co">#&gt; [121] R6_2.5.1                      bookdown_0.31                </span></span>
-<span><span class="co">#&gt; [123] promises_1.2.0.1              gridExtra_2.3                </span></span>
-<span><span class="co">#&gt; [125] codetools_0.2-19              MASS_7.3-58.2                </span></span>
-<span><span class="co">#&gt; [127] assertthat_0.2.1              openssl_2.0.5                </span></span>
-<span><span class="co">#&gt; [129] rprojroot_2.0.3               withr_2.5.0                  </span></span>
-<span><span class="co">#&gt; [131] GenomeInfoDbData_1.2.9        mgcv_1.8-41                  </span></span>
-<span><span class="co">#&gt; [133] hms_1.1.2                     parallel_4.2.2               </span></span>
-<span><span class="co">#&gt; [135] grid_4.2.2                    beachmat_2.14.0              </span></span>
-<span><span class="co">#&gt; [137] rmarkdown_2.19                DelayedMatrixStats_1.20.0    </span></span>
-<span><span class="co">#&gt; [139] googledrive_2.0.0             lubridate_1.9.0              </span></span>
-<span><span class="co">#&gt; [141] shiny_1.7.4                   gamlss.dist_6.0-5</span></span></code></pre></div>
+<span><span class="co">#&gt;   [1] rstudioapi_0.15.0             jsonlite_1.8.7               </span></span>
+<span><span class="co">#&gt;   [3] umap_0.2.10.0                 magrittr_2.0.3               </span></span>
+<span><span class="co">#&gt;   [5] farver_2.1.1                  rmarkdown_2.23               </span></span>
+<span><span class="co">#&gt;   [7] fs_1.6.2                      zlibbioc_1.46.0              </span></span>
+<span><span class="co">#&gt;   [9] ragg_1.2.5                    vctrs_0.6.3                  </span></span>
+<span><span class="co">#&gt;  [11] memoise_2.0.1                 DelayedMatrixStats_1.22.1    </span></span>
+<span><span class="co">#&gt;  [13] RCurl_1.98-1.12               askpass_1.1                  </span></span>
+<span><span class="co">#&gt;  [15] htmltools_0.5.5               S4Arrays_1.0.4               </span></span>
+<span><span class="co">#&gt;  [17] AnnotationHub_3.8.0           curl_5.0.1                   </span></span>
+<span><span class="co">#&gt;  [19] BiocNeighbors_1.18.0          sass_0.4.6                   </span></span>
+<span><span class="co">#&gt;  [21] bslib_0.5.0                   desc_1.4.2                   </span></span>
+<span><span class="co">#&gt;  [23] plyr_1.8.8                    cachem_1.0.8                 </span></span>
+<span><span class="co">#&gt;  [25] igraph_1.5.0                  mime_0.12                    </span></span>
+<span><span class="co">#&gt;  [27] lifecycle_1.0.3               pkgconfig_2.0.3              </span></span>
+<span><span class="co">#&gt;  [29] rsvd_1.0.5                    Matrix_1.6-0                 </span></span>
+<span><span class="co">#&gt;  [31] R6_2.5.1                      fastmap_1.1.1                </span></span>
+<span><span class="co">#&gt;  [33] GenomeInfoDbData_1.2.10       shiny_1.7.4.1                </span></span>
+<span><span class="co">#&gt;  [35] digest_0.6.33                 colorspace_2.1-0             </span></span>
+<span><span class="co">#&gt;  [37] AnnotationDbi_1.62.2          rprojroot_2.0.3              </span></span>
+<span><span class="co">#&gt;  [39] RSpectra_0.16-1               dqrng_0.3.0                  </span></span>
+<span><span class="co">#&gt;  [41] irlba_2.3.5.1                 ExperimentHub_2.8.0          </span></span>
+<span><span class="co">#&gt;  [43] textshaping_0.3.6             RSQLite_2.3.1                </span></span>
+<span><span class="co">#&gt;  [45] beachmat_2.16.0               labeling_0.4.2               </span></span>
+<span><span class="co">#&gt;  [47] filelock_1.0.2                timechange_0.2.0             </span></span>
+<span><span class="co">#&gt;  [49] fansi_1.0.4                   mgcv_1.8-42                  </span></span>
+<span><span class="co">#&gt;  [51] httr_1.4.6                    compiler_4.3.0               </span></span>
+<span><span class="co">#&gt;  [53] bit64_4.0.5                   withr_2.5.0                  </span></span>
+<span><span class="co">#&gt;  [55] BiocParallel_1.34.2           viridis_0.6.3                </span></span>
+<span><span class="co">#&gt;  [57] DBI_1.1.3                     highr_0.10                   </span></span>
+<span><span class="co">#&gt;  [59] MASS_7.3-60                   openssl_2.0.6                </span></span>
+<span><span class="co">#&gt;  [61] rappdirs_0.3.3                DelayedArray_0.26.6          </span></span>
+<span><span class="co">#&gt;  [63] bluster_1.10.0                tools_4.3.0                  </span></span>
+<span><span class="co">#&gt;  [65] interactiveDisplayBase_1.38.0 httpuv_1.6.11                </span></span>
+<span><span class="co">#&gt;  [67] glue_1.6.2                    nlme_3.1-162                 </span></span>
+<span><span class="co">#&gt;  [69] promises_1.2.0.1              grid_4.3.0                   </span></span>
+<span><span class="co">#&gt;  [71] cluster_2.1.4                 reshape2_1.4.4               </span></span>
+<span><span class="co">#&gt;  [73] generics_0.1.3                gtable_0.3.3                 </span></span>
+<span><span class="co">#&gt;  [75] tzdb_0.4.0                    hms_1.1.3                    </span></span>
+<span><span class="co">#&gt;  [77] metapod_1.8.0                 BiocSingular_1.16.0          </span></span>
+<span><span class="co">#&gt;  [79] ScaledMatrix_1.8.1            utf8_1.2.3                   </span></span>
+<span><span class="co">#&gt;  [81] XVector_0.40.0                BiocVersion_3.17.1           </span></span>
+<span><span class="co">#&gt;  [83] pillar_1.9.0                  limma_3.56.2                 </span></span>
+<span><span class="co">#&gt;  [85] later_1.3.1                   splines_4.3.0                </span></span>
+<span><span class="co">#&gt;  [87] BiocFileCache_2.8.0           lattice_0.21-8               </span></span>
+<span><span class="co">#&gt;  [89] survival_3.5-5                bit_4.0.5                    </span></span>
+<span><span class="co">#&gt;  [91] gamlss.data_6.0-2             tidyselect_1.2.0             </span></span>
+<span><span class="co">#&gt;  [93] locfit_1.5-9.8                Biostrings_2.68.1            </span></span>
+<span><span class="co">#&gt;  [95] knitr_1.43                    gridExtra_2.3                </span></span>
+<span><span class="co">#&gt;  [97] bookdown_0.34                 edgeR_3.42.4                 </span></span>
+<span><span class="co">#&gt;  [99] xfun_0.39                     statmod_1.5.0                </span></span>
+<span><span class="co">#&gt; [101] stringi_1.7.12                yaml_2.3.7                   </span></span>
+<span><span class="co">#&gt; [103] evaluate_0.21                 codetools_0.2-19             </span></span>
+<span><span class="co">#&gt; [105] BiocManager_1.30.21           cli_3.6.1                    </span></span>
+<span><span class="co">#&gt; [107] reticulate_1.30               pbmcapply_1.5.1              </span></span>
+<span><span class="co">#&gt; [109] xtable_1.8-4                  systemfonts_1.0.4            </span></span>
+<span><span class="co">#&gt; [111] munsell_0.5.0                 jquerylib_0.1.4              </span></span>
+<span><span class="co">#&gt; [113] Rcpp_1.0.11                   dbplyr_2.3.3                 </span></span>
+<span><span class="co">#&gt; [115] png_0.1-8                     parallel_4.3.0               </span></span>
+<span><span class="co">#&gt; [117] ellipsis_0.3.2                pkgdown_2.0.7                </span></span>
+<span><span class="co">#&gt; [119] blob_1.2.4                    mclust_6.0.0                 </span></span>
+<span><span class="co">#&gt; [121] sparseMatrixStats_1.12.2      bitops_1.0-7                 </span></span>
+<span><span class="co">#&gt; [123] gamlss.dist_6.0-5             mvtnorm_1.2-2                </span></span>
+<span><span class="co">#&gt; [125] viridisLite_0.4.2             ggthemes_4.2.4               </span></span>
+<span><span class="co">#&gt; [127] scales_1.2.1                  gamlss_5.4-12                </span></span>
+<span><span class="co">#&gt; [129] crayon_1.5.2                  rlang_1.1.1                  </span></span>
+<span><span class="co">#&gt; [131] KEGGREST_1.40.0</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
