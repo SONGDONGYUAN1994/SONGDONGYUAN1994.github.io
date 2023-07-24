@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">20 May 2023</h4>
+            <h4 data-toc-skip class="date">17 July 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-spatial-deconvolution.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-spatial-deconvolution.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-spatial-deconvolution.Rmd</code></div>
@@ -188,7 +188,6 @@
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>  copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  input_data <span class="op">=</span> <span class="va">MOBSC_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -197,7 +196,7 @@
 <span>  marginal_list <span class="op">=</span> <span class="va">MOBSC_marginal</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  new_covariate <span class="op">=</span> <span class="va">MOBSC_data</span><span class="op">$</span><span class="va">newCovariate</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">MOBSC_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -244,7 +243,6 @@
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
 <span>  copula <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  input_data <span class="op">=</span> <span class="va">MOBSP_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span>
 <span></span>
@@ -253,7 +251,7 @@
 <span>  marginal_list <span class="op">=</span> <span class="va">MOBSP_marginal</span>,</span>
 <span>  n_cores <span class="op">=</span> <span class="fl">2</span>,</span>
 <span>  family_use <span class="op">=</span> <span class="st">"nb"</span>,</span>
-<span>  new_covariate <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  new_covariate <span class="op">=</span> <span class="va">MOBSP_data</span><span class="op">$</span><span class="va">newCovariate</span>,</span>
 <span>  data <span class="op">=</span> <span class="va">MOBSP_data</span><span class="op">$</span><span class="va">dat</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now we get the fitted models for scRNA-seq and spatial data. We need to extract their mean parameters (i.e., expected expression values).</p>
@@ -274,7 +272,7 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">colors_cell_type</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span>, <span class="st">"#009E73"</span>, </span>
 <span>                       <span class="st">"#0072B2"</span><span class="op">)</span></span>
-<span><span class="va">d_pie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSP_sce</span><span class="op">)</span>, rownames <span class="op">=</span> <span class="st">"cell"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">proportion_mat</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">MOBSP_sce</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>X<span class="op">=</span> <span class="va">spatial1</span>, Y <span class="op">=</span> <span class="va">spatial2</span><span class="op">)</span></span>
+<span><span class="va">d_pie</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">MOBSP_sce</span><span class="op">)</span>, rownames <span class="op">=</span> <span class="st">"cell"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_cols.html" class="external-link">bind_cols</a></span><span class="op">(</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">proportion_mat</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>region <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dim.html" class="external-link">dim</a></span><span class="op">(</span><span class="va">MOBSP_sce</span><span class="op">)</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>X<span class="op">=</span> <span class="va">spatial1</span>, Y <span class="op">=</span> <span class="va">spatial2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">p_pie_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/scatterpie/man/geom_scatterpie.html" class="external-link">geom_scatterpie</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">X</span>, y<span class="op">=</span><span class="va">Y</span>, group<span class="op">=</span><span class="va">region</span><span class="op">)</span>, data<span class="op">=</span><span class="va">d_pie</span> ,</span>
 <span>                           cols <span class="op">=</span> <span class="va">cell_type</span>, color<span class="op">=</span><span class="cn">NA</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -331,11 +329,11 @@
 <span></span>
 <span><span class="va">MOBSP_mixture_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html" class="external-link">transform</a></span><span class="op">(</span><span class="va">MOBSP_mixture_tbl</span>, Expression<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/ave.html" class="external-link">ave</a></span><span class="op">(</span><span class="va">Expression</span>, <span class="va">Gene</span>, FUN<span class="op">=</span><span class="fu">scales</span><span class="fu">::</span><span class="va"><a href="https://scales.r-lib.org/reference/rescale.html" class="external-link">rescale</a></span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">MOBSP_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">MOBSP_real_tbl</span>, <span class="va">MOBSP_mixture_tbl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">MOBSP_tbl</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">MOBSP_real_tbl</span>, <span class="va">MOBSP_mixture_tbl</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">MOBSC_marker</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Penk"</span>, <span class="st">"Apold1"</span>, <span class="st">"Cdhr1"</span>, <span class="st">"S100a5"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p_MOB_prop</span> <span class="op">&lt;-</span> <span class="va">MOBSP_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Gene</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">MOBSC_marker</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Gene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">Gene</span>, levels <span class="op">=</span> <span class="va">MOBSC_marker</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">X</span>, y <span class="op">=</span> <span class="va">Y</span>, color <span class="op">=</span> <span class="va">Expression</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> <span class="fu">ggrastr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrastr/man/rasterise.html" class="external-link">rasterize</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, limits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">Method</span> <span class="op">~</span> <span class="va">Gene</span> <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
+<span><span class="va">p_MOB_prop</span> <span class="op">&lt;-</span> <span class="va">MOBSP_tbl</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">Gene</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="va">MOBSC_marker</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>Gene <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">factor</a></span><span class="op">(</span><span class="va">Gene</span>, levels <span class="op">=</span> <span class="va">MOBSC_marker</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">X</span>, y <span class="op">=</span> <span class="va">Y</span>, color <span class="op">=</span> <span class="va">Expression</span><span class="op">)</span><span class="op">)</span>  <span class="op">+</span> <span class="fu">ggrastr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggrastr/man/rasterize.html" class="external-link">rasterize</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_gradient.html" class="external-link">scale_colour_gradientn</a></span><span class="op">(</span>colors <span class="op">=</span> <span class="fu"><a href="https://sjmgarnier.github.io/viridis/reference/viridis_pal.html" class="external-link">viridis_pal</a></span><span class="op">(</span>option <span class="op">=</span> <span class="st">"B"</span>, direction <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>, limits<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html" class="external-link">coord_fixed</a></span><span class="op">(</span>ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">Method</span> <span class="op">~</span> <span class="va">Gene</span> <span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_bw</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"right"</span><span class="op">)</span>  <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span></span>
 <span>    panel.grid.minor <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    panel.grid.major <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>    axis.text.x<span class="op">=</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_blank</a></span><span class="op">(</span><span class="op">)</span>,</span>
@@ -350,13 +348,13 @@
 </h2>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; R version 4.2.2 Patched (2022-11-10 r83330)</span></span>
+<span><span class="co">#&gt; R version 4.3.0 (2023-04-21)</span></span>
 <span><span class="co">#&gt; Platform: x86_64-pc-linux-gnu (64-bit)</span></span>
-<span><span class="co">#&gt; Running under: Ubuntu 20.04.5 LTS</span></span>
+<span><span class="co">#&gt; Running under: Ubuntu 20.04.6 LTS</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Matrix products: default</span></span>
-<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3</span></span>
-<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3</span></span>
+<span><span class="co">#&gt; BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 </span></span>
+<span><span class="co">#&gt; LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/liblapack.so.3;  LAPACK version 3.9.0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; locale:</span></span>
 <span><span class="co">#&gt;  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              </span></span>
@@ -366,111 +364,104 @@
 <span><span class="co">#&gt;  [9] LC_ADDRESS=C               LC_TELEPHONE=C            </span></span>
 <span><span class="co">#&gt; [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       </span></span>
 <span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; time zone: America/Los_Angeles</span></span>
+<span><span class="co">#&gt; tzcode source: system (glibc)</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; attached base packages:</span></span>
 <span><span class="co">#&gt; [1] grid      stats4    stats     graphics  grDevices utils     datasets </span></span>
 <span><span class="co">#&gt; [8] methods   base     </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; other attached packages:</span></span>
-<span><span class="co">#&gt;  [1] scatterpie_0.1.8            IOBR_0.99.9                </span></span>
-<span><span class="co">#&gt;  [3] tidyHeatmap_1.8.1           ComplexHeatmap_2.12.1      </span></span>
-<span><span class="co">#&gt;  [5] survival_3.5-5              ggpubr_0.5.0               </span></span>
-<span><span class="co">#&gt;  [7] tibble_3.1.8                viridis_0.6.2              </span></span>
-<span><span class="co">#&gt;  [9] viridisLite_0.4.1           dplyr_1.0.10               </span></span>
-<span><span class="co">#&gt; [11] ggplot2_3.4.0               SingleCellExperiment_1.20.0</span></span>
-<span><span class="co">#&gt; [13] SummarizedExperiment_1.28.0 Biobase_2.58.0             </span></span>
-<span><span class="co">#&gt; [15] GenomicRanges_1.50.2        GenomeInfoDb_1.34.6        </span></span>
-<span><span class="co">#&gt; [17] IRanges_2.32.0              S4Vectors_0.36.1           </span></span>
-<span><span class="co">#&gt; [19] BiocGenerics_0.44.0         MatrixGenerics_1.10.0      </span></span>
-<span><span class="co">#&gt; [21] matrixStats_0.63.0          scDesign3_0.99.2           </span></span>
-<span><span class="co">#&gt; [23] BiocStyle_2.24.0           </span></span>
+<span><span class="co">#&gt;  [1] scatterpie_0.2.1            IOBR_0.99.9                </span></span>
+<span><span class="co">#&gt;  [3] tidyHeatmap_1.8.1           ComplexHeatmap_2.16.0      </span></span>
+<span><span class="co">#&gt;  [5] survival_3.5-5              ggpubr_0.6.0               </span></span>
+<span><span class="co">#&gt;  [7] tibble_3.2.1                viridis_0.6.3              </span></span>
+<span><span class="co">#&gt;  [9] viridisLite_0.4.2           dplyr_1.1.2                </span></span>
+<span><span class="co">#&gt; [11] ggplot2_3.4.2               SingleCellExperiment_1.22.0</span></span>
+<span><span class="co">#&gt; [13] SummarizedExperiment_1.30.2 Biobase_2.60.0             </span></span>
+<span><span class="co">#&gt; [15] GenomicRanges_1.52.0        GenomeInfoDb_1.36.1        </span></span>
+<span><span class="co">#&gt; [17] IRanges_2.34.1              S4Vectors_0.38.1           </span></span>
+<span><span class="co">#&gt; [19] BiocGenerics_0.46.0         MatrixGenerics_1.12.2      </span></span>
+<span><span class="co">#&gt; [21] matrixStats_1.0.0           scDesign3_0.99.5           </span></span>
+<span><span class="co">#&gt; [23] BiocStyle_2.28.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
-<span><span class="co">#&gt;   [1] ragg_1.2.5                tidyr_1.2.1              </span></span>
-<span><span class="co">#&gt;   [3] bit64_4.0.5               knitr_1.41               </span></span>
-<span><span class="co">#&gt;   [5] irlba_2.3.5.1             DelayedArray_0.24.0      </span></span>
-<span><span class="co">#&gt;   [7] data.table_1.14.6         KEGGREST_1.36.3          </span></span>
-<span><span class="co">#&gt;   [9] RCurl_1.98-1.9            doParallel_1.0.17        </span></span>
-<span><span class="co">#&gt;  [11] generics_0.1.3            preprocessCore_1.58.0    </span></span>
-<span><span class="co">#&gt;  [13] ScaledMatrix_1.4.1        cowplot_1.1.1            </span></span>
-<span><span class="co">#&gt;  [15] RSQLite_2.2.20            proxy_0.4-27             </span></span>
-<span><span class="co">#&gt;  [17] bit_4.0.5                 tzdb_0.3.0               </span></span>
-<span><span class="co">#&gt;  [19] xml2_1.3.3                lubridate_1.9.0          </span></span>
-<span><span class="co">#&gt;  [21] assertthat_0.2.1          tidyverse_1.3.2          </span></span>
-<span><span class="co">#&gt;  [23] gargle_1.2.1              xfun_0.36                </span></span>
-<span><span class="co">#&gt;  [25] hms_1.1.2                 jquerylib_0.1.4          </span></span>
-<span><span class="co">#&gt;  [27] evaluate_0.19             fansi_1.0.3              </span></span>
-<span><span class="co">#&gt;  [29] dendextend_1.17.1         dbplyr_2.2.1             </span></span>
-<span><span class="co">#&gt;  [31] readxl_1.4.1              km.ci_0.5-6              </span></span>
-<span><span class="co">#&gt;  [33] DBI_1.1.3                 geneplotter_1.74.0       </span></span>
-<span><span class="co">#&gt;  [35] googledrive_2.0.0         purrr_1.0.1              </span></span>
-<span><span class="co">#&gt;  [37] ellipsis_0.3.2            corrplot_0.92            </span></span>
-<span><span class="co">#&gt;  [39] backports_1.4.1           bookdown_0.31            </span></span>
-<span><span class="co">#&gt;  [41] annotate_1.74.0           sparseMatrixStats_1.10.0 </span></span>
-<span><span class="co">#&gt;  [43] vctrs_0.5.1               Cairo_1.6-0              </span></span>
-<span><span class="co">#&gt;  [45] abind_1.4-5               cachem_1.0.6             </span></span>
-<span><span class="co">#&gt;  [47] withr_2.5.0               ggforce_0.4.1            </span></span>
-<span><span class="co">#&gt;  [49] gamlss_5.4-10             mclust_6.0.0             </span></span>
-<span><span class="co">#&gt;  [51] cluster_2.1.4             crayon_1.5.2             </span></span>
-<span><span class="co">#&gt;  [53] genefilter_1.78.0         glmnet_4.1-6             </span></span>
-<span><span class="co">#&gt;  [55] pkgconfig_2.0.3           labeling_0.4.2           </span></span>
-<span><span class="co">#&gt;  [57] tweenr_2.0.2              vipor_0.4.5              </span></span>
-<span><span class="co">#&gt;  [59] nlme_3.1-162              rlang_1.0.6              </span></span>
-<span><span class="co">#&gt;  [61] lifecycle_1.0.3           gamlss.data_6.0-2        </span></span>
-<span><span class="co">#&gt;  [63] modelr_0.1.10             rsvd_1.0.5               </span></span>
-<span><span class="co">#&gt;  [65] ggrastr_1.0.1             cellranger_1.1.0         </span></span>
-<span><span class="co">#&gt;  [67] rprojroot_2.0.3           polyclip_1.10-4          </span></span>
-<span><span class="co">#&gt;  [69] GSVA_1.44.5               graph_1.74.0             </span></span>
-<span><span class="co">#&gt;  [71] Matrix_1.5-1              KMsurv_0.1-5             </span></span>
-<span><span class="co">#&gt;  [73] carData_3.0-5             Rhdf5lib_1.20.0          </span></span>
-<span><span class="co">#&gt;  [75] zoo_1.8-11                reprex_2.0.2             </span></span>
-<span><span class="co">#&gt;  [77] beeswarm_0.4.0            GlobalOptions_0.1.2      </span></span>
-<span><span class="co">#&gt;  [79] googlesheets4_1.0.1       png_0.1-8                </span></span>
-<span><span class="co">#&gt;  [81] rjson_0.2.21              bitops_1.0-7             </span></span>
-<span><span class="co">#&gt;  [83] rhdf5filters_1.10.0       Biostrings_2.64.1        </span></span>
-<span><span class="co">#&gt;  [85] blob_1.2.3                DelayedMatrixStats_1.20.0</span></span>
-<span><span class="co">#&gt;  [87] shape_1.4.6               stringr_1.5.0            </span></span>
-<span><span class="co">#&gt;  [89] readr_2.1.3               rstatix_0.7.1            </span></span>
-<span><span class="co">#&gt;  [91] ggsignif_0.6.4            beachmat_2.14.0          </span></span>
-<span><span class="co">#&gt;  [93] scales_1.2.1              lpSolve_5.6.18           </span></span>
-<span><span class="co">#&gt;  [95] memoise_2.0.1             GSEABase_1.58.0          </span></span>
-<span><span class="co">#&gt;  [97] magrittr_2.0.3            zlibbioc_1.44.0          </span></span>
-<span><span class="co">#&gt;  [99] compiler_4.2.2            RColorBrewer_1.1-3       </span></span>
-<span><span class="co">#&gt; [101] clue_0.3-63               DESeq2_1.36.0            </span></span>
-<span><span class="co">#&gt; [103] cli_3.6.0                 XVector_0.38.0           </span></span>
-<span><span class="co">#&gt; [105] patchwork_1.1.2           MASS_7.3-58.2            </span></span>
-<span><span class="co">#&gt; [107] mgcv_1.8-41               limSolve_1.5.6           </span></span>
-<span><span class="co">#&gt; [109] tidyselect_1.2.0          stringi_1.7.12           </span></span>
-<span><span class="co">#&gt; [111] forcats_0.5.2             textshaping_0.3.6        </span></span>
-<span><span class="co">#&gt; [113] highr_0.10                yaml_2.3.6               </span></span>
-<span><span class="co">#&gt; [115] BiocSingular_1.12.0       locfit_1.5-9.7           </span></span>
-<span><span class="co">#&gt; [117] survMisc_0.5.6            pbmcapply_1.5.1          </span></span>
-<span><span class="co">#&gt; [119] sass_0.4.4                tools_4.2.2              </span></span>
-<span><span class="co">#&gt; [121] timechange_0.2.0          parallel_4.2.2           </span></span>
-<span><span class="co">#&gt; [123] circlize_0.4.15           gamlss.dist_6.0-5        </span></span>
-<span><span class="co">#&gt; [125] foreach_1.5.2             gridExtra_2.3            </span></span>
-<span><span class="co">#&gt; [127] farver_2.1.1              digest_0.6.31            </span></span>
-<span><span class="co">#&gt; [129] BiocManager_1.30.19       quadprog_1.5-8           </span></span>
-<span><span class="co">#&gt; [131] Rcpp_1.0.9                car_3.1-1                </span></span>
-<span><span class="co">#&gt; [133] broom_1.0.2               httr_1.4.4               </span></span>
-<span><span class="co">#&gt; [135] survminer_0.4.9           AnnotationDbi_1.58.0     </span></span>
-<span><span class="co">#&gt; [137] colorspace_2.0-3          rvest_1.0.3              </span></span>
-<span><span class="co">#&gt; [139] XML_3.99-0.13             fs_1.5.2                 </span></span>
-<span><span class="co">#&gt; [141] splines_4.2.2             pkgdown_2.0.7            </span></span>
-<span><span class="co">#&gt; [143] systemfonts_1.0.4         xtable_1.8-4             </span></span>
-<span><span class="co">#&gt; [145] jsonlite_1.8.4            ggfun_0.0.9              </span></span>
-<span><span class="co">#&gt; [147] R6_2.5.1                  pillar_1.8.1             </span></span>
-<span><span class="co">#&gt; [149] htmltools_0.5.4           glue_1.6.2               </span></span>
-<span><span class="co">#&gt; [151] fastmap_1.1.0             BiocParallel_1.32.5      </span></span>
-<span><span class="co">#&gt; [153] class_7.3-21              codetools_0.2-19         </span></span>
-<span><span class="co">#&gt; [155] mvtnorm_1.1-3             utf8_1.2.2               </span></span>
-<span><span class="co">#&gt; [157] lattice_0.20-45           bslib_0.4.2              </span></span>
-<span><span class="co">#&gt; [159] curl_5.0.0                ggbeeswarm_0.7.1         </span></span>
-<span><span class="co">#&gt; [161] limma_3.54.0              rmarkdown_2.19           </span></span>
-<span><span class="co">#&gt; [163] desc_1.4.2                munsell_0.5.0            </span></span>
-<span><span class="co">#&gt; [165] e1071_1.7-12              GetoptLong_1.0.5         </span></span>
-<span><span class="co">#&gt; [167] rhdf5_2.42.0              GenomeInfoDbData_1.2.9   </span></span>
-<span><span class="co">#&gt; [169] iterators_1.0.14          HDF5Array_1.26.0         </span></span>
-<span><span class="co">#&gt; [171] haven_2.5.1               gtable_0.3.1</span></span></code></pre></div>
+<span><span class="co">#&gt;   [1] splines_4.3.0             bitops_1.0-7             </span></span>
+<span><span class="co">#&gt;   [3] polyclip_1.10-4           preprocessCore_1.62.1    </span></span>
+<span><span class="co">#&gt;   [5] graph_1.78.0              XML_3.99-0.14            </span></span>
+<span><span class="co">#&gt;   [7] gamlss.data_6.0-2         lifecycle_1.0.3          </span></span>
+<span><span class="co">#&gt;   [9] rstatix_0.7.2             pbmcapply_1.5.1          </span></span>
+<span><span class="co">#&gt;  [11] doParallel_1.0.17         rprojroot_2.0.3          </span></span>
+<span><span class="co">#&gt;  [13] lattice_0.21-8            MASS_7.3-60              </span></span>
+<span><span class="co">#&gt;  [15] dendextend_1.17.1         backports_1.4.1          </span></span>
+<span><span class="co">#&gt;  [17] magrittr_2.0.3            limma_3.56.2             </span></span>
+<span><span class="co">#&gt;  [19] sass_0.4.6                rmarkdown_2.23           </span></span>
+<span><span class="co">#&gt;  [21] jquerylib_0.1.4           yaml_2.3.7               </span></span>
+<span><span class="co">#&gt;  [23] cowplot_1.1.1             DBI_1.1.3                </span></span>
+<span><span class="co">#&gt;  [25] RColorBrewer_1.1-3        abind_1.4-5              </span></span>
+<span><span class="co">#&gt;  [27] zlibbioc_1.46.0           quadprog_1.5-8           </span></span>
+<span><span class="co">#&gt;  [29] purrr_1.0.1               RCurl_1.98-1.12          </span></span>
+<span><span class="co">#&gt;  [31] tweenr_2.0.2              circlize_0.4.15          </span></span>
+<span><span class="co">#&gt;  [33] GenomeInfoDbData_1.2.10   KMsurv_0.1-5             </span></span>
+<span><span class="co">#&gt;  [35] irlba_2.3.5.1             GSVA_1.48.2              </span></span>
+<span><span class="co">#&gt;  [37] annotate_1.78.0           pkgdown_2.0.7            </span></span>
+<span><span class="co">#&gt;  [39] DelayedMatrixStats_1.22.1 codetools_0.2-19         </span></span>
+<span><span class="co">#&gt;  [41] DelayedArray_0.26.6       ggforce_0.4.1            </span></span>
+<span><span class="co">#&gt;  [43] tidyselect_1.2.0          shape_1.4.6              </span></span>
+<span><span class="co">#&gt;  [45] farver_2.1.1              ScaledMatrix_1.8.1       </span></span>
+<span><span class="co">#&gt;  [47] jsonlite_1.8.7            GetoptLong_1.0.5         </span></span>
+<span><span class="co">#&gt;  [49] e1071_1.7-13              iterators_1.0.14         </span></span>
+<span><span class="co">#&gt;  [51] systemfonts_1.0.4         foreach_1.5.2            </span></span>
+<span><span class="co">#&gt;  [53] tools_4.3.0               ragg_1.2.5               </span></span>
+<span><span class="co">#&gt;  [55] Rcpp_1.0.11               glue_1.6.2               </span></span>
+<span><span class="co">#&gt;  [57] gridExtra_2.3             mgcv_1.8-42              </span></span>
+<span><span class="co">#&gt;  [59] xfun_0.39                 DESeq2_1.40.2            </span></span>
+<span><span class="co">#&gt;  [61] HDF5Array_1.28.1          withr_2.5.0              </span></span>
+<span><span class="co">#&gt;  [63] BiocManager_1.30.21       fastmap_1.1.1            </span></span>
+<span><span class="co">#&gt;  [65] rhdf5filters_1.12.1       fansi_1.0.4              </span></span>
+<span><span class="co">#&gt;  [67] digest_0.6.33             rsvd_1.0.5               </span></span>
+<span><span class="co">#&gt;  [69] gamlss_5.4-12             R6_2.5.1                 </span></span>
+<span><span class="co">#&gt;  [71] textshaping_0.3.6         colorspace_2.1-0         </span></span>
+<span><span class="co">#&gt;  [73] Cairo_1.6-0               lpSolve_5.6.18           </span></span>
+<span><span class="co">#&gt;  [75] RSQLite_2.3.1             utf8_1.2.3               </span></span>
+<span><span class="co">#&gt;  [77] tidyr_1.3.0               generics_0.1.3           </span></span>
+<span><span class="co">#&gt;  [79] data.table_1.14.8         class_7.3-21             </span></span>
+<span><span class="co">#&gt;  [81] httr_1.4.6                S4Arrays_1.0.4           </span></span>
+<span><span class="co">#&gt;  [83] pkgconfig_2.0.3           gtable_0.3.3             </span></span>
+<span><span class="co">#&gt;  [85] blob_1.2.4                XVector_0.40.0           </span></span>
+<span><span class="co">#&gt;  [87] survMisc_0.5.6            htmltools_0.5.5          </span></span>
+<span><span class="co">#&gt;  [89] carData_3.0-5             bookdown_0.34            </span></span>
+<span><span class="co">#&gt;  [91] GSEABase_1.62.0           clue_0.3-64              </span></span>
+<span><span class="co">#&gt;  [93] scales_1.2.1              tidyverse_2.0.0          </span></span>
+<span><span class="co">#&gt;  [95] png_0.1-8                 corrplot_0.92            </span></span>
+<span><span class="co">#&gt;  [97] ggfun_0.1.1               knitr_1.43               </span></span>
+<span><span class="co">#&gt;  [99] km.ci_0.5-6               rjson_0.2.21             </span></span>
+<span><span class="co">#&gt; [101] nlme_3.1-162              proxy_0.4-27             </span></span>
+<span><span class="co">#&gt; [103] cachem_1.0.8              zoo_1.8-12               </span></span>
+<span><span class="co">#&gt; [105] rhdf5_2.44.0              GlobalOptions_0.1.2      </span></span>
+<span><span class="co">#&gt; [107] stringr_1.5.0             vipor_0.4.5              </span></span>
+<span><span class="co">#&gt; [109] parallel_4.3.0            AnnotationDbi_1.62.2     </span></span>
+<span><span class="co">#&gt; [111] ggrastr_1.0.2             desc_1.4.2               </span></span>
+<span><span class="co">#&gt; [113] pillar_1.9.0              vctrs_0.6.3              </span></span>
+<span><span class="co">#&gt; [115] car_3.1-2                 BiocSingular_1.16.0      </span></span>
+<span><span class="co">#&gt; [117] beachmat_2.16.0           xtable_1.8-4             </span></span>
+<span><span class="co">#&gt; [119] cluster_2.1.4             beeswarm_0.4.0           </span></span>
+<span><span class="co">#&gt; [121] gamlss.dist_6.0-5         evaluate_0.21            </span></span>
+<span><span class="co">#&gt; [123] mvtnorm_1.2-2             cli_3.6.1                </span></span>
+<span><span class="co">#&gt; [125] locfit_1.5-9.8            compiler_4.3.0           </span></span>
+<span><span class="co">#&gt; [127] rlang_1.1.1               crayon_1.5.2             </span></span>
+<span><span class="co">#&gt; [129] ggsignif_0.6.4            labeling_0.4.2           </span></span>
+<span><span class="co">#&gt; [131] survminer_0.4.9           mclust_6.0.0             </span></span>
+<span><span class="co">#&gt; [133] ggbeeswarm_0.7.2          fs_1.6.2                 </span></span>
+<span><span class="co">#&gt; [135] stringi_1.7.12            BiocParallel_1.34.2      </span></span>
+<span><span class="co">#&gt; [137] munsell_0.5.0             Biostrings_2.68.1        </span></span>
+<span><span class="co">#&gt; [139] limSolve_1.5.6            glmnet_4.1-7             </span></span>
+<span><span class="co">#&gt; [141] Matrix_1.6-0              patchwork_1.1.2          </span></span>
+<span><span class="co">#&gt; [143] sparseMatrixStats_1.12.2  bit64_4.0.5              </span></span>
+<span><span class="co">#&gt; [145] Rhdf5lib_1.22.0           KEGGREST_1.40.0          </span></span>
+<span><span class="co">#&gt; [147] highr_0.10                broom_1.0.5              </span></span>
+<span><span class="co">#&gt; [149] memoise_2.0.1             bslib_0.5.0              </span></span>
+<span><span class="co">#&gt; [151] bit_4.0.5</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
