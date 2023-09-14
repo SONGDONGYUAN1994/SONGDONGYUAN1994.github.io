@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -148,6 +148,10 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
 
   <dt><code>newCovariate</code></dt>
 <dd><p>The simulated new covariate matrix, is NULL if the parameter ncell is default</p></dd>
+
+  <dt><code>filtered_gene</code></dt>
+<dd><p>The genes that are excluded in the marginal and copula fitting 
+steps because these genes only express in less than two cells.</p></dd>
 
 
 </dl></div>

@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">scDesign3</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.5</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.6</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +84,8 @@
 <span>  <span class="va">usebam</span>,</span>
 <span>  parallelization <span class="op">=</span> <span class="st">"mcmapply"</span>,</span>
 <span>  BPPARAM <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  trace <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  trace <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  simplify <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -136,6 +137,10 @@ this parameter must be NULL. When the parameter parallelization = 'bpmapply',  t
 <dt>trace</dt>
 <dd><p>A logic variable. If TRUE, the warning/error log and runtime for gam/gamlss
 will be returned, FALSE otherwise. Default is FALSE.</p></dd>
+
+
+<dt>simplify</dt>
+<dd><p>A logic variable. If TRUE, the fitted regression model will only keep the essential contains for <code>predict</code>. Default is FALSE.</p></dd>
 
 </dl></div>
     <div class="section level2">
