@@ -13,10 +13,11 @@ articles:
   scDesign3-marginal-vignette: scDesign3-marginal-vignette.html
   scDesign3-multiomics-vignette: scDesign3-multiomics-vignette.html
   scDesign3-multipleLineages-vignette: scDesign3-multipleLineages-vignette.html
+  scDesign3-parallelization-vignette: scDesign3-parallelization-vignette.html
   scDesign3-pseudotimeGOF-vignette: scDesign3-pseudotimeGOF-vignette.html
   scDesign3-scATACseq-vignette: scDesign3-scATACseq-vignette.html
   scDesign3-spatial-deconvolution: scDesign3-spatial-deconvolution.html
   scDesign3-spatial-vignette: scDesign3-spatial-vignette.html
   scDesign3: scDesign3.html
-last_built: 2023-09-12T22:29Z
+last_built: 2023-09-15T07:03Z
 

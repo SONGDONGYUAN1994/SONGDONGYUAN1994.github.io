@@ -47,6 +47,7 @@
     <a class="dropdown-item" href="../articles/scDesign3-introduction-vignette.html">scDesign3 Introduction</a>
     <a class="dropdown-item" href="../articles/scDesign3-marginal-vignette.html">scDesign3 marginal distribution for genes</a>
     <a class="dropdown-item" href="../articles/scDesign3-copulaCompare-vignette.html">Compare gaussian copula and vine copula</a>
+    <a class="dropdown-item" href="../articles/scDesign3-parallelization-vignette.html">Parallelization in scDesign3</a>
     <a class="dropdown-item" href="../articles/scDesign3-librarySize-vignette.html">Simulate datasets with cell library size</a>
     <a class="dropdown-item" href="../articles/scDesign3-multipleLineages-vignette.html">Simulate datasets with multiple lineages</a>
     <a class="dropdown-item" href="../articles/scDesign3-conditionEffect-vignette.html">Simulate datasets with condition effect</a>
@@ -95,7 +96,7 @@
       Department of Statistics, University of California, Los Angeles<br><a class="author_email" href="mailto:#"></a><a href="mailto:qw802@g.ucla.edu" class="email">qw802@g.ucla.edu</a>
       </address>
                   
-            <h4 data-toc-skip class="date">13 September 2023</h4>
+            <h4 data-toc-skip class="date">15 September 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/SONGDONGYUAN1994/scDesign3/blob/HEAD/../../scDesign3/code/vignettes/scDesign3-clusterGOF-vignette.Rmd" class="external-link"><code>../../scDesign3/code/vignettes/scDesign3-clusterGOF-vignette.Rmd</code></a></small>
       <div class="d-none name"><code>scDesign3-clusterGOF-vignette.Rmd</code></div>
@@ -184,15 +185,15 @@ pre {
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">bic_df</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"k = "</span>, <span class="fl">2</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></span>
 <span><span class="va">bic_df</span></span>
 <span><span class="co">#&gt;        bic.marginal bic.copula bic.total</span></span>
-<span><span class="co">#&gt; k = 2      554744.7  -49060.52  505684.2</span></span>
-<span><span class="co">#&gt; k = 3      508801.1  -15868.33  492932.8</span></span>
-<span><span class="co">#&gt; k = 4      510224.3  -14974.36  495250.0</span></span>
-<span><span class="co">#&gt; k = 5      508536.4  143981.02  652517.4</span></span>
-<span><span class="co">#&gt; k = 6      490276.5   27103.62  517380.1</span></span>
-<span><span class="co">#&gt; k = 7      498336.3  112936.19  611272.4</span></span>
-<span><span class="co">#&gt; k = 8      500005.6  104685.62  604691.3</span></span>
-<span><span class="co">#&gt; k = 9      496912.8  101731.53  598644.3</span></span>
-<span><span class="co">#&gt; k = 10     492096.2  279369.26  771465.5</span></span></code></pre></div>
+<span><span class="co">#&gt; k = 2      554744.7  -48866.61  505878.1</span></span>
+<span><span class="co">#&gt; k = 3      508801.1  -15914.27  492886.9</span></span>
+<span><span class="co">#&gt; k = 4      510224.3  -14764.58  495459.7</span></span>
+<span><span class="co">#&gt; k = 5      508536.4  141223.68  649760.1</span></span>
+<span><span class="co">#&gt; k = 6      490276.5   31747.20  522023.7</span></span>
+<span><span class="co">#&gt; k = 7      498336.3  115753.31  614089.6</span></span>
+<span><span class="co">#&gt; k = 8      500005.6  101529.59  601535.2</span></span>
+<span><span class="co">#&gt; k = 9      496912.8  107714.86  604627.7</span></span>
+<span><span class="co">#&gt; k = 10     492096.2  302639.74  794736.0</span></span></code></pre></div>
 <p>Since we also have ground truth cell type labels from <code>DuoClustering2018</code>, we also calculate the Adjusted Rand Index (ARI) using each set of clustering labels from k-means clustering and the ground truth cell type labels. The ARI is a supervised metric to evaluate the clustering qualities. The figure below demonstrates that scDesign3’s BIC agrees with ARI.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
