@@ -57,7 +57,7 @@ yandex_site_verification :
 
 # Social Sharing
 #twitter:
-  username               : &twitter
+#  username               : &twitter
 facebook:
   username               :
   app_id                 :
@@ -88,7 +88,7 @@ author:
   pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=Dongyuan%20Song"
   googlescholar    : "https://scholar.google.com/citations?user=on0VpSsAAAAJ&hl=en&oi=ao"
   email            : "dongyuansong@ucla.edu"
-  #researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
+  researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
   codepen          :
@@ -106,7 +106,7 @@ author:
   orcid            : "http://orcid.org/yourorcidurl"
   pinterest        :
   soundcloud       :
-  #stackoverflow    : # http://stackoverflow.com/users/123456/username
+  stackoverflow    : # http://stackoverflow.com/users/123456/username
   steam            :
   tumblr           :
   twitter          : "SongDongyuan"
