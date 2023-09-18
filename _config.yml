@@ -82,12 +82,12 @@ analytics:
 author:
   name             : "Dongyuan Song"
   avatar           : "profile.png"
-  bio              : "Ph.D. candiate in Bioinformatics, Graduate Programs in Bioscience & Department of Statistics and Data Science at Univeristy of California, Los Angeles."
+  bio              : "Ph.D. candiate in Bioinformatics at Univeristy of California, Los Angeles"
   location         : "Los Angeles, California"
   employer         :
   pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=Dongyuan%20Song"
   googlescholar    : "https://scholar.google.com/citations?user=on0VpSsAAAAJ&hl=en&oi=ao"
-  email            :
+  email            : "dongyuansong@ucla.edu"
   #researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
