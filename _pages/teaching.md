@@ -9,7 +9,7 @@ author_profile: true
 
 ### Teaching assistant
 - UCLA STATS 100B *Introduction to Mathematical Statistics* (Winter 2022)
-- UCLA STATS M254/BIOINFO M271 *Statistical Methods in Computational Biology* (Winter 2022)
+- UCLA STATS M254/BIOINFO M223 *Statistical Methods in Computational Biology* (Winter 2022)
 - UCLA STATS 205 *Hierarchical Linear Models* (Fall 2021)
 
 ### Guest lecture
