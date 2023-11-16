@@ -18,9 +18,9 @@ author_profile: true
 author\*: equal distribution; author†: co-corresponding author
 
 ### Under review
-1. **Dongyuan Song**\*, Kexin Li\*, Xinzhou Ge, and Jingyi Jessica Li. ClusterDE: a post-clustering differential expression (DE) method robust to false-positive inflation caused by double dipping. Under review at *Nature Biotechnology*, 2023 [link](https://doi.org/10.1101/2023.07.21.550107)
+1. **Dongyuan Song**\*, Kexin Li\*, Xinzhou Ge, Christy Li, and Jingyi Jessica Li. ClusterDE: a post-clustering differential expression (DE) method robust to false-positive inflation caused by double dipping. Under review at *RECOMB*, 2024 [link](https://doi.org/10.1101/2023.07.21.550107)
 2. Qingyang Wang, Zhiqian Zhai, **Dongyuan Song**, and Jingyi Jessica Li. Review of computational methods for estimating cell potency from single-cell rna-seq data, with a detailed analysis of discrepancies between method description and code implementation. Under review at *Nature Communications*, 2023
-3. Kian Hong Kock, Patrick K Kimes, Stephen S Gisselbrecht, Sachi Inukai, Sabrina K Phanor, James L Anderson, Gayatri L Ramakrishnan, Colin H Lipper, **Dongyuan Song**, Jesse V Kurland, Julia M Rogers, Raehoon Jeong, Stephen C Blacklow, Rafael A Irizarry, and Martha L Bulyk. DNA binding analysis of rare variants in homeodomains reveals novel homeodomain specificity-determining residues. Submitted to *Nature Communications*, 2023 [link](https://doi.org/10.1101/2023.06.16.545320)
+3. Kian Hong Kock, Patrick K Kimes, Stephen S Gisselbrecht, Sachi Inukai, Sabrina K Phanor, James L Anderson, Gayatri L Ramakrishnan, Colin H Lipper, **Dongyuan Song**, Jesse V Kurland, Julia M Rogers, Raehoon Jeong, Stephen C Blacklow, Rafael A Irizarry, and Martha L Bulyk. DNA binding analysis of rare variants in homeodomains reveals novel homeodomain specificity-determining residues. Under review at *Nature Communications*, 2023 [link](https://doi.org/10.1101/2023.06.16.545320)
 
 ### Peer reviewed
 4. Guanao Yan, **Dongyuan Song**, and Jingyi Jessica Li. scReadSim: a single-cell RNA-seq and ATAC-seq read simulator. In press at *Nature Communications*, 2023 [link](https://doi.org/10.1101/2022.05.29.493924)
