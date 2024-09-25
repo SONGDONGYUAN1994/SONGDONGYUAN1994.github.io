@@ -12,6 +12,8 @@ Hi, I'm Dongyuan, Ph.D. in [Bioinformatics](https://bioinformatics.ucla.edu/), a
 
 **On November 1st, 2024, I will begin my appointment as a tenure track assistant professor in Department of Genetics and Genome Sciences, University of Connecticut School of Medicine.**
 
+I am looking for students and postdocs to work on computational genomics. Please email dongyuansong@ucla.edu if you are interested in.
+
 My research focuses on developing computational tools in analyzing high-dimensional single-cell and spatial omics. Some of my major works include:
 1. Probabilistic generative models of high-dimensional single-cell and spatial multi-omics data. I develped [scDesign3](https://doi.org/10.1038/s41587-023-01772-1), an "all-in-one" multimodal single-cell and spatial omics simulator which summarizes the input real dataset into a parametric model. I also contributed to the development of [scReadSim](https://www.biorxiv.org/content/10.1101/2022.05.29.493924v3), a single-cell RNA-seq and ATAC-seq read simulator, and [scDesign2](https://doi.org/10.1186/s13059-021-02367-2), the predecessor of scDesign3.
 2. Differential expression (DE) test and false discovery rate (FDR) control based on inferred variables. We developed [ClusterDE](https://www.biorxiv.org/content/10.1101/2023.07.21.550107v1), a post-clustering DE method controlling FDR under "double dipping (i.e., first clustering then DE between clusters)". Previously, I developed [PseudotimeDE](https://doi.org/10.1186/s13059-021-02341-y), a DE method for testing gene changes along cell pseudotime accounting for the uncertainty of pseudotime.
