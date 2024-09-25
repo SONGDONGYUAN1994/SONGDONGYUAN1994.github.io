@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Dongyuan Song"
 title_separator          : "-"
 name                     : &name "Dongyuan Song"
-description              : &description "Ph.D. candidate at UCLA"
+description              : &description "Incoming AP at UConn Health"
 url                      : https://SONGDONGYUAN1994.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "SONGDONGYUAN1994/SONGDONGYUAN1994.github.io"
@@ -82,7 +82,7 @@ analytics:
 author:
   name             : "Dongyuan Song"
   avatar           : "profile.png"
-  bio              : "Ph.D. candidate in Bioinformatics at UCLA"
+  bio              : "Ph.D. in Bioinformatics at UCLA"
   location         : "Los Angeles, California"
   employer         :
   pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=Dongyuan%20Song"
@@ -103,7 +103,7 @@ author:
   impactstory      : #"https://profiles.impactstory.org/u/xxxx-xxxx-xxxx-xxxx"
   lastfm           :
   linkedin         :
-  orcid            : "http://orcid.org/yourorcidurl"
+  orcid            : "http://orcid.org/0000-0003-1114-1215"
   pinterest        :
   soundcloud       :
   stackoverflow    : # http://stackoverflow.com/users/123456/username
