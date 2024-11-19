@@ -10,7 +10,7 @@ locale                   : "en-US"
 title                    : "Dongyuan Song"
 title_separator          : "-"
 name                     : &name "Dongyuan Song"
-description              : &description "Incoming AP at UConn Health"
+description              : &description "Assistant Professor at UConn Health"
 url                      : https://SONGDONGYUAN1994.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "SONGDONGYUAN1994/SONGDONGYUAN1994.github.io"
@@ -82,12 +82,12 @@ analytics:
 author:
   name             : "Dongyuan Song"
   avatar           : "profile.png"
-  bio              : "Ph.D. in Bioinformatics at UCLA"
-  location         : "Los Angeles, California"
+  bio              : "Assitant Professor in Computational Genomics, UConn Health"
+  location         : "Farmington, Connecticut"
   employer         :
   pubmed           : "https://www.ncbi.nlm.nih.gov/pubmed/?term=Dongyuan%20Song"
   googlescholar    : "https://scholar.google.com/citations?user=on0VpSsAAAAJ&hl=en&oi=ao"
-  email            : "dongyuansong@ucla.edu"
+  email            : "dosong@uchc.edu"
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -255,7 +255,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Los_Angeles # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: America/New_York # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 
 
 # Plugins

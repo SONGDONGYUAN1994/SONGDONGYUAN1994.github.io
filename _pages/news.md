@@ -6,6 +6,9 @@ author_profile: true
 ---
 
 {% include base_path %}
+2024
+- November 1st: I officially started my new position at UConn Health.
+
 
 2023
 - June 26th: I received the [UCLA Dissertation Year Fellowship](https://grad.ucla.edu/funding/financial-aid/funding-for-continuing-students/dissertation-year-fellowship/). Approximately 160 fellowships awarded under this program yearly (on average one for each Ph.D. program).
